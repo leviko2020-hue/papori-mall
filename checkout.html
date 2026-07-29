@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>주문/결제 — PAPORI</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container header-top">
+    <a href="index.html" class="logo">PAPOR<span>I</span></a>
+    <nav class="gnb">
+      <a href="category-thermal.html">열화상카메라</a>
+      <a href="category-kepco.html">한전 기자재/계측기</a>
+      <a href="#">고객센터</a>
+    </nav>
+    <div class="header-actions">
+      <div class="search-box"><input type="text" placeholder="제품명, 모델명 검색"></div>
+      <a href="login.html">로그인</a>
+      <a href="cart.html">장바구니</a>
+      <a href="quote-request.html" class="btn btn-primary btn-sm">견적요청</a>
+    </div>
+  </div>
+</header>
+
+<main class="container">
+  <h1 class="section-title" style="margin-top:32px;">주문/결제</h1>
+  <p class="section-sub">비회원도 배송지·연락처만 입력하면 바로 결제할 수 있습니다</p>
+
+  <div class="quote-layout">
+    <div>
+      <div class="form-group"><label>받는 분</label><input type="text" placeholder="이름 또는 담당자명"></div>
+      <div class="form-group"><label>연락처</label><input type="tel" placeholder="010-0000-0000"></div>
+      <div class="form-group"><label>배송지</label><input type="text" placeholder="주소 검색"></div>
+      <div class="form-group"><label>배송 요청사항</label><input type="text" placeholder="예: 경비실에 맡겨주세요"></div>
+
+      <div class="form-group">
+        <label>세금계산서</label>
+        <label style="display:flex; align-items:center; gap:8px; font-weight:400; font-size:14px;">
+          <input type="checkbox" style="width:auto;"> 전자세금계산서 발행 요청 (사업자등록번호 입력)
+        </label>
+      </div>
+
+      <div class="form-group">
+        <label>결제 수단</label>
+        <div style="display:flex; flex-direction:column; gap:10px;">
+          <label style="display:flex; align-items:center; gap:8px; font-weight:400; font-size:14px; border:1px solid var(--border); border-radius:8px; padding:12px;">
+            <input type="radio" name="pay" checked style="width:auto;"> 신용카드 / 간편결제 (Toss Payments)
+          </label>
+          <label style="display:flex; align-items:center; gap:8px; font-weight:400; font-size:14px; border:1px solid var(--border); border-radius:8px; padding:12px;">
+            <input type="radio" name="pay" style="width:auto;"> 카카오페이
+          </label>
+          <label style="display:flex; align-items:center; gap:8px; font-weight:400; font-size:14px; border:1px solid var(--border); border-radius:8px; padding:12px;">
+            <input type="radio" name="pay" style="width:auto;"> 무통장입금 (가상계좌) — 입금 확인 후 주문 승인
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <aside class="quote-side">
+      <h3>결제 정보</h3>
+      <div class="cart-summary" style="margin-left:0; width:auto; padding:0; background:none;">
+        <div class="row"><span>상품 합계</span><span>2,970,000원</span></div>
+        <div class="row"><span>배송비</span><span>25,000원</span></div>
+        <div class="row total"><span>결제 예정 금액</span><span>2,995,000원</span></div>
+      </div>
+      <button type="button" class="btn btn-primary btn-block" style="margin-top:18px;"
+        onclick="alert('데모 화면입니다. 실제 PG 연동(Toss Payments/Kakao Pay) 및 전자세금계산서 발행은 3단계 개발 시 실제 계정으로 연동됩니다.')">
+        결제하기
+      </button>
+      <div class="quote-note">
+        무통장입금 선택 시 입금 확인 후 관리자가 주문을 승인하며, 승인 즉시 알림톡/문자로 안내드립니다.
+      </div>
+    </aside>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-links">
+      <a href="#">이용약관</a>
+      <a href="#">개인정보처리방침</a>
+      <a href="#">제품 자료실</a>
+    </div>
+    <div class="footer-info">
+      <div>상호명 SEGlobal · 대표전화 042-349-0703 · 고객센터 010-8699-8868</div>
+      <div>사업자등록번호 146-88-01550 · 통신판매업신고 제2024-대전유성-0000호(확인 후 교체 예정)</div>
+      <div>© PAPORI. All rights reserved.</div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

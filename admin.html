@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>관리자 — PAPORI</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="admin-layout">
+  <aside class="admin-sidebar">
+    <div class="admin-logo">PAPORI 관리자</div>
+    <a href="#" class="active" onclick="showPanel('orders')">주문 관리</a>
+    <a href="#" onclick="showPanel('quotes')">견적문의 관리</a>
+    <a href="#" onclick="showPanel('products')">상품 관리</a>
+    <a href="#" onclick="showPanel('stock')">재고 관리</a>
+    <a href="#" onclick="showPanel('config')">사이트 기본정보 설정</a>
+    <a href="index.html" style="margin-top:20px; color:var(--text-mute);">← 쇼핑몰로 돌아가기</a>
+  </aside>
+
+  <main class="admin-main">
+
+    <div id="panel-orders">
+      <h1>주문 관리</h1>
+      <p class="sub">결제 완료 / 무통장입금 대기 주문을 확인하고 처리합니다</p>
+      <div class="admin-stats">
+        <div class="card"><div class="num">18</div><div class="label">이번달 주문</div></div>
+        <div class="card"><div class="num">3</div><div class="label">입금 대기</div></div>
+        <div class="card"><div class="num">2</div><div class="label">배송 준비중</div></div>
+        <div class="card"><div class="num">13</div><div class="label">배송 완료</div></div>
+      </div>
+      <table class="admin-table">
+        <tr><th>주문번호</th><th>고객</th><th>상품</th><th>결제수단</th><th>금액</th><th>상태</th></tr>
+        <tr><td>PO-20260728-01</td><td>SEGlobal 홍길동</td><td>하이크마이크로 B25 외 1건</td><td>카드</td><td>2,995,000원</td><td><span class="status-pill status-done">배송완료</span></td></tr>
+        <tr><td>PO-20260727-04</td><td>비회원(임〇〇)</td><td>디지털 클램프미터</td><td>무통장입금</td><td>514,000원</td><td><span class="status-pill status-pending">입금대기</span></td></tr>
+        <tr><td>PO-20260727-02</td><td>㈜대한전력</td><td>절연장갑 외 2건</td><td>카카오페이</td><td>612,000원</td><td><span class="status-pill status-wait">배송준비중</span></td></tr>
+      </table>
+    </div>
+
+    <div id="panel-quotes" style="display:none;">
+      <h1>견적문의 관리</h1>
+      <p class="sub">홈페이지에서 접수된 견적요청서를 확인하고 견적서를 회신합니다</p>
+      <table class="admin-table">
+        <tr><th>접수일</th><th>요청자</th><th>상품 수</th><th>연락처</th><th>상태</th><th></th></tr>
+        <tr><td>2026-07-28</td><td>㈜한빛전기</td><td>4개</td><td>042-***-1234</td><td><span class="status-pill status-pending">답변대기</span></td><td><a href="#" class="btn btn-ghost btn-sm">견적서 작성</a></td></tr>
+        <tr><td>2026-07-27</td><td>비회원(박〇〇)</td><td>1개</td><td>010-***-5678</td><td><span class="status-pill status-done">회신완료</span></td><td><a href="#" class="btn btn-ghost btn-sm">보기</a></td></tr>
+      </table>
+    </div>
+
+    <div id="panel-products" style="display:none;">
+      <h1>상품 관리</h1>
+      <p class="sub">카테고리별 상품 등록/수정</p>
+      <table class="admin-table">
+        <tr><th>카테고리</th><th>상품명</th><th>모델명</th><th>가격</th><th></th></tr>
+        <tr><td>열화상카메라</td><td>하이크마이크로 B25</td><td>HM-B25</td><td>2,480,000원</td><td><a href="#" class="btn btn-ghost btn-sm">수정</a></td></tr>
+        <tr><td>계측기</td><td>디지털 클램프미터</td><td>CM-330</td><td>245,000원</td><td><a href="#" class="btn btn-ghost btn-sm">수정</a></td></tr>
+        <tr><td>고압 활선작업 장구류</td><td>간접 활선작업용 절연조작봉</td><td>GI-08</td><td>견적문의</td><td><a href="#" class="btn btn-ghost btn-sm">수정</a></td></tr>
+      </table>
+      <button class="btn btn-primary btn-sm" style="margin-top:16px;">+ 상품 등록</button>
+    </div>
+
+    <div id="panel-stock" style="display:none;">
+      <h1>재고 관리</h1>
+      <p class="sub">가격 표기 상품(계측기·열화상카메라 등)의 재고 현황</p>
+      <table class="admin-table">
+        <tr><th>상품명</th><th>재고</th><th>상태</th></tr>
+        <tr><td>하이크마이크로 B25</td><td>4</td><td><span class="status-pill status-done">정상</span></td></tr>
+        <tr><td>하이크마이크로 Pocket2</td><td>1</td><td><span class="status-pill status-pending">부족</span></td></tr>
+        <tr><td>디지털 클램프미터</td><td>12</td><td><span class="status-pill status-done">정상</span></td></tr>
+      </table>
+    </div>
+
+    <div id="panel-config" style="display:none;">
+      <h1>사이트 기본정보 설정</h1>
+      <p class="sub">여기서 값을 수정하면 푸터 등 사이트 전체에 자동 반영됩니다 (통신판매업신고번호 등)</p>
+      <div style="max-width:460px;">
+        <div class="form-group"><label>상호명</label><input type="text" value="SEGlobal"></div>
+        <div class="form-group"><label>사업자등록번호</label><input type="text" value="146-88-01550"></div>
+        <div class="form-group"><label>통신판매업신고번호</label><input type="text" value="제2024-대전유성-0000호 (임시값 — 확인 후 교체)"></div>
+        <div class="form-group"><label>대표전화</label><input type="text" value="042-349-0703"></div>
+        <div class="form-group"><label>고객센터</label><input type="text" value="010-8699-8868"></div>
+        <button class="btn btn-primary" onclick="alert('데모 화면입니다. 실제 저장 시 사이트 전체 푸터에 즉시 반영됩니다.')">저장</button>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<script>
+  function showPanel(name) {
+    ['orders','quotes','products','stock','config'].forEach(p => {
+      document.getElementById('panel-' + p).style.display = (p === name) ? 'block' : 'none';
+    });
+    document.querySelectorAll('.admin-sidebar a').forEach(a => a.classList.remove('active'));
+    event.target.classList.add('active');
+  }
+</script>
+
+</body>
+</html>
