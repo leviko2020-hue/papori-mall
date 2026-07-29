@@ -301,6 +301,12 @@ img { max-width: 100%; display: block; }
   border: 1px solid var(--border);
   cursor: pointer;
 }
+.detail-section .full-img {
+  width: 100%;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  display: block;
+}
 .detail-info .brand-line {
   font-size: 13px;
   color: var(--purple-dark);
