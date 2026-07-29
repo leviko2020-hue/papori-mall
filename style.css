@@ -732,3 +732,100 @@ img { max-width: 100%; display: block; }
 @media (max-width: 900px) {
   .series-grid { grid-template-columns: repeat(2, 1fr); }
 }
+
+/* Rich detail page sections (hikmicrotech 스타일) */
+.feature-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin: 18px 0 8px;
+}
+.feature-block {
+  background: var(--bg-soft);
+  border-radius: 12px;
+  padding: 20px;
+}
+.feature-block .feature-icon {
+  font-size: 26px;
+  margin-bottom: 10px;
+}
+.feature-block h4 {
+  font-size: 15px;
+  color: var(--text-strong);
+  margin: 0 0 8px;
+}
+.feature-block p {
+  font-size: 13px;
+  color: var(--text);
+  line-height: 1.6;
+  margin: 0;
+}
+.app-gallery {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin: 16px 0 8px;
+}
+.app-gallery figure {
+  margin: 0;
+}
+.app-gallery .app-img {
+  height: 130px;
+  border-radius: 10px;
+  background-size: cover;
+  background-position: center;
+}
+.app-gallery figcaption {
+  font-size: 12px;
+  color: var(--text-mute);
+  text-align: center;
+  margin-top: 6px;
+}
+.package-list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px 20px;
+  margin: 10px 0 0;
+  padding: 0;
+  list-style: none;
+}
+.package-list li {
+  font-size: 13px;
+  color: var(--text);
+  padding-left: 16px;
+  position: relative;
+}
+.package-list li::before {
+  content: "•";
+  color: var(--purple);
+  position: absolute;
+  left: 0;
+}
+.hikmicro-badge-strip {
+  display: flex;
+  gap: 10px;
+  margin: 16px 0;
+  flex-wrap: wrap;
+}
+.hikmicro-badge-strip .badge-item {
+  text-align: center;
+  background: var(--purple-light);
+  border-radius: 10px;
+  padding: 12px 18px;
+  min-width: 90px;
+}
+.hikmicro-badge-strip .badge-item .num {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--purple-dark);
+}
+.hikmicro-badge-strip .badge-item .label {
+  font-size: 11px;
+  color: var(--text-mute);
+  margin-top: 2px;
+}
+@media (max-width: 900px) {
+  .feature-grid { grid-template-columns: 1fr; }
+  .app-gallery { grid-template-columns: repeat(2, 1fr); }
+  .package-list { grid-template-columns: 1fr; }
+}
