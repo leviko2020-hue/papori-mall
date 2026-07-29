@@ -64,13 +64,13 @@
   </div>
 
   <div class="tabs">
-    <div class="tab active">상세정보</div>
-    <div class="tab">스펙(제원표)</div>
-    <div class="tab">구매평</div>
-    <div class="tab">Q&amp;A</div>
+    <div class="tab active" onclick="showTab('info')">상세정보</div>
+    <div class="tab" onclick="showTab('spec')">스펙(제원표)</div>
+    <div class="tab" onclick="showTab('review')">구매평</div>
+    <div class="tab" onclick="showTab('qna')">Q&amp;A</div>
   </div>
 
-  <div class="tab-panel">
+  <div class="tab-panel" id="panel-info">
     <div class="detail-section">
       <h3>제품 소개</h3>
       <p>마킹시스템 케이블 마커는 헬러만타이톤 전용 라벨프린터와 호환되는 케이블 식별 마커입니다. 배전·통신 케이블의 체계적인 식별·관리에 사용됩니다.</p>
@@ -85,8 +85,8 @@
       <h3>활용 예시</h3>
       <p>변전소·통신실 케이블 식별 표기, 배전반 내부 회로 마킹, 지중 케이블 접속함 표기 등에 사용됩니다.</p>
     </div>
-
-    <div class="detail-section">
+  </div>
+  <div class="tab-panel" id="panel-spec" style="display:none;"><div class="detail-section">
       <h3>제원표</h3>
       <table class="spec-table">
         <tr><th>모델명</th><td>HT-MK200</td></tr>
@@ -94,6 +94,12 @@
         <tr><th>소재</th><td>내마모 필름</td></tr>
       </table>
     </div>
+  </div>
+  <div class="tab-panel" id="panel-review" style="display:none;">
+    <p style="color:var(--text-mute); font-size:14px; padding:20px 0;">아직 등록된 구매평이 없습니다.</p>
+  </div>
+  <div class="tab-panel" id="panel-qna" style="display:none;">
+    <p style="color:var(--text-mute); font-size:14px; padding:20px 0;">아직 등록된 문의가 없습니다. 궁금하신 점은 견적요청 또는 고객센터로 문의해주세요.</p>
   </div>
 
   <div class="related">
@@ -128,5 +134,16 @@
 
 <a href="quote-request.html" class="floating-quote">빠른 견적문의</a>
 
+
+<script>
+  function showTab(name) {
+    ['info','spec','review','qna'].forEach(t => {
+      const el = document.getElementById('panel-' + t);
+      if (el) el.style.display = (t === name) ? 'block' : 'none';
+    });
+    document.querySelectorAll('.tabs .tab').forEach(t => t.classList.remove('active'));
+    event.currentTarget.classList.add('active');
+  }
+</script>
 </body>
 </html>

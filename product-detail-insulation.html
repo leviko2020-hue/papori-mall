@@ -76,13 +76,13 @@
   </div>
 
   <div class="tabs">
-    <div class="tab active">상세정보</div>
-    <div class="tab">스펙(제원표)</div>
-    <div class="tab">구매평</div>
-    <div class="tab">Q&amp;A</div>
+    <div class="tab active" onclick="showTab('info')">상세정보</div>
+    <div class="tab" onclick="showTab('spec')">스펙(제원표)</div>
+    <div class="tab" onclick="showTab('review')">구매평</div>
+    <div class="tab" onclick="showTab('qna')">Q&amp;A</div>
   </div>
 
-  <div class="tab-panel">
+  <div class="tab-panel" id="panel-info">
     <div class="detail-section">
       <h3>제품 소개</h3>
       <p>절연안전모 YSH-300은 고압 활선작업 현장에서 머리 부위 감전을 방지하는 절연 전용 안전모입니다. 코리아테크 안전용품에서 공급하는 정품으로, 한전 및 전기공사 현장의 표준 개인보호구로 사용됩니다.</p>
@@ -91,7 +91,8 @@
       <h3>주요 특장점</h3>
       <p>· 절연 전용 소재로 고압 활선작업 시 감전 위험 최소화<br>· 경량 설계로 장시간 착용에도 부담이 적음<br>· KC 인증을 취득한 정품 제품</p>
     </div>
-    <div class="detail-section">
+  </div>
+  <div class="tab-panel" id="panel-spec" style="display:none;"><div class="detail-section">
       <h3>제원표</h3>
       <table class="spec-table">
         <tr><th>모델명</th><td>YSH-300</td></tr>
@@ -100,6 +101,12 @@
         <tr><th>인증</th><td>KC 인증</td></tr>
       </table>
     </div>
+  </div>
+  <div class="tab-panel" id="panel-review" style="display:none;">
+    <p style="color:var(--text-mute); font-size:14px; padding:20px 0;">아직 등록된 구매평이 없습니다.</p>
+  </div>
+  <div class="tab-panel" id="panel-qna" style="display:none;">
+    <p style="color:var(--text-mute); font-size:14px; padding:20px 0;">아직 등록된 문의가 없습니다. 궁금하신 점은 견적요청 또는 고객센터로 문의해주세요.</p>
   </div>
 
   <div class="related">
@@ -166,5 +173,16 @@
   });
 </script>
 
+
+<script>
+  function showTab(name) {
+    ['info','spec','review','qna'].forEach(t => {
+      const el = document.getElementById('panel-' + t);
+      if (el) el.style.display = (t === name) ? 'block' : 'none';
+    });
+    document.querySelectorAll('.tabs .tab').forEach(t => t.classList.remove('active'));
+    event.currentTarget.classList.add('active');
+  }
+</script>
 </body>
 </html>

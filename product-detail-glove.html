@@ -76,13 +76,13 @@
   </div>
 
   <div class="tabs">
-    <div class="tab active">상세정보</div>
-    <div class="tab">스펙(제원표)</div>
-    <div class="tab">구매평</div>
-    <div class="tab">Q&amp;A</div>
+    <div class="tab active" onclick="showTab('info')">상세정보</div>
+    <div class="tab" onclick="showTab('spec')">스펙(제원표)</div>
+    <div class="tab" onclick="showTab('review')">구매평</div>
+    <div class="tab" onclick="showTab('qna')">Q&amp;A</div>
   </div>
 
-  <div class="tab-panel">
+  <div class="tab-panel" id="panel-info">
     <div class="detail-section">
       <h3>제품 소개</h3>
       <p>오메가 절연장갑은 저압(1000V) 전기 작업 시 작업자의 손을 감전 위험으로부터 보호하는 천연고무 소재 절연장갑입니다. KCs 인증을 취득한 정품으로 안정적인 절연 성능을 제공합니다.</p>
@@ -91,7 +91,8 @@
       <h3>주요 특장점</h3>
       <p>· 저압 1000V까지 절연 보호<br>· 천연고무 소재로 유연하고 세밀한 작업에 적합<br>· KCs 인증 취득 정품</p>
     </div>
-    <div class="detail-section">
+  </div>
+  <div class="tab-panel" id="panel-spec" style="display:none;"><div class="detail-section">
       <h3>제원표</h3>
       <table class="spec-table">
         <tr><th>등급</th><td>저압용 1000V</td></tr>
@@ -99,6 +100,12 @@
         <tr><th>인증</th><td>KCs 인증</td></tr>
       </table>
     </div>
+  </div>
+  <div class="tab-panel" id="panel-review" style="display:none;">
+    <p style="color:var(--text-mute); font-size:14px; padding:20px 0;">아직 등록된 구매평이 없습니다.</p>
+  </div>
+  <div class="tab-panel" id="panel-qna" style="display:none;">
+    <p style="color:var(--text-mute); font-size:14px; padding:20px 0;">아직 등록된 문의가 없습니다. 궁금하신 점은 견적요청 또는 고객센터로 문의해주세요.</p>
   </div>
 
   <div class="related">
@@ -165,5 +172,16 @@
   });
 </script>
 
+
+<script>
+  function showTab(name) {
+    ['info','spec','review','qna'].forEach(t => {
+      const el = document.getElementById('panel-' + t);
+      if (el) el.style.display = (t === name) ? 'block' : 'none';
+    });
+    document.querySelectorAll('.tabs .tab').forEach(t => t.classList.remove('active'));
+    event.currentTarget.classList.add('active');
+  }
+</script>
 </body>
 </html>

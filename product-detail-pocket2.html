@@ -77,13 +77,13 @@
   </div>
 
   <div class="tabs">
-    <div class="tab active">상세정보</div>
-    <div class="tab">스펙(제원표)</div>
-    <div class="tab">구매평</div>
-    <div class="tab">Q&amp;A</div>
+    <div class="tab active" onclick="showTab('info')">상세정보</div>
+    <div class="tab" onclick="showTab('spec')">스펙(제원표)</div>
+    <div class="tab" onclick="showTab('review')">구매평</div>
+    <div class="tab" onclick="showTab('qna')">Q&amp;A</div>
   </div>
 
-  <div class="tab-panel">
+  <div class="tab-panel" id="panel-info">
     <div class="detail-section">
       <h3>제품 소개</h3>
       <p>HIKMICRO POCKET2는 스마트폰 크기의 초소형 휴대용 열화상카메라로, 256×192 IR 해상도와 8MP 실화상을 갖춰 소형 기기임에도 안정적인 열화상 진단 성능을 제공합니다.</p>
@@ -98,8 +98,8 @@
       <h3>활용 예시</h3>
       <p>배전반 발열 간이 점검, 현장 이동 중 신속한 이상 유무 확인, 소규모 사업장 정기 점검 등에 적합합니다.</p>
     </div>
-
-    <div class="detail-section">
+  </div>
+  <div class="tab-panel" id="panel-spec" style="display:none;"><div class="detail-section">
       <h3>제원표</h3>
       <table class="spec-table">
         <tr><th>모델명</th><td>POCKET2</td></tr>
@@ -111,12 +111,14 @@
         <tr><th>프레임레이트</th><td>25Hz</td></tr>
         <tr><th>감도(NETD)</th><td>≤40mK</td></tr>
         <tr><th>A/S 기간</th><td>3년</td></tr>
-        <tr><th>해상도</th><td>160 × 120</td></tr>
-        <tr><th>무게</th><td>약 130g</td></tr>
-        <tr><th>배터리</th><td>연속 4시간 사용</td></tr>
-        <tr><th>인증</th><td>KC 인증</td></tr>
       </table>
     </div>
+  </div>
+  <div class="tab-panel" id="panel-review" style="display:none;">
+    <p style="color:var(--text-mute); font-size:14px; padding:20px 0;">아직 등록된 구매평이 없습니다.</p>
+  </div>
+  <div class="tab-panel" id="panel-qna" style="display:none;">
+    <p style="color:var(--text-mute); font-size:14px; padding:20px 0;">아직 등록된 문의가 없습니다. 궁금하신 점은 견적요청 또는 고객센터로 문의해주세요.</p>
   </div>
 
   <div class="related">
@@ -183,5 +185,16 @@
   });
 </script>
 
+
+<script>
+  function showTab(name) {
+    ['info','spec','review','qna'].forEach(t => {
+      const el = document.getElementById('panel-' + t);
+      if (el) el.style.display = (t === name) ? 'block' : 'none';
+    });
+    document.querySelectorAll('.tabs .tab').forEach(t => t.classList.remove('active'));
+    event.currentTarget.classList.add('active');
+  }
+</script>
 </body>
 </html>

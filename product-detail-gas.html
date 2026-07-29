@@ -65,13 +65,13 @@
   </div>
 
   <div class="tabs">
-    <div class="tab active">상세정보</div>
-    <div class="tab">스펙(제원표)</div>
-    <div class="tab">구매평</div>
-    <div class="tab">Q&amp;A</div>
+    <div class="tab active" onclick="showTab('info')">상세정보</div>
+    <div class="tab" onclick="showTab('spec')">스펙(제원표)</div>
+    <div class="tab" onclick="showTab('review')">구매평</div>
+    <div class="tab" onclick="showTab('qna')">Q&amp;A</div>
   </div>
 
-  <div class="tab-panel">
+  <div class="tab-panel" id="panel-info">
     <div class="detail-section">
       <h3>제품 소개</h3>
       <p>절연커버는 배전선로 및 기기의 충전부를 감싸 낙뢰·동물 접촉·오접촉으로 인한 정전 및 감전 사고를 예방하는 절연 보호 자재입니다. 세원산업(SWIC)에서 자체 제작·공급하는 정품입니다.</p>
@@ -80,7 +80,8 @@
       <h3>주요 특장점</h3>
       <p>· 인장강도 1.0kgf/mm² 이상, 신율 350% 이상의 내구성<br>· 자외선(UV) 노후화 후에도 인장강도 80% 이상 유지<br>· 최소 20,000V, 시험전압 30,000V(1분)의 내전압 성능 확보</p>
     </div>
-    <div class="detail-section">
+  </div>
+  <div class="tab-panel" id="panel-spec" style="display:none;"><div class="detail-section">
       <h3>제원표</h3>
       <table class="spec-table">
         <tr><th>제조사</th><td>세원산업(SWIC)</td></tr>
@@ -89,6 +90,12 @@
         <tr><th>내전압시험</th><td>최소 20,000V / 시험 30,000V(1분)</td></tr>
       </table>
     </div>
+  </div>
+  <div class="tab-panel" id="panel-review" style="display:none;">
+    <p style="color:var(--text-mute); font-size:14px; padding:20px 0;">아직 등록된 구매평이 없습니다.</p>
+  </div>
+  <div class="tab-panel" id="panel-qna" style="display:none;">
+    <p style="color:var(--text-mute); font-size:14px; padding:20px 0;">아직 등록된 문의가 없습니다. 궁금하신 점은 견적요청 또는 고객센터로 문의해주세요.</p>
   </div>
 
   <div class="related">
@@ -131,5 +138,16 @@
 
 <a href="quote-request.html" class="floating-quote">빠른 견적문의</a>
 
+
+<script>
+  function showTab(name) {
+    ['info','spec','review','qna'].forEach(t => {
+      const el = document.getElementById('panel-' + t);
+      if (el) el.style.display = (t === name) ? 'block' : 'none';
+    });
+    document.querySelectorAll('.tabs .tab').forEach(t => t.classList.remove('active'));
+    event.currentTarget.classList.add('active');
+  }
+</script>
 </body>
 </html>
