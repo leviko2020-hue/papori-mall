@@ -200,9 +200,12 @@ img { max-width: 100%; display: block; }
 }
 .product-card .thumb {
   height: 200px;
-  background: var(--purple-light);
-  background-size: cover;
+  background: #FAFAFA;
+  background-size: contain;
+  background-repeat: no-repeat;
   background-position: center;
+  padding: 12px;
+  box-sizing: border-box;
 }
 .product-card .body { padding: 16px; }
 .product-card .brand {
@@ -274,10 +277,13 @@ img { max-width: 100%; display: block; }
   width: 100%;
   height: 420px;
   border-radius: 14px;
-  background: var(--purple-light);
-  background-size: cover;
+  background: #FAFAFA;
+  background-size: contain;
+  background-repeat: no-repeat;
   background-position: center;
   border: 1px solid var(--border);
+  box-sizing: border-box;
+  padding: 20px;
 }
 .detail-info .brand-line {
   font-size: 13px;
@@ -663,3 +669,66 @@ img { max-width: 100%; display: block; }
 .status-pending { background: #FFF3E0; color: #B8720A; }
 .status-done { background: var(--purple-light); color: var(--purple-dark); }
 .status-wait { background: var(--gray-light); color: var(--text-mute); }
+
+/* Series landing cards (하이크마이크로 스타일) */
+.series-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  padding: 8px 0 40px;
+}
+.series-card {
+  display: block;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  overflow: hidden;
+  transition: box-shadow .15s ease, transform .15s ease;
+}
+.series-card:hover {
+  box-shadow: 0 10px 26px rgba(139,127,232,0.18);
+  transform: translateY(-3px);
+}
+.series-card .series-thumb {
+  height: 160px;
+  background: #FAFAFA;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  padding: 14px;
+  box-sizing: border-box;
+  border-bottom: 1px solid var(--border);
+}
+.series-card .series-body {
+  padding: 14px 16px 18px;
+}
+.series-card .series-body h4 {
+  font-size: 15px;
+  margin: 0 0 4px;
+  color: var(--text-strong);
+}
+.series-card .series-body p {
+  font-size: 12px;
+  color: var(--text-mute);
+  margin: 0;
+  line-height: 1.5;
+}
+.series-section {
+  padding-top: 20px;
+  margin-top: 8px;
+  border-top: 1px solid var(--border);
+  scroll-margin-top: 90px;
+}
+.series-section h2 {
+  font-size: 19px;
+  color: var(--text-strong);
+  margin: 0 0 4px;
+}
+.series-section .series-desc {
+  font-size: 13px;
+  color: var(--text-mute);
+  margin: 0 0 18px;
+}
+@media (max-width: 900px) {
+  .series-grid { grid-template-columns: repeat(2, 1fr); }
+}
