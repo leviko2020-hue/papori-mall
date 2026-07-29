@@ -47,13 +47,24 @@
       </div>
 
       <div class="price-box">
-        <div class="final-price" style="font-size:20px; color:var(--purple-dark);">가격문의</div>
-        <div class="ship-note">공식 총판 공급가 기준 별도 안내 — 견적요청 시 빠르게 회신드립니다</div>
+        <div class="final-price">3,660,000원</div>
+        <div class="ship-note">소비자가(VAT 별도) · 배송비 별도 · 결제 시 자동 계산됩니다</div>
+      </div>
+
+      <div class="qty-row">
+        <span style="font-size:14px;">수량</span>
+        <div class="qty-selector">
+          <button type="button">-</button>
+          <input type="text" value="1">
+          <button type="button">+</button>
+        </div>
       </div>
 
       <div class="action-row">
-        <a href="quote-request.html" class="btn btn-primary btn-block">이 상품 견적요청 하기</a>
+        <button class="btn btn-outline btn-block">장바구니</button>
+        <button class="btn btn-primary btn-block">바로구매</button>
       </div>
+      <a href="quote-request.html" class="quick-quote">이 상품 견적서로 담기 →</a>
       <a href="https://drive.google.com/file/d/1ECaQBCvxMflMm97EbFzvEDRZ7tGvLNI-/view?usp=drive_link" target="_blank" class="quick-quote" style="display:block; margin-top:6px;">📄 공식 카탈로그 PDF 다운로드 →</a>
 
       <div class="trust-strip">
@@ -120,7 +131,7 @@
         <div class="body">
           <div class="brand">HIKMICRO</div>
           <h4>HIKMICRO M11W 산업용 열화상카메라</h4>
-          <div class="price">1,870,000<span class="unit">원</span></div>
+          <div class="price">1,400,000<span class="unit">원</span></div>
         </div>
       </a>
       <a href="product-detail-pocket2.html" class="product-card">
@@ -128,7 +139,7 @@
         <div class="body">
           <div class="brand">HIKMICRO</div>
           <h4>HIKMICRO POCKET2 휴대용 열화상카메라</h4>
-          <div class="price">847,000<span class="unit">원</span></div>
+          <div class="price">770,000<span class="unit">원</span></div>
         </div>
       </a>
     </div>
@@ -154,6 +165,22 @@
 
 
 <script>
+  
+  document.querySelectorAll('.qty-selector button').forEach(btn => {
+    btn.onclick = () => {
+      const input = btn.parentElement.querySelector('input');
+      let val = parseInt(input.value) || 1;
+      val = btn.textContent === '+' ? val + 1 : Math.max(1, val - 1);
+      input.value = val;
+    };
+  });
+  document.querySelectorAll('.action-row .btn-outline').forEach(btn => {
+    btn.onclick = () => alert('장바구니에 담았습니다');
+  });
+  document.querySelectorAll('.action-row .btn-primary').forEach(btn => {
+    btn.onclick = () => alert('결제 페이지로 연동될 예정입니다');
+  });
+
   function showTab(name) {
     ['info','spec','review','qna'].forEach(t => {
       const el = document.getElementById('panel-' + t);
