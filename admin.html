@@ -23,28 +23,19 @@
 
     <div id="panel-orders">
       <h1>주문 관리</h1>
-      <p class="sub">결제 완료 / 무통장입금 대기 주문을 확인하고 처리합니다</p>
-      <div class="admin-stats">
-        <div class="card"><div class="num">18</div><div class="label">이번달 주문</div></div>
-        <div class="card"><div class="num">3</div><div class="label">입금 대기</div></div>
-        <div class="card"><div class="num">2</div><div class="label">배송 준비중</div></div>
-        <div class="card"><div class="num">13</div><div class="label">배송 완료</div></div>
-      </div>
-      <table class="admin-table">
-        <tr><th>주문번호</th><th>고객</th><th>상품</th><th>결제수단</th><th>금액</th><th>상태</th></tr>
-        <tr><td>PO-20260728-01</td><td>SEGlobal 홍길동</td><td>하이크마이크로 B25 외 1건</td><td>카드</td><td>2,995,000원</td><td><span class="status-pill status-done">배송완료</span></td></tr>
-        <tr><td>PO-20260727-04</td><td>비회원(임〇〇)</td><td>디지털 클램프미터</td><td>무통장입금</td><td>514,000원</td><td><span class="status-pill status-pending">입금대기</span></td></tr>
-        <tr><td>PO-20260727-02</td><td>㈜대한전력</td><td>절연장갑 외 2건</td><td>카카오페이</td><td>612,000원</td><td><span class="status-pill status-wait">배송준비중</span></td></tr>
+      <p class="sub">결제 완료 / 무통장입금 대기 주문을 실시간으로 불러옵니다</p>
+      <div id="orders-loading" style="font-size:13px; color:var(--text-mute);">불러오는 중...</div>
+      <table class="admin-table" id="orders-table" style="display:none;">
+        <tr><th>주문일</th><th>고객</th><th>상품</th><th>결제수단</th><th>금액</th><th>상태</th></tr>
       </table>
     </div>
 
     <div id="panel-quotes" style="display:none;">
       <h1>견적문의 관리</h1>
-      <p class="sub">홈페이지에서 접수된 견적요청서를 확인하고 견적서를 회신합니다</p>
-      <table class="admin-table">
-        <tr><th>접수일</th><th>요청자</th><th>상품 수</th><th>연락처</th><th>상태</th><th></th></tr>
-        <tr><td>2026-07-28</td><td>㈜한빛전기</td><td>4개</td><td>042-***-1234</td><td><span class="status-pill status-pending">답변대기</span></td><td><a href="#" class="btn btn-ghost btn-sm">견적서 작성</a></td></tr>
-        <tr><td>2026-07-27</td><td>비회원(박〇〇)</td><td>1개</td><td>010-***-5678</td><td><span class="status-pill status-done">회신완료</span></td><td><a href="#" class="btn btn-ghost btn-sm">보기</a></td></tr>
+      <p class="sub">홈페이지에서 접수된 견적요청서를 실시간으로 불러옵니다</p>
+      <div id="quotes-loading" style="font-size:13px; color:var(--text-mute);">불러오는 중...</div>
+      <table class="admin-table" id="quotes-table" style="display:none;">
+        <tr><th>접수일</th><th>회사/이름</th><th>연락처</th><th>상품</th><th>요청사항</th><th>상태</th></tr>
       </table>
     </div>
 
@@ -94,7 +85,82 @@
     });
     document.querySelectorAll('.admin-sidebar a').forEach(a => a.classList.remove('active'));
     event.target.classList.add('active');
+    if (name === 'quotes') loadQuotes();
+    if (name === 'orders') loadOrders();
   }
+
+  let quotesLoaded = false;
+  async function loadQuotes() {
+    if (quotesLoaded) return;
+    const { paporiGetQuotes } = await import('./papori-firebase.js');
+    const loadingEl = document.getElementById('quotes-loading');
+    const tableEl = document.getElementById('quotes-table');
+    try {
+      const quotes = await paporiGetQuotes();
+      quotesLoaded = true;
+      loadingEl.style.display = 'none';
+      tableEl.style.display = 'table';
+      if (quotes.length === 0) {
+        tableEl.insertAdjacentHTML('beforeend', '<tr><td colspan="6" style="text-align:center; color:var(--text-mute);">아직 접수된 견적문의가 없습니다.</td></tr>');
+        return;
+      }
+      quotes.forEach(q => {
+        const date = q.createdAt && q.createdAt.toDate ? q.createdAt.toDate().toLocaleDateString('ko-KR') : '-';
+        const itemsText = (q.items || []).map(i => `${i.name} x${i.qty}`).join(', ');
+        const statusClass = q.status === '회신완료' ? 'status-done' : 'status-pending';
+        tableEl.insertAdjacentHTML('beforeend', `
+          <tr>
+            <td>${date}</td>
+            <td>${(q.customer && (q.customer.companyName || '비회원')) || '비회원'}</td>
+            <td>${(q.customer && q.customer.contact) || '-'}</td>
+            <td>${itemsText || '-'}</td>
+            <td>${(q.customer && q.customer.message) || '-'}</td>
+            <td><span class="status-pill ${statusClass}">${q.status || '답변대기'}</span></td>
+          </tr>
+        `);
+      });
+    } catch (err) {
+      loadingEl.textContent = '불러오기 실패: ' + (err.message || err);
+    }
+  }
+
+  let ordersLoaded = false;
+  async function loadOrders() {
+    if (ordersLoaded) return;
+    const { paporiGetOrders } = await import('./papori-firebase.js');
+    const loadingEl = document.getElementById('orders-loading');
+    const tableEl = document.getElementById('orders-table');
+    try {
+      const orders = await paporiGetOrders();
+      ordersLoaded = true;
+      loadingEl.style.display = 'none';
+      tableEl.style.display = 'table';
+      if (orders.length === 0) {
+        tableEl.insertAdjacentHTML('beforeend', '<tr><td colspan="6" style="text-align:center; color:var(--text-mute);">아직 접수된 주문이 없습니다.</td></tr>');
+        return;
+      }
+      orders.forEach(o => {
+        const date = o.createdAt && o.createdAt.toDate ? o.createdAt.toDate().toLocaleDateString('ko-KR') : '-';
+        const itemsText = (o.items || []).map(i => `${i.name} x${i.qty}`).join(', ');
+        const statusClass = o.status === '입금대기' ? 'status-pending' : (o.status === '배송완료' ? 'status-done' : 'status-wait');
+        tableEl.insertAdjacentHTML('beforeend', `
+          <tr>
+            <td>${date}</td>
+            <td>${(o.customer && o.customer.name) || '-'}</td>
+            <td>${itemsText || '-'}</td>
+            <td>${o.payMethod || '-'}</td>
+            <td>${o.totalAmount ? o.totalAmount.toLocaleString() + '원' : '-'}</td>
+            <td><span class="status-pill ${statusClass}">${o.status || '-'}</span></td>
+          </tr>
+        `);
+      });
+    } catch (err) {
+      loadingEl.textContent = '불러오기 실패: ' + (err.message || err);
+    }
+  }
+
+  // 첫 화면(주문 관리)이 기본으로 열려있으므로 바로 로딩
+  loadOrders();
 </script>
 
 </body>

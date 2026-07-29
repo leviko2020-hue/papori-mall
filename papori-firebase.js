@@ -6,7 +6,8 @@ import {
   onAuthStateChanged, signOut
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 import {
-  getFirestore, collection, addDoc, serverTimestamp, doc, setDoc
+  getFirestore, collection, addDoc, serverTimestamp, doc, setDoc,
+  getDocs, query, orderBy
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const app = initializeApp(firebaseConfig);
@@ -53,4 +54,31 @@ export async function paporiSubmitQuote({ items, customer }) {
     createdAt: serverTimestamp()
   });
   return ref.id;
+}
+
+// ---- 관리자: 견적문의 목록 조회 ----
+export async function paporiGetQuotes() {
+  const snap = await getDocs(query(collection(db, "quoteRequests"), orderBy("createdAt", "desc")));
+  return snap.docs.map(d => ({ id: d.id, ...d.data() }));
+}
+
+// ---- 주문 저장 ----
+// items: [{ name, price, qty }], customer: {...}, payMethod, taxInvoice(bool)
+export async function paporiSubmitOrder({ items, customer, payMethod, taxInvoice, totalAmount }) {
+  const ref = await addDoc(collection(db, "orders"), {
+    items,
+    customer,
+    payMethod,
+    taxInvoice: !!taxInvoice,
+    totalAmount,
+    status: payMethod === "무통장입금" ? "입금대기" : "결제완료",
+    createdAt: serverTimestamp()
+  });
+  return ref.id;
+}
+
+// ---- 관리자: 주문 목록 조회 ----
+export async function paporiGetOrders() {
+  const snap = await getDocs(query(collection(db, "orders"), orderBy("createdAt", "desc")));
+  return snap.docs.map(d => ({ id: d.id, ...d.data() }));
 }
