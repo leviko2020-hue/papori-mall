@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<title>HIKMICRO M11 — PAPORI</title>
+<title>HIKMICRO M11 전문가용 열화상카메라 — PAPORI</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="style.css">
 </head>
@@ -32,22 +32,23 @@
 
   <div class="detail-wrap">
     <div class="detail-gallery">
-      <div class="main-img" style="background-image:url('https://hikkorea.co.kr/images/product_images/010105/100009_L.jpg');"></div>
+      <div class="main-img" id="mainImg" style="background-image:url('images/products/m11_main.jpg');"></div>
       <div class="gallery-thumbs">
-        <div class="thumb-img" style="background-image:url('https://hikkorea.co.kr/images/product_images/010105/100009_A1.jpg');"></div>
-        <div class="thumb-img" style="background-image:url('https://hikkorea.co.kr/images/product_images/010105/100009_A2.jpg');"></div>
+        <div class="thumb-img active" data-src="images/products/m11_main.jpg" style="background-image:url('images/products/m11_main.jpg');"></div>
+        <div class="thumb-img" data-src="images/products/m11_main2.jpg" style="background-image:url('images/products/m11_main2.jpg');"></div>
+        <div class="thumb-img" data-src="images/products/m11_main3.jpg" style="background-image:url('images/products/m11_main3.jpg');"></div>
       </div>
     </div>
 
     <div class="detail-info">
       <div class="brand-line">HIKMICRO</div>
-      <h1>HIKMICRO M11</h1>
-      <div class="model">모델명 M11 · IR 192×144(27,648 화소) · 온도범위 -20℃~+650℃</div>
+      <h1>HIKMICRO M11 전문가용 열화상카메라</h1>
+      <div class="model">모델명 M11 · IR 192×144(27,648 화소) · 온도범위 -20℃~+550℃</div>
 
       <div class="trust-badges">
         <span class="trust-badge">하이크마이크로 코리아 정식 총판</span>
         <span class="trust-badge">A/S 3년</span>
-        <span class="trust-badge">산업용</span>
+        <span class="trust-badge">M 시리즈 입문형</span>
       </div>
 
       <div class="price-box">
@@ -73,7 +74,7 @@
       <div class="trust-strip">
         <div class="item"><b>배송</b>주문 후 2~3일 이내 (배송비 별도)</div>
         <div class="item"><b>교환/반품</b>미개봉 7일 이내 가능</div>
-        <div class="item"><b>A/S</b>제조사 정품 보증 3년</div>
+        <div class="item"><b>A/S</b>제조사 정품 보증 3년, 한국 A/S센터 상주</div>
         <div class="item"><b>세금계산서</b>발행 가능 (기업/관공서)</div>
       </div>
     </div>
@@ -86,44 +87,80 @@
     <div class="tab" onclick="showTab('qna')">Q&amp;A</div>
   </div>
 
-    <div class="tab-panel" id="panel-info">
+  <div class="tab-panel" id="panel-info">
+
     <div class="detail-section">
       <h3>제품 소개</h3>
-      <p>HIKMICRO M11은 192×144의 컴팩트한 IR 해상도와 -20℃~+650℃의 넓은 온도 측정범위를 갖춘 산업용 열화상카메라로, 배전반·수배전반 등 기본적인 전력설비 열화상 점검에 적합합니다.</p>
-      <ul class="package-list">
-        <li>시야각 18.8° × 14.1°</li>
-        <li>이미지 프레임 25Hz</li>
-        <li>감도(NETD) ≤40mK</li>
-        <li>디스플레이 3.5인치 LCD 터치스크린</li>
-        <li>A/S 기간 3년</li>
-      </ul>
-    </div>
-    <div class="detail-section">
-      <h3>제품 사진</h3>
-      <div class="gallery-thumbs" style="margin-top:0;">
-        <div class="thumb-img" style="background-image:url('https://hikkorea.co.kr/images/product_images/010105/100009_A6.jpg');"></div>
-        <div class="thumb-img" style="background-image:url('https://hikkorea.co.kr/images/product_images/010105/100009_A7.jpg');"></div>
-        <div class="thumb-img" style="background-image:url('https://hikkorea.co.kr/images/product_images/010105/100009_A8.jpg');"></div>
+      <p>HIKMICRO M11은 192×144(27,648 화소)의 컴팩트한 IR 해상도와 -20℃~+550℃의 넓은 온도 측정범위를 갖춘 M 시리즈 입문형 열화상카메라로, 배전반·수배전반 등 기본적인 전력설비 열화상 점검에 적합합니다.</p>
+
+      <div class="feature-grid">
+        <div class="feature-block">
+          <div class="feature-icon">🌡️</div>
+          <h4>192 × 144 IR 해상도</h4>
+          <p>SuperIR 이미지 향상 기술로 열화상 이미지를 4배 업스케일링하여 정교한 실시간 분석을 제공합니다.</p>
+        </div>
+        <div class="feature-block">
+          <div class="feature-icon">📷</div>
+          <h4>8MP 실화상 해상도</h4>
+          <p>3,264 × 2,448 고화질 실화상 카메라로 열화상과 실제 이미지를 함께 기록합니다.</p>
+        </div>
+        <div class="feature-block">
+          <div class="feature-icon">🎯</div>
+          <h4>40mK(0.04℃) 열민감도</h4>
+          <p>기본적인 전력설비 점검에 충분한 열민감도(NETD)로 온도 이상을 빠르게 파악합니다.</p>
+        </div>
       </div>
     </div>
+
+    <div class="detail-section">
+      <h3>SuperIR을 통한 향상된 이미지 품질</h3>
+      <p>SuperIR 이미지 향상기술을 기반으로 열화상 이미지를 4배 업스케일링하여 정교한 실시간 분석을 제공합니다.</p>
+      <img class="full-img" src="images/products/m11_detail_features.jpg" alt="M11 SuperIR 이미지 품질 소개">
+    </div>
+
+    <div class="detail-section">
+      <h3>구성품 및 제품 사양</h3>
+      <p>M11 본체, USB 케이블, 스트랩, 빠른 시작 가이드 및 인증서, 하드케이스, 충전 거치대 세트, 교체식 배터리 2개, 32GB SD카드가 기본 제공됩니다. (파우치, 매크로렌즈는 추가 옵션)</p>
+      <ul class="package-list">
+        <li>M11 본체 · USB 케이블 · 스트랩</li>
+        <li>빠른 시작 가이드 &amp; 인증서</li>
+        <li>하드케이스 · 충전 거치대 세트</li>
+        <li>교체식 배터리 2개 · 32GB SD카드</li>
+        <li>추가 옵션: 파우치 / 매크로렌즈</li>
+        <li>A/S 3년, 한국 A/S센터 상주</li>
+      </ul>
+      <img class="full-img" src="images/products/m11_detail_package_spec.jpg" alt="M11 구성품 및 상세 사양표" style="margin-top:16px;">
+    </div>
+
+    <div class="detail-section">
+      <h3>HIKMICRO Viewer / Analyzer 소프트웨어</h3>
+      <p>HIKMICRO Viewer 앱으로 현장에서 실시간 이미지 확인, 스냅샷 캡처 및 즉시 보고서 생성이 가능하며, PC용 HIKMICRO Analyzer 프로그램을 통해 정밀 분석 및 실시간 데이터 확인이 가능합니다.</p>
+      <img class="full-img" src="images/products/m11_detail_software.jpg" alt="HIKMICRO Viewer 및 Analyzer 소프트웨어">
+    </div>
+
   </div>
+
   <div class="tab-panel" id="panel-spec" style="display:none;">
     <div class="detail-section">
       <h3>제원표</h3>
       <table class="spec-table">
         <tr><th>모델명</th><td>M11</td></tr>
         <tr><th>IR 해상도</th><td>192 × 144 (27,648 화소)</td></tr>
-        <tr><th>온도범위</th><td>-20℃ ~ +650℃</td></tr>
+        <tr><th>실화상 해상도</th><td>3,264 × 2,448 (8MP)</td></tr>
+        <tr><th>온도범위</th><td>-20℃ ~ +550℃</td></tr>
         <tr><th>정확도</th><td>±2℃ 또는 ±2%</td></tr>
         <tr><th>시야각</th><td>18.8° × 14.1°</td></tr>
         <tr><th>프레임레이트</th><td>25Hz</td></tr>
-        <tr><th>감도(NETD)</th><td>≤40mK</td></tr>
+        <tr><th>열민감도(NETD)</th><td>0.04℃ (&lt;40mK)</td></tr>
         <tr><th>공간분해능(IFOV)</th><td>1.74 mrad</td></tr>
         <tr><th>초점방식</th><td>수동초점 (최소 10cm)</td></tr>
         <tr><th>배터리 사용시간</th><td>6시간</td></tr>
+        <tr><th>배터리</th><td>충전식 리튬이온 배터리(탈착 가능)</td></tr>
+        <tr><th>저장매체</th><td>32GB 마이크로 SD카드 제공</td></tr>
+        <tr><th>온도분석 프로그램</th><td>HIKMICRO Analyzer / 직무고시 양식보고서 S/W</td></tr>
         <tr><th>디스플레이</th><td>3.5인치 LCD 터치스크린</td></tr>
         <tr><th>낙하시험/방수등급</th><td>2m / IP54</td></tr>
-        <tr><th>A/S 기간</th><td>3년</td></tr>
+        <tr><th>A/S</th><td>한국 A/S센터 상주 (무상기간 3년)</td></tr>
       </table>
     </div>
   </div>
@@ -142,7 +179,7 @@
         <div class="body"><div class="brand">HIKMICRO</div><h4>HIKMICRO M11W</h4><div class="price">1,400,000<span class="unit">원</span></div></div>
       </a>
       <a href="product-detail-pocket2.html" class="product-card">
-        <div class="thumb" style="background-image:url('https://hikkorea.co.kr/images/product_images/0101/100004_L.jpg');"></div>
+        <div class="thumb" style="background-image:url('images/products/pocket2_main.jpg');"></div>
         <div class="body"><div class="brand">HIKMICRO</div><h4>HIKMICRO POCKET2</h4><div class="price">770,000<span class="unit">원</span></div></div>
       </a>
     </div>
@@ -167,6 +204,13 @@
 <a href="quote-request.html" class="floating-quote">빠른 견적문의</a>
 
 <script>
+  document.querySelectorAll('.gallery-thumbs .thumb-img').forEach(thumb => {
+    thumb.onclick = () => {
+      document.getElementById('mainImg').style.backgroundImage = `url('${thumb.dataset.src}')`;
+      document.querySelectorAll('.gallery-thumbs .thumb-img').forEach(t => t.classList.remove('active'));
+      thumb.classList.add('active');
+    };
+  });
   document.querySelectorAll('.qty-selector button').forEach(btn => {
     btn.onclick = () => {
       const input = btn.parentElement.querySelector('input');
