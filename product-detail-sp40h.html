@@ -32,10 +32,11 @@
 
   <div class="detail-wrap">
     <div class="detail-gallery">
-      <div class="main-img" style="background-image:url('images/products/sp40h_main.jpg');"></div>
+      <div class="main-img" id="mainImg" style="background-image:url('images/products/sp40h_main.jpg');"></div>
       <div class="gallery-thumbs">
-        <div class="thumb-img" style="background-image:url('images/products/sp40h_main2.jpg');"></div>
-        <div class="thumb-img" style="background-image:url('images/products/sp40h_main3.jpg');"></div>
+        <div class="thumb-img active" data-src="images/products/sp40h_main.jpg" style="background-image:url('images/products/sp40h_main.jpg');"></div>
+        <div class="thumb-img" data-src="images/products/sp40h_main2.jpg" style="background-image:url('images/products/sp40h_main2.jpg');"></div>
+        <div class="thumb-img" data-src="images/products/sp40h_main3.jpg" style="background-image:url('images/products/sp40h_main3.jpg');"></div>
       </div>
     </div>
 
@@ -227,6 +228,13 @@
 <a href="quote-request.html" class="floating-quote">빠른 견적문의</a>
 
 <script>
+  document.querySelectorAll('.gallery-thumbs .thumb-img').forEach(thumb => {
+    thumb.onclick = () => {
+      document.getElementById('mainImg').style.backgroundImage = `url('${thumb.dataset.src}')`;
+      document.querySelectorAll('.gallery-thumbs .thumb-img').forEach(t => t.classList.remove('active'));
+      thumb.classList.add('active');
+    };
+  });
   function showTab(name) {
     ['info','spec','review','qna'].forEach(t => {
       const el = document.getElementById('panel-' + t);
