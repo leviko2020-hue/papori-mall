@@ -325,10 +325,17 @@ img { max-width: 100%; display: block; }
   cursor: pointer;
 }
 .detail-section .full-img {
-  width: 100%;
+  width: 60%;
+  max-width: 700px;
+  margin: 0 auto;
   border-radius: 10px;
   border: 1px solid var(--border);
   display: block;
+}
+@media (max-width: 768px) {
+  .detail-section .full-img {
+    width: 100%;
+  }
 }
 .detail-gallery .img-stack {
   display: flex;
