@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>회원가입 — PAPORI</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container header-top">
+    <a href="index.html" class="logo">PAPOR<span>I</span></a>
+    <nav class="gnb">
+      <a href="category-thermal.html">열화상카메라</a>
+      <a href="category-kepco.html">한전 기자재/계측기</a>
+      <a href="#">고객센터</a>
+    </nav>
+    <div class="header-actions">
+      <div class="search-box"><input type="text" placeholder="제품명, 모델명 검색"></div>
+      <a href="login.html">로그인</a>
+      <a href="cart.html">장바구니</a>
+      <a href="quote-request.html" class="btn btn-primary btn-sm">견적요청</a>
+    </div>
+  </div>
+</header>
+
+<div class="auth-wrap">
+  <h1>회원가입</h1>
+  <p class="sub">회원가입 즉시 이용 가능합니다. 기업회원도 별도 승인 절차 없이 바로 이용하실 수 있어요.</p>
+
+  <div class="member-type-toggle">
+    <button type="button" id="btn-personal" class="active">일반회원</button>
+    <button type="button" id="btn-corp">기업회원</button>
+  </div>
+
+  <form id="signup-form">
+    <div class="form-group">
+      <label>이름 / 담당자명</label>
+      <input type="text" id="su-name" placeholder="홍길동">
+    </div>
+    <div class="form-group" id="corp-name-field" style="display:none;">
+      <label>회사명</label>
+      <input type="text" id="su-company" placeholder="예: 한전 협력사명">
+    </div>
+    <div class="form-group">
+      <label>이메일</label>
+      <input type="email" id="su-email" placeholder="example@company.com">
+    </div>
+    <div class="form-group">
+      <label>휴대폰 번호</label>
+      <input type="tel" id="su-phone" placeholder="010-0000-0000">
+    </div>
+    <div class="form-group">
+      <label>비밀번호</label>
+      <input type="password" id="su-password" placeholder="8자 이상 입력">
+    </div>
+    <button type="button" class="btn btn-primary btn-block" id="signup-submit">가입 완료 (승인 절차 없음)</button>
+    <p id="signup-msg" style="font-size:13px; color:var(--text-mute); margin-top:10px; text-align:center;"></p>
+  </form>
+
+  <div class="auth-links">
+    이미 계정이 있으신가요? <a href="login.html">로그인</a>
+  </div>
+  <a href="quote-request.html" class="guest-order-link">회원가입 없이 비회원으로 견적요청 하기 →</a>
+</div>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-links">
+      <a href="#">이용약관</a>
+      <a href="#">개인정보처리방침</a>
+      <a href="#">제품 자료실</a>
+    </div>
+    <div class="footer-info">
+      <div>상호명 SEGlobal · 대표전화 042-349-0703 · 고객센터 010-8699-8868</div>
+      <div>사업자등록번호 146-88-01550 · 통신판매업신고 제2024-대전유성-0000호(확인 후 교체 예정)</div>
+      <div>© PAPORI. All rights reserved.</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const btnP = document.getElementById('btn-personal');
+  const btnC = document.getElementById('btn-corp');
+  const corpField = document.getElementById('corp-name-field');
+  let memberType = 'personal';
+  window.memberType = memberType;
+  btnP.onclick = () => { btnP.classList.add('active'); btnC.classList.remove('active'); corpField.style.display = 'none'; window.memberType = 'personal'; };
+  btnC.onclick = () => { btnC.classList.add('active'); btnP.classList.remove('active'); corpField.style.display = 'block'; window.memberType = 'corp'; };
+</script>
+
+<script type="module">
+  import { paporiSignUp } from "./papori-firebase.js";
+  const msg = document.getElementById('signup-msg');
+  document.getElementById('signup-submit').addEventListener('click', async () => {
+    const email = document.getElementById('su-email').value.trim();
+    const password = document.getElementById('su-password').value;
+    const name = document.getElementById('su-name').value.trim();
+    const companyName = document.getElementById('su-company').value.trim();
+    if (!email || !password || !name) {
+      msg.textContent = '이름, 이메일, 비밀번호를 입력해주세요.';
+      return;
+    }
+    msg.textContent = '가입 처리 중...';
+    try {
+      await paporiSignUp({ email, password, name, memberType: window.memberType, companyName });
+      msg.textContent = '가입이 완료되었습니다. 로그인 페이지로 이동합니다.';
+      setTimeout(() => location.href = 'login.html', 1200);
+    } catch (err) {
+      msg.textContent = '가입 실패: ' + (err.message || err);
+    }
+  });
+</script>
+
+</body>
+</html>
