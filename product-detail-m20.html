@@ -32,10 +32,11 @@
 
   <div class="detail-wrap">
     <div class="detail-gallery">
-      <div class="main-img" style="background-image:url('https://hikkorea.co.kr/images/product_images/0101/100011_L.jpg');"></div>
+      <div class="main-img" id="mainImg" style="background-image:url('https://hikkorea.co.kr/images/product_images/0101/100011_L.jpg');"></div>
       <div class="gallery-thumbs">
-        <div class="thumb-img" style="background-image:url('https://hikkorea.co.kr/images/product_images/0101/100011_A1.jpg');"></div>
-        <div class="thumb-img" style="background-image:url('https://hikkorea.co.kr/images/product_images/0101/100011_A2.jpg');"></div>
+        <div class="thumb-img active" data-src="https://hikkorea.co.kr/images/product_images/0101/100011_L.jpg" style="background-image:url('https://hikkorea.co.kr/images/product_images/0101/100011_L.jpg');"></div>
+        <div class="thumb-img" data-src="https://hikkorea.co.kr/images/product_images/0101/100011_A1.jpg" style="background-image:url('https://hikkorea.co.kr/images/product_images/0101/100011_A1.jpg');"></div>
+        <div class="thumb-img" data-src="https://hikkorea.co.kr/images/product_images/0101/100011_A2.jpg" style="background-image:url('https://hikkorea.co.kr/images/product_images/0101/100011_A2.jpg');"></div>
       </div>
     </div>
 
@@ -89,7 +90,26 @@
     <div class="detail-section">
       <h3>제품 소개</h3>
       <p>HIKMICRO M20는 256×192의 향상된 IR 해상도와 -20℃~+650℃의 온도 측정범위로, M11 대비 한 단계 높은 정밀도가 필요한 전력설비·기계설비 진단에 적합한 산업용 열화상카메라입니다.</p>
-      <ul class="package-list">
+
+      <div class="feature-grid">
+        <div class="feature-block">
+          <div class="feature-icon">🌡️</div>
+          <h4>256 × 192 IR 해상도</h4>
+          <p>49,152 화소의 고해상도 열화상 센서로 M11보다 더 세밀하게 이상 발열 지점을 구분합니다.</p>
+        </div>
+        <div class="feature-block">
+          <div class="feature-icon">📷</div>
+          <h4>8MP 실화상 해상도</h4>
+          <p>3,264 × 2,448 고화질 실화상 카메라로 열화상과 실제 이미지를 함께 기록합니다.</p>
+        </div>
+        <div class="feature-block">
+          <div class="feature-icon">🎯</div>
+          <h4>40mK(0.04℃) 열민감도</h4>
+          <p>미세한 온도차까지 감지하는 높은 열민감도(NETD)로 초기 결함을 놓치지 않습니다.</p>
+        </div>
+      </div>
+
+      <ul class="package-list" style="margin-top:16px;">
         <li>시야각 25° × 18.8°</li>
         <li>이미지 프레임 25Hz</li>
         <li>감도(NETD) ≤40mK</li>
@@ -100,9 +120,9 @@
     <div class="detail-section">
       <h3>제품 사진</h3>
       <div class="gallery-thumbs" style="margin-top:0;">
-        <div class="thumb-img" style="background-image:url('https://hikkorea.co.kr/images/product_images/0101/100011_A6.jpg');"></div>
-        <div class="thumb-img" style="background-image:url('https://hikkorea.co.kr/images/product_images/0101/100011_A7.jpg');"></div>
-        <div class="thumb-img" style="background-image:url('https://hikkorea.co.kr/images/product_images/0101/100011_A8.jpg');"></div>
+        <div class="thumb-img" data-src="https://hikkorea.co.kr/images/product_images/0101/100011_A6.jpg" style="background-image:url('https://hikkorea.co.kr/images/product_images/0101/100011_A6.jpg');"></div>
+        <div class="thumb-img" data-src="https://hikkorea.co.kr/images/product_images/0101/100011_A7.jpg" style="background-image:url('https://hikkorea.co.kr/images/product_images/0101/100011_A7.jpg');"></div>
+        <div class="thumb-img" data-src="https://hikkorea.co.kr/images/product_images/0101/100011_A8.jpg" style="background-image:url('https://hikkorea.co.kr/images/product_images/0101/100011_A8.jpg');"></div>
       </div>
     </div>
 
@@ -122,13 +142,9 @@
     <div class="detail-section">
       <h3>사용자 매뉴얼</h3>
       <p>HIKMICRO M 시리즈(M20 포함) 국문 사용자 매뉴얼을 다운로드하실 수 있습니다.</p>
-      <div class="manual-download-banner" style="display:flex; align-items:center; justify-content:space-between; gap:16px; padding:20px 24px; background:#f6f6f8; border-radius:8px; max-width:700px; margin-top:10px;">
-        <span style="font-weight:600;">HIKMICRO M시리즈 한글 사용자 매뉴얼 (PDF)</span>
-        <a href="hikmicro-m-series-manual.pdf" download
-           style="padding:10px 20px; background:var(--accent-color, #7c3aed); color:#fff; border-radius:6px; text-decoration:none; font-weight:600; white-space:nowrap;">
-          매뉴얼 다운로드
-        </a>
-      </div>
+      <a href="hikmicro-m-series-manual.pdf" download style="display:block; max-width:640px; margin-top:10px;">
+        <img src="images/manual-download-banner.svg" alt="M 시리즈 한글 매뉴얼 다운로드" style="width:100%; border-radius:12px;">
+      </a>
     </div>
   </div>
   <div class="tab-panel" id="panel-spec" style="display:none;">
@@ -191,6 +207,14 @@
 <a href="quote-request.html" class="floating-quote">빠른 견적문의</a>
 
 <script>
+  document.querySelectorAll('.gallery-thumbs .thumb-img[data-src]').forEach(thumb => {
+    thumb.onclick = () => {
+      const mainImg = document.getElementById('mainImg');
+      if (mainImg) mainImg.style.backgroundImage = `url('${thumb.dataset.src}')`;
+      document.querySelectorAll('.gallery-thumbs .thumb-img').forEach(t => t.classList.remove('active'));
+      thumb.classList.add('active');
+    };
+  });
   document.querySelectorAll('.qty-selector button').forEach(btn => {
     btn.onclick = () => {
       const input = btn.parentElement.querySelector('input');
