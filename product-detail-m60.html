@@ -32,7 +32,10 @@
 
   <div class="detail-wrap">
     <div class="detail-gallery">
-      <div class="main-img" style="background-image:url('images/products/m60_main_v2.jpg');"></div>
+      <div class="main-img" id="mainImg" style="background-image:url('images/products/m60_main_v2.jpg');"></div>
+      <div class="gallery-thumbs">
+        <div class="thumb-img active" data-src="images/products/m60_main_v2.jpg" style="background-image:url('images/products/m60_main_v2.jpg');"></div>
+      </div>
     </div>
 
     <div class="detail-info">
@@ -135,8 +138,16 @@
     <div class="detail-section">
       <h3>사용자 매뉴얼</h3>
       <p>HIKMICRO M 시리즈(M60 포함) 국문 사용자 매뉴얼을 다운로드하실 수 있습니다.</p>
-      <a href="hikmicro-m-series-manual.pdf" target="_blank" style="display:block; margin-top:10px;">
-        <img src="images/products/m60_manual_banner.jpg" alt="M 시리즈 한글 매뉴얼 다운로드" style="max-width:320px; border-radius:8px; border:1px solid var(--border);">
+      <a href="hikmicro-m-series-manual.pdf" download style="display:flex; align-items:center; gap:18px; max-width:640px; margin:10px auto 0; padding:22px 26px; border-radius:16px; background:linear-gradient(135deg, #8b6ff5, #5b3fd9); text-decoration:none; box-sizing:border-box; box-shadow:0 8px 20px rgba(91,63,217,0.28);">
+        <div style="position:relative; flex-shrink:0; width:50px; height:50px;">
+          <div style="width:50px; height:50px; border-radius:12px; background:rgba(255,255,255,0.2); display:flex; align-items:center; justify-content:center; font-size:24px;">📄</div>
+          <div style="position:absolute; right:-6px; bottom:-6px; width:22px; height:22px; border-radius:50%; background:#ffffff; display:flex; align-items:center; justify-content:center; font-size:12px; color:#5b3fd9; box-shadow:0 2px 4px rgba(0,0,0,0.2);">⬇</div>
+        </div>
+        <div style="flex:1; min-width:0;">
+          <div style="color:#ffffff; font-size:17px; font-weight:700; letter-spacing:-0.2px;">HIKMICRO M시리즈 한글 사용자 매뉴얼</div>
+          <div style="color:#e3d9fb; font-size:13px; margin-top:3px;">PDF 파일 · 클릭하여 바로 다운로드</div>
+        </div>
+        <div style="flex-shrink:0; background:#ffffff; color:#5b3fd9; font-size:13px; font-weight:700; padding:9px 18px; border-radius:20px; box-shadow:0 2px 6px rgba(0,0,0,0.12);">다운로드</div>
       </a>
     </div>
 
@@ -182,7 +193,7 @@
         <div class="body"><div class="brand">HIKMICRO</div><h4>HIKMICRO M11W</h4><div class="price">1,400,000<span class="unit">원</span></div></div>
       </a>
       <a href="product-detail-m31.html" class="product-card">
-        <div class="thumb" style="background-image:url('images/products/m31_main.jpg');"></div>
+        <div class="thumb" style="background-image:url('images/products/m31_main1.jpg');"></div>
         <div class="body"><div class="brand">HIKMICRO</div><h4>HIKMICRO M31</h4><div class="price">3,660,000<span class="unit">원</span></div></div>
       </a>
       <a href="product-detail-pocket2.html" class="product-card">
@@ -211,6 +222,13 @@
 <a href="quote-request.html" class="floating-quote">빠른 견적문의</a>
 
 <script>
+  document.querySelectorAll('.gallery-thumbs .thumb-img').forEach(thumb => {
+    thumb.onclick = () => {
+      document.getElementById('mainImg').style.backgroundImage = `url('${thumb.dataset.src}')`;
+      document.querySelectorAll('.gallery-thumbs .thumb-img').forEach(t => t.classList.remove('active'));
+      thumb.classList.add('active');
+    };
+  });
   document.querySelectorAll('.qty-selector button').forEach(btn => {
     btn.onclick = () => {
       const input = btn.parentElement.querySelector('input');
