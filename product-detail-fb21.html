@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
@@ -32,21 +32,21 @@
 
   <div class="detail-wrap">
     <div class="detail-gallery">
-      <div class="main-img" style="background-image:url('https://hikkorea.co.kr/images/product_images/0103/100027_L.jpg');"></div>
+      <div class="main-img" id="mainImg" style="background-image:url('images/products/fb21_main1.jpg');"></div>
       <div class="gallery-thumbs">
-        <div class="thumb-img" style="background-image:url('https://hikkorea.co.kr/images/product_images/0103/100027_A1.jpg');"></div>
-        <div class="thumb-img" style="background-image:url('https://hikkorea.co.kr/images/product_images/0103/100027_A2.jpg');"></div>
+        <div class="thumb-img active" data-src="images/products/fb21_main1.jpg" style="background-image:url('images/products/fb21_main1.jpg');"></div>
       </div>
     </div>
 
     <div class="detail-info">
       <div class="brand-line">HIKMICRO</div>
       <h1>HIKMICRO FB21</h1>
-      <div class="model">256×192 · IP54 · 온도범위 -20℃~+550℃</div>
+      <div class="model">모델명 FB21 · IR 256×192(49,152 화소) · 시야각 37.2°×50° · 온도범위 -20℃~+550℃</div>
 
       <div class="trust-badges">
         <span class="trust-badge">A/S 3년</span>
         <span class="trust-badge">소방용</span>
+        <span class="trust-badge">2m 낙하 · IP65</span>
       </div>
 
       <div class="price-box">
@@ -72,7 +72,7 @@
       <div class="trust-strip">
         <div class="item"><b>배송</b>주문 후 2~3일 이내 (배송비 별도)</div>
         <div class="item"><b>교환/반품</b>미개봉 7일 이내 가능</div>
-        <div class="item"><b>A/S</b>제조사 정품 보증 3년</div>
+        <div class="item"><b>A/S</b>제조사 정품 보증 3년, 한국 A/S센터 상주</div>
         <div class="item"><b>세금계산서</b>발행 가능 (기업/관공서)</div>
       </div>
     </div>
@@ -85,42 +85,104 @@
     <div class="tab" onclick="showTab('qna')">Q&amp;A</div>
   </div>
 
-    <div class="tab-panel" id="panel-info">
+  <div class="tab-panel" id="panel-info">
+
     <div class="detail-section">
       <h3>제품 소개</h3>
-      <p>HIKMICRO FB21은 소방 현장의 화점 탐색과 인명 구조를 위한 소방 전용 열화상카메라입니다.</p>
-      <ul class="package-list">
-        <li>실화상 해상도 2MP</li>
-        <li>시야각 37.2° × 50°</li>
-        <li>감도(NETD) <40mK</li>
-        <li>저장공간 16GB</li>
-        <li>디스플레이 3.2인치 320×240 LCD</li>
-        <li>방수방진 IP54</li>
-      </ul>
-    </div>
-    <div class="detail-section">
-      <h3>제품 사진</h3>
-      <div class="gallery-thumbs" style="margin-top:0;">
-        <div class="thumb-img" style="background-image:url('https://hikkorea.co.kr/images/product_images/0103/100027_A6.jpg');"></div>
-        <div class="thumb-img" style="background-image:url('https://hikkorea.co.kr/images/product_images/0103/100027_A7.jpg');"></div>
-        <div class="thumb-img" style="background-image:url('https://hikkorea.co.kr/images/product_images/0103/100027_A8.jpg');"></div>
+      <p>HIKMICRO FB21은 화재 진압 및 인명구조 현장에 최적화된 소방용 열화상카메라입니다. 8가지 색상 팔레트로 화재 상황과 인명을 신속하게 식별할 수 있으며, 2m 낙하시험과 IP65 방진방수 등급으로 가혹한 현장 환경에서도 안정적으로 작동합니다.</p>
+
+      <div class="feature-grid">
+        <div class="feature-block">
+          <div class="feature-icon">🎨</div>
+          <h4>8가지 색상 팔레트</h4>
+          <p>Fire Detection, Rescue, Basic, Black&amp;White, Hot Area 등 상황별 팔레트로 화재와 인명을 빠르게 식별합니다.</p>
+        </div>
+        <div class="feature-block">
+          <div class="feature-icon">🚨</div>
+          <h4>컬러알람(Above Alarm)</h4>
+          <p>설정한 온도 이상 영역을 색상으로 강조 표시해 위험 구역을 즉시 파악할 수 있습니다.</p>
+        </div>
+        <div class="feature-block">
+          <div class="feature-icon">🛡️</div>
+          <h4>내구성 2m 낙하시험 · IP65</h4>
+          <p>가혹한 화재 현장에서도 안정적으로 사용할 수 있는 내구 설계를 갖췄습니다.</p>
+        </div>
       </div>
     </div>
+
+    <div class="detail-section">
+      <h3>8가지 색상 팔레트 · 화재현장 대응 어플리케이션</h3>
+      <p>배경 온도가 높은 장면이나 초기 화재 공격·구조 작업 등 상황에 맞는 8가지 색상 팔레트를 제공하며, 화재 현장/연기, 화재 구조, 건물 구조물 검사 등 다양한 소방 임무에 활용할 수 있습니다.</p>
+      <img class="full-img" src="images/products/fb21_detail_features.jpg" alt="FB21 8가지 색상 팔레트 및 화재현장 어플리케이션">
+    </div>
+
+    <div class="detail-section">
+      <h3>구성품 및 제품 사양</h3>
+      <p>FB21 열화상카메라(스트랩 포함), 전원 공급 장치, 국제용 플러그(US/EU/UK/AU/CN), USB 케이블, 교정 인증서, 빠른 시작 가이드가 기본 제공됩니다.</p>
+      <ul class="package-list">
+        <li>열화상카메라 (스트랩 포함)</li>
+        <li>전원 공급 장치 · 국제용 플러그(US/EU/UK/AU/CN)</li>
+        <li>USB 2.0 A to USB Type-C 케이블</li>
+        <li>교정 인증서</li>
+        <li>빠른 시작 가이드</li>
+        <li>A/S 3년, 한국 A/S센터 상주</li>
+      </ul>
+      <img class="full-img" src="images/products/fb21_detail_package_spec.jpg" alt="FB21 구성품" style="margin-top:16px;">
+    </div>
+
+    <div class="detail-section">
+      <h3>사용자 매뉴얼</h3>
+      <p>HIKMICRO FB21 사용자 매뉴얼(한글)을 다운로드하실 수 있습니다.</p>
+      <a href="fb-series-manual-kr.pdf" download style="display:flex; align-items:center; gap:18px; max-width:640px; margin:10px auto 0; padding:22px 26px; border-radius:16px; background:linear-gradient(135deg, #8b6ff5, #5b3fd9); text-decoration:none; box-sizing:border-box; box-shadow:0 8px 20px rgba(91,63,217,0.28);">
+        <div style="position:relative; flex-shrink:0; width:50px; height:50px;">
+          <div style="width:50px; height:50px; border-radius:12px; background:rgba(255,255,255,0.2); display:flex; align-items:center; justify-content:center; font-size:24px;">📄</div>
+          <div style="position:absolute; right:-6px; bottom:-6px; width:22px; height:22px; border-radius:50%; background:#ffffff; display:flex; align-items:center; justify-content:center; font-size:12px; color:#5b3fd9; box-shadow:0 2px 4px rgba(0,0,0,0.2);">⬇</div>
+        </div>
+        <div style="flex:1; min-width:0;">
+          <div style="color:#ffffff; font-size:17px; font-weight:700; letter-spacing:-0.2px;">HIKMICRO FB 시리즈 사용자 매뉴얼 (한글)</div>
+          <div style="color:#e3d9fb; font-size:13px; margin-top:3px;">PDF 파일 · 클릭하여 바로 다운로드</div>
+        </div>
+        <div style="flex-shrink:0; background:#ffffff; color:#5b3fd9; font-size:13px; font-weight:700; padding:9px 18px; border-radius:20px; box-shadow:0 2px 6px rgba(0,0,0,0.12);">다운로드</div>
+      </a>
+    </div>
+
   </div>
+
   <div class="tab-panel" id="panel-spec" style="display:none;">
     <div class="detail-section">
       <h3>제원표</h3>
       <table class="spec-table">
         <tr><th>모델명</th><td>FB21</td></tr>
-        <tr><th>IR 해상도</th><td>256 × 192</td></tr>
-        <tr><th>시야각</th><td>37.2° × 50°</td></tr>
-        <tr><th>실화상 카메라</th><td>2MP</td></tr>
-        <tr><th>감도(NETD)</th><td><40mK</td></tr>
-        <tr><th>온도범위</th><td>-20℃ ~ +550℃</td></tr>
+        <tr><th>열화상해상도</th><td>256 × 192 (49,152 화소)</td></tr>
+        <tr><th>Super IR</th><td>미지원</td></tr>
+        <tr><th>시야각(FOV)</th><td>37.2° × 50°</td></tr>
+        <tr><th>온도측정범위</th><td>-20℃ ~ +550℃</td></tr>
+        <tr><th>이미지 프레임</th><td>25Hz</td></tr>
+        <tr><th>열민감도(NETD)</th><td>&lt;40mK (0.04℃)</td></tr>
+        <tr><th>공간분해능</th><td>3.3 mrad</td></tr>
+        <tr><th>최소 초점거리</th><td>30cm</td></tr>
+        <tr><th>배터리 사용시간</th><td>6시간</td></tr>
+        <tr><th>배터리</th><td>충전식 리튬 배터리 (탈착 가능)</td></tr>
+        <tr><th>초점 방식</th><td>포커스 프리</td></tr>
+        <tr><th>디스플레이 크기</th><td>3.2인치 LCD 디스플레이</td></tr>
+        <tr><th>측정도구</th><td>중앙 스팟 / 최고 온도 / 최저 온도</td></tr>
+        <tr><th>실화상 카메라</th><td>1,600 × 1,200 (2MP)</td></tr>
+        <tr><th>터치스크린</th><td>미지원</td></tr>
         <tr><th>정확도</th><td>±2℃ 또는 ±2%</td></tr>
-        <tr><th>저장공간</th><td>16GB</td></tr>
-        <tr><th>디스플레이</th><td>3.2인치 320×240 LCD</td></tr>
-        <tr><th>방수방진</th><td>IP54</td></tr>
+        <tr><th>LED조명</th><td>지원</td></tr>
+        <tr><th>WiFi기능</th><td>미지원</td></tr>
+        <tr><th>비디오 녹화(카메라)</th><td>미지원</td></tr>
+        <tr><th>디지털줌</th><td>미지원</td></tr>
+        <tr><th>자동 온도 범위</th><td>10℃~90℃:10분 / -10℃~115℃:2분</td></tr>
+        <tr><th>최고·최저 자동추적</th><td>미지원</td></tr>
+        <tr><th>레이저포인트</th><td>미지원</td></tr>
+        <tr><th>컬러알람</th><td>Above alarm</td></tr>
+        <tr><th>저장매체</th><td>내장 16GB 플래시 메모리</td></tr>
+        <tr><th>무게(배터리 포함)</th><td>380g</td></tr>
+        <tr><th>크기</th><td>196 × 117 × 59 mm</td></tr>
+        <tr><th>낙하시험/방수등급</th><td>2m / IP65</td></tr>
+        <tr><th>온도분석 프로그램</th><td>HIKMICRO Analyzer</td></tr>
+        <tr><th>A/S</th><td>한국 A/S센터 상주 (무상기간 3년)</td></tr>
       </table>
     </div>
   </div>
@@ -132,15 +194,15 @@
   </div>
 
   <div class="related">
-    <h2>이 카테고리의 다른 상품</h2>
+    <h2>소방용 열화상카메라 다른 상품</h2>
     <div class="product-grid" style="padding-top:0;">
-      <a href="product-detail-m11w.html" class="product-card">
-        <div class="thumb" style="background-image:url('images/products/m11w_main1.jpg');"></div>
-        <div class="body"><div class="brand">HIKMICRO</div><h4>HIKMICRO M11W</h4><div class="price">1,400,000<span class="unit">원</span></div></div>
+      <a href="product-detail-ft31.html" class="product-card">
+        <div class="thumb" style="background-image:url('images/products/ft31_main1.jpg');"></div>
+        <div class="body"><div class="brand">HIKMICRO</div><h4>HIKMICRO FT31</h4><div class="price">6,000,000<span class="unit">원</span></div></div>
       </a>
-      <a href="product-detail-pocket2.html" class="product-card">
-        <div class="thumb" style="background-image:url('https://hikkorea.co.kr/images/product_images/0101/100004_L.jpg');"></div>
-        <div class="body"><div class="brand">HIKMICRO</div><h4>HIKMICRO POCKET2</h4><div class="price">770,000<span class="unit">원</span></div></div>
+      <a href="product-detail-fp31.html" class="product-card">
+        <div class="thumb" style="background-image:url('images/products/fp31_main1.jpg');"></div>
+        <div class="body"><div class="brand">HIKMICRO</div><h4>HIKMICRO FP31</h4><div class="price">3,000,000<span class="unit">원</span></div></div>
       </a>
     </div>
   </div>
@@ -164,6 +226,13 @@
 <a href="quote-request.html" class="floating-quote">빠른 견적문의</a>
 
 <script>
+  document.querySelectorAll('.gallery-thumbs .thumb-img').forEach(thumb => {
+    thumb.onclick = () => {
+      document.getElementById('mainImg').style.backgroundImage = `url('${thumb.dataset.src}')`;
+      document.querySelectorAll('.gallery-thumbs .thumb-img').forEach(t => t.classList.remove('active'));
+      thumb.classList.add('active');
+    };
+  });
   document.querySelectorAll('.qty-selector button').forEach(btn => {
     btn.onclick = () => {
       const input = btn.parentElement.querySelector('input');
@@ -190,5 +259,3 @@
 
 </body>
 </html>
-
-
