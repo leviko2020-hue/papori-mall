@@ -961,3 +961,76 @@ img { max-width: 100%; display: block; }
   .app-gallery { grid-template-columns: repeat(2, 1fr); }
   .package-list { grid-template-columns: 1fr; }
 }
+
+/* ===== Homepage promo banner (falling brand/category words) ===== */
+.promo-banner {
+  margin: 56px 0 40px;
+  padding: 48px 24px 56px;
+  border-radius: 28px;
+  background: linear-gradient(135deg, #6C5CE7 0%, #8B7FE8 55%, #A79AF0 100%);
+  overflow: hidden;
+  position: relative;
+  text-align: center;
+  box-shadow: 0 20px 50px rgba(108, 92, 231, 0.28);
+}
+.promo-banner::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 15% 20%, rgba(255,255,255,0.16) 0, transparent 45%),
+    radial-gradient(circle at 85% 80%, rgba(255,255,255,0.12) 0, transparent 50%);
+  pointer-events: none;
+}
+.promo-caption {
+  position: relative;
+  margin: 0 0 28px;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  color: rgba(255,255,255,0.78);
+  text-transform: uppercase;
+}
+.promo-track {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 16px 44px;
+  min-height: 140px;
+}
+.promo-word {
+  display: inline-block;
+  font-size: 40px;
+  font-weight: 800;
+  letter-spacing: -1px;
+  line-height: 1.2;
+  color: #ffffff;
+  text-shadow: 0 6px 20px rgba(0,0,0,0.18);
+  opacity: 0;
+  transform: translateY(-120px) scale(0.9);
+  animation: promoDropIn 4.9s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+  white-space: nowrap;
+}
+.promo-word:nth-child(odd) { color: #fff7d6; }
+@keyframes promoDropIn {
+  0%   { opacity: 0; transform: translateY(-120px) scale(0.9); }
+  10%  { opacity: 1; transform: translateY(6px) scale(1.04); }
+  16%  { opacity: 1; transform: translateY(0) scale(1); }
+  78%  { opacity: 1; transform: translateY(0) scale(1); }
+  92%  { opacity: 0; transform: translateY(-14px) scale(0.97); }
+  100% { opacity: 0; transform: translateY(-120px) scale(0.9); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .promo-word {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}
+@media (max-width: 768px) {
+  .promo-banner { padding: 36px 16px 44px; border-radius: 20px; }
+  .promo-word { font-size: 26px; }
+  .promo-track { gap: 12px 24px; min-height: 100px; }
+}
