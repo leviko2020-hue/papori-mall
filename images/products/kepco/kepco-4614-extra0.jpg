@@ -1,0 +1,148 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=euckr">
+<title>PHPS.kr</title>
+<link href="https://cdn.jsdelivr.net/xeicon/2/xeicon.min.css" rel="stylesheet">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<style type="text/css">
+@import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:400,600);
+
+html, body, pre,
+h1, h2, h3, h4, h5, h6,
+dl, dt, dd, ul, li, ol,
+th, td, p, blockquote,
+form, fieldset, legend,
+menu, nav, section, hgroup, article, header, aside, footer,
+input, select, textarea, button {
+    margin: 0;
+    padding: 0;
+        font-family: 'Open Sans', Nanum Gothic, monospace, Corbel, Dotum, AppleGothic, Helvetica, sans-serif;
+}
+
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+        display: block;
+}
+
+body,
+h1, h2, h3, h4, h5, h6, table,
+input, select, textarea, a {
+    font-size: 12px;
+    color: #313131;
+        font-family: 'Open Sans', Nanum Gothic, monospace, Corbel, Dotum, AppleGothic, Helvetica, sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 { font-weight: normal }
+img, fieldset, button { border: 0 none }
+li { list-style: none }
+hr, caption, legend { display: none }
+a { color: #313131; text-decoration: none; }
+a:hover { }
+button { overflow: hidden; cursor: pointer; }
+button span { visibility: hidden }
+address, em { font-style: normal }
+select { line-height: 22px; height: 22px; }
+input:focus { outline: none }
+table { width: 100%; border-collapse: collapse; border-spacing: 0; table-layout: fixed; word-wrap: break-word; word-break: keep-all; }
+
+input, select {border:1px solid #e1e1e1; vertical-align:middle }
+textarea {border:1px solid #e1e1e1; vertical-align:middle; padding: 2px 0 0 2px }
+input[type=checkbox], input[type=radio], input[type=image] { border:0 }
+
+#wrap { position:relative; width:100% }
+
+#phpsTopArea { position:relative; width:100%; height:77px; border-bottom:1px solid #e5e5e5 }
+#phpsTopArea .phpsTop { margin:0 auto; position:relative; width:1100px }
+#phpsTopArea .phpsTop .tlogo { padding-top:21px }
+
+#phpContentArea { position:relative; width:100% }
+
+#columnMessege { margin:0 auto; position:relative; width:1100px; height:379px; background:url(http://www.phps.kr/img/phps_index/bg_column_messege.jpg) 100% bottom no-repeat }
+#columnMessege .bx_messege { padding-top:100px }
+#columnMessege .bx_messege .t1 { font-size:42px; color:#111; font-weight:bold }
+#columnMessege .bx_messege .t2 { padding-top:15px; font-size:32px; color:#1a4f98 }
+#columnMessege .bx_messege .t3 { padding-top:15px; font-size:20px; color:#555; line-height:28px }
+
+#columnBottom { padding:20px 0 50px; position:relative; border-top:1px solid #e5e5e5 }
+
+#columnBnnr { margin:0 auto; padding-top:30px; position:relative; width:1100px }
+
+#phpsFooterArea { margin-top:50px; position:relative; border-top:1px solid #e1e1e1 }
+#phpsFooterArea .columnQuick { height:40px; border-bottom:1px solid #e1e1e1 }
+#phpsFooterArea .columnQuick ul { margin:0 auto; position:relative; width:1100px; height:40px; border-left:1px solid #e1e1e1; border-right:1px solid #e1e1e1; *zoom:1 }
+#phpsFooterArea .columnQuick ul:after { display:block; clear:both; content:'' }
+#phpsFooterArea .columnQuick ul li { margin-left:-1px; float:left; width:219px; height:40px; text-align:center; border-left:1px solid #e1e1e1 }
+#phpsFooterArea .columnQuick ul li a { display:block; height:40px; font-size:14px; color:#313131; font-weight:bold; line-height:40px }
+
+#phpsFooterArea .phpsFooter { margin:0 auto; position:relative; width:1100px; *zoom:1 }
+#phpsFooterArea .phpsFooter:after { display:block; clear:both; content:'' }
+#phpsFooterArea .phpsFooter .flogo { padding-top:23px; float:left }
+#phpsFooterArea .phpsFooter .ft_right { padding-top:25px; float:right; text-align:right }
+#phpsFooterArea .phpsFooter .ft_right span { color:#d8d8d8 }
+</style>
+<script type="text/javascript">
+<!--
+        $(document).ready(function(){
+                var url = "https://ad-api.phpschool.com/phps_pc/settingpage/bottom/bundle?bundlenum=1";
+                $.ajax({
+                        url : url,
+                        dataType: "json",
+                        success : function(data) {
+                                var imgHtml = "";
+                                $.each(data,function(key,value){
+                                        imgHtml += "<a href='"+value.JURL1+"' target='_blank'><img src='"+value.IMG1+"' /></a>";
+                                });                             
+                                $("#columnBnnr").append(imgHtml); 
+                        },
+                        error: function (xhr, ajaxOptions, thrownError) {}
+                });
+        });
+//-->
+</script>
+</head>
+<body>
+<div id="wrap">
+    <div id="phpsTopArea">
+        <div class="phpsTop">
+            <h1 class="tlogo"><a href="https://www.phps.kr/" target="_blank"><img src="http://www.phps.kr/img/common/tlogo.jpg" alt="PHPS.kr" /></a></h1>
+        </div>
+    </div>
+    <div id="phpContentArea">
+        <div id="columnMessege">
+            <div class="bx_messege">
+                <p class="t1">404 Error</p>
+                <p class="t2">페이지를 찾을 수 없습니다.</p>
+                <p class="t3">
+                    웹페이지의 주소가 변경되었거나 존재하지 않습니다.<br />
+                    페이지주소가 정확한지 확인해주세요.(영문 대소문자 구분)
+                </p>
+            </div>
+        </div>
+        <div id="columnBottom">
+            <div id="columnBnnr">
+            </div>
+        </div>
+    </div>
+    <div id="phpsFooterArea">
+        <div class="columnQuick">
+            <ul>
+                <li class="first"><a href="https://www.phps.kr/customer_faq.html" target="_blank"><span class="tx">FAQ</span></a></li>
+                <li><a href="https://www.phps.kr/customer_menual.html" target="_blank"><span class="tx">서비스매뉴얼</span></a></li>
+                <li><a href="https://www.phps.kr/customer_consult.html" target="_blank"><span class="tx">1:1맞춤상담</span></a></li>
+                <li><a href="https://www.phps.kr/allpay_list.html" target="_blank"><span class="tx">서비스연장</span></a></li>
+                <li><a href="http://domain.phps.kr/domain_price/" target="_blank"><span class="tx">도메인등록비용</span></a></li>
+            </ul>
+        </div>
+        <div class="phpsFooter">
+            <h2 class="flogo"><a href="https://www.phps.kr/" target="_blank"><img src="http://www.phps.kr/img/common/flogo.jpg" alt="PHPS.kr" /></a></h2>
+            <div class="ft_right">
+                <p>메일 : <a href="https://www.phps.kr/customer_mail_consult.html" target="_blank">helpcenter@phps.kr</a></p>
+                <p>COPYRIGHT WWW.PHPS.KR(스쿨호스팅). ALL RIGHT RESERVED</p>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
