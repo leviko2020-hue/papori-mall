@@ -554,7 +554,8 @@ img { max-width: 100%; display: block; }
 .detail-section img { border-radius: 12px; margin-top: 10px; }
 
 /* Sunsco KEPCO detail gallery */
-.sunsco-detail-gallery {
+.sunsco-detail-gallery,
+.vendor-detail-gallery {
   background: var(--purple-light);
   border: 1px solid rgba(139, 127, 232, 0.22);
   border-radius: 16px;
@@ -564,7 +565,8 @@ img { max-width: 100%; display: block; }
   align-items: center;
   gap: 22px;
 }
-.sunsco-detail-gallery img {
+.sunsco-detail-gallery img,
+.vendor-detail-gallery img {
   max-width: 100%;
   width: auto;
   height: auto;
@@ -575,7 +577,38 @@ img { max-width: 100%; display: block; }
   box-shadow: 0 2px 10px rgba(139, 127, 232, 0.14);
 }
 @media (max-width: 768px) {
-  .sunsco-detail-gallery { padding: 16px; gap: 16px; }
+  .sunsco-detail-gallery,
+  .vendor-detail-gallery { padding: 16px; gap: 16px; }
+}
+.vendor-feature-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.vendor-feature-list li {
+  position: relative;
+  padding-left: 22px;
+  font-size: 14px;
+  color: var(--text);
+  line-height: 1.55;
+}
+.vendor-feature-list li::before {
+  content: "";
+  position: absolute;
+  left: 4px;
+  top: 8px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--purple);
+}
+.vendor-source-note {
+  margin-top: 14px;
+  font-size: 12px;
+  color: var(--text-mute);
 }
 
 /* Related */
