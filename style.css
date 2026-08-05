@@ -605,6 +605,51 @@ img { max-width: 100%; display: block; }
   border-radius: 50%;
   background: var(--purple);
 }
+.kepco-hero {
+  position: relative;
+  padding: 64px 0 56px;
+  background:
+    radial-gradient(circle at 15% 20%, rgba(255,255,255,0.10) 0%, transparent 45%),
+    radial-gradient(circle at 85% 80%, rgba(255,255,255,0.08) 0%, transparent 50%),
+    linear-gradient(120deg, var(--purple-dark) 0%, var(--purple) 55%, #a99bf0 100%);
+  overflow: hidden;
+}
+.kepco-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    repeating-linear-gradient(90deg, rgba(255,255,255,0.05) 0px, rgba(255,255,255,0.05) 1px, transparent 1px, transparent 64px);
+  pointer-events: none;
+}
+.kepco-hero-inner { position: relative; z-index: 1; }
+.kepco-hero h1 { color: #fff; font-size: 32px; margin: 0 0 10px; }
+.kepco-hero p { color: rgba(255,255,255,0.88); font-size: 15px; margin: 0; }
+@media (max-width: 768px) {
+  .kepco-hero { padding: 40px 0 34px; }
+  .kepco-hero h1 { font-size: 24px; }
+}
+
+.coop-section { margin-top: 12px; }
+.coop-group { margin-bottom: 28px; }
+.coop-group h3 { font-size: 16px; color: var(--purple-dark); margin: 0 0 10px; padding-left: 12px; border-left: 4px solid var(--purple); }
+.coop-table-wrap { overflow-x: auto; border-radius: 10px; border: 1px solid var(--border); }
+.coop-table { width: 100%; border-collapse: collapse; font-size: 13px; min-width: 560px; }
+.coop-table thead th {
+  background: var(--purple-light);
+  color: var(--purple-dark);
+  font-weight: 700;
+  text-align: left;
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+}
+.coop-table tbody td { padding: 10px 14px; border-bottom: 1px solid var(--border); color: var(--text); vertical-align: top; }
+.coop-table tbody tr:last-child td { border-bottom: none; }
+.coop-table tbody tr:nth-child(odd) { background: #FCFBFF; }
+.coop-table .coop-name { font-weight: 600; color: var(--text-strong); white-space: nowrap; }
+.coop-table .coop-unit, .coop-table .coop-qty { white-space: nowrap; color: var(--text-mute); }
+
 .vendor-source-note {
   margin-top: 14px;
   font-size: 12px;
@@ -1118,4 +1163,71 @@ img { max-width: 100%; display: block; }
   .promo-banner { padding: 36px 16px 44px; border-radius: 20px; }
   .promo-word { font-size: 26px; }
   .promo-track { gap: 12px 24px; min-height: 100px; }
+}
+
+.no-image {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--purple-light);
+  color: var(--purple-dark);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+/* Thermal (HIKMICRO) hero */
+.thermal-hero {
+  position: relative;
+  padding: 56px 0 48px;
+  background:
+    radial-gradient(circle at 20% 30%, rgba(255,138,0,0.20) 0%, transparent 45%),
+    radial-gradient(circle at 80% 70%, rgba(255,138,0,0.12) 0%, transparent 50%),
+    linear-gradient(135deg, #0B0E14 0%, #171B24 55%, #1F2430 100%);
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+.thermal-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    repeating-linear-gradient(0deg, rgba(255,255,255,0.04) 0px, rgba(255,255,255,0.04) 1px, transparent 1px, transparent 48px),
+    repeating-linear-gradient(90deg, rgba(255,255,255,0.04) 0px, rgba(255,255,255,0.04) 1px, transparent 1px, transparent 48px);
+  pointer-events: none;
+}
+.thermal-hero-inner { position: relative; z-index: 1; }
+.thermal-hero-badge {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  color: #FF8A00;
+  background: rgba(255,138,0,0.14);
+  border: 1px solid rgba(255,138,0,0.4);
+  padding: 6px 14px;
+  border-radius: 20px;
+  margin-bottom: 14px;
+}
+.thermal-hero h1 { color: #fff; font-size: 28px; margin: 0 0 8px; }
+.thermal-hero p { color: rgba(255,255,255,0.7); font-size: 14px; margin: 0; }
+@media (max-width: 768px) {
+  .thermal-hero { padding: 36px 0 30px; }
+  .thermal-hero h1 { font-size: 22px; }
+}
+
+/* Homepage hero enhancement */
+.hero {
+  background:
+    radial-gradient(circle at 10% 15%, rgba(255,255,255,0.14) 0%, transparent 40%),
+    radial-gradient(circle at 90% 85%, rgba(255,255,255,0.10) 0%, transparent 45%),
+    linear-gradient(135deg, #6C5CE7 0%, #8B7FE8 55%, #a99bf0 100%) !important;
+  position: relative;
+  overflow: hidden;
+}
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: repeating-linear-gradient(45deg, rgba(255,255,255,0.035) 0px, rgba(255,255,255,0.035) 1px, transparent 1px, transparent 40px);
+  pointer-events: none;
 }
