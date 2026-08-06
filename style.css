@@ -253,7 +253,7 @@ img { max-width: 100%; display: block; }
 }
 .product-card .thumb {
   height: 200px;
-  background: #FAFAFA;
+  background: #fff;
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
@@ -330,7 +330,7 @@ img { max-width: 100%; display: block; }
   width: 100%;
   height: 420px;
   border-radius: 14px;
-  background: #FAFAFA;
+  background: #fff;
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
@@ -371,7 +371,7 @@ img { max-width: 100%; display: block; }
   width: 90px;
   height: 90px;
   border-radius: 8px;
-  background: #FAFAFA;
+  background: #fff;
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
@@ -399,7 +399,7 @@ img { max-width: 100%; display: block; }
 .detail-gallery .stack-img {
   width: 100%;
   height: 380px;
-  background-color: #FAFAFA;
+  background-color: #fff;
   border: 1px solid var(--border);
   background-size: contain;
   background-repeat: no-repeat;
@@ -608,18 +608,25 @@ img { max-width: 100%; display: block; }
 .kepco-hero {
   position: relative;
   padding: 64px 0 56px;
-  background:
-    radial-gradient(circle at 15% 20%, rgba(255,255,255,0.10) 0%, transparent 45%),
-    radial-gradient(circle at 85% 80%, rgba(255,255,255,0.08) 0%, transparent 50%),
-    linear-gradient(120deg, var(--purple-dark) 0%, var(--purple) 55%, #a99bf0 100%);
+  background: var(--purple-dark);
   overflow: hidden;
 }
 .kepco-hero::before {
   content: "";
   position: absolute;
+  inset: -10px;
+  background-image: url('images/kepco-powerline.png');
+  background-size: cover;
+  background-position: center 55%;
+  filter: blur(3px) brightness(0.7) saturate(1.1);
+  transform: scale(1.05);
+  pointer-events: none;
+}
+.kepco-hero::after {
+  content: "";
+  position: absolute;
   inset: 0;
-  background-image:
-    repeating-linear-gradient(90deg, rgba(255,255,255,0.05) 0px, rgba(255,255,255,0.05) 1px, transparent 1px, transparent 64px);
+  background: linear-gradient(100deg, rgba(46,33,92,0.82) 0%, rgba(108,92,231,0.55) 55%, rgba(139,127,232,0.30) 100%);
   pointer-events: none;
 }
 .kepco-hero-inner { position: relative; z-index: 1; }
@@ -953,7 +960,7 @@ img { max-width: 100%; display: block; }
 }
 .series-card .series-thumb {
   height: 160px;
-  background: #FAFAFA;
+  background: #fff;
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
@@ -1179,20 +1186,26 @@ img { max-width: 100%; display: block; }
 .thermal-hero {
   position: relative;
   padding: 56px 0 48px;
-  background:
-    radial-gradient(circle at 20% 30%, rgba(255,138,0,0.20) 0%, transparent 45%),
-    radial-gradient(circle at 80% 70%, rgba(255,138,0,0.12) 0%, transparent 50%),
-    linear-gradient(135deg, #0B0E14 0%, #171B24 55%, #1F2430 100%);
+  background: #0B0E14;
   overflow: hidden;
   margin-bottom: 8px;
 }
 .thermal-hero::before {
   content: "";
   position: absolute;
+  inset: -10px;
+  background-image: url('images/hikmicro-building.png');
+  background-size: cover;
+  background-position: center 60%;
+  filter: blur(3px) brightness(0.55);
+  transform: scale(1.05);
+  pointer-events: none;
+}
+.thermal-hero::after {
+  content: "";
+  position: absolute;
   inset: 0;
-  background-image:
-    repeating-linear-gradient(0deg, rgba(255,255,255,0.04) 0px, rgba(255,255,255,0.04) 1px, transparent 1px, transparent 48px),
-    repeating-linear-gradient(90deg, rgba(255,255,255,0.04) 0px, rgba(255,255,255,0.04) 1px, transparent 1px, transparent 48px);
+  background: linear-gradient(100deg, rgba(11,14,20,0.88) 0%, rgba(11,14,20,0.55) 55%, rgba(11,14,20,0.25) 100%);
   pointer-events: none;
 }
 .thermal-hero-inner { position: relative; z-index: 1; }
@@ -1215,20 +1228,28 @@ img { max-width: 100%; display: block; }
   .thermal-hero h1 { font-size: 22px; }
 }
 
-/* Homepage hero enhancement */
+/* Homepage hero — blurred photo background (main-page-bg.png) */
 .hero {
-  background:
-    radial-gradient(circle at 10% 15%, rgba(255,255,255,0.14) 0%, transparent 40%),
-    radial-gradient(circle at 90% 85%, rgba(255,255,255,0.10) 0%, transparent 45%),
-    linear-gradient(135deg, #6C5CE7 0%, #8B7FE8 55%, #a99bf0 100%) !important;
   position: relative;
   overflow: hidden;
+  background: #201933;
+}
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: -10px;
+  background-image: url('images/main-page-bg.png');
+  background-size: cover;
+  background-position: center 62%;
+  filter: blur(3px) brightness(0.6) saturate(1.05);
+  transform: scale(1.05);
+  pointer-events: none;
 }
 .hero::after {
   content: "";
   position: absolute;
   inset: 0;
-  background-image: repeating-linear-gradient(45deg, rgba(255,255,255,0.035) 0px, rgba(255,255,255,0.035) 1px, transparent 1px, transparent 40px);
+  background: linear-gradient(100deg, rgba(32,25,51,0.82) 0%, rgba(76,60,130,0.55) 55%, rgba(139,127,232,0.28) 100%);
   pointer-events: none;
 }
 
@@ -1321,12 +1342,13 @@ img { max-width: 100%; display: block; }
 }
 .grainger-thumb {
   height: 150px;
-  background-color: var(--purple-light);
+  background-color: #fff;
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
   padding: 14px;
   box-sizing: border-box;
+  border-bottom: 1px solid var(--border);
 }
 .grainger-label {
   font-size: 14.5px;
@@ -1341,4 +1363,55 @@ img { max-width: 100%; display: block; }
 }
 @media (max-width: 860px) {
   .grainger-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* RS-style horizontal category tiles: name left / representative image right (homepage) */
+.rs-tile-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+.rs-tile {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px 22px;
+  min-height: 96px;
+  transition: border-color .15s ease, transform .15s ease, box-shadow .15s ease;
+}
+.rs-tile:hover {
+  border-color: var(--purple);
+  transform: translateY(-3px);
+  box-shadow: 0 10px 24px rgba(139,127,232,0.16);
+}
+.rs-tile-name { flex: 1; min-width: 0; }
+.rs-tile-name h3 {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-strong);
+  margin: 0 0 6px;
+  line-height: 1.35;
+}
+.rs-tile-name p {
+  font-size: 12.5px;
+  color: var(--text-mute);
+  margin: 0;
+}
+.rs-tile-img {
+  flex: 0 0 92px;
+  width: 92px;
+  height: 70px;
+  background-color: #fff;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+@media (max-width: 640px) {
+  .rs-tile-grid { grid-template-columns: 1fr; }
 }
