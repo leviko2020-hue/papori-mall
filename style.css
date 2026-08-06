@@ -1231,3 +1231,71 @@ img { max-width: 100%; display: block; }
   background-image: repeating-linear-gradient(45deg, rgba(255,255,255,0.035) 0px, rgba(255,255,255,0.035) 1px, transparent 1px, transparent 40px);
   pointer-events: none;
 }
+
+/* RS-style promo cards + icon grid (KEPCO category page) */
+.promo-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  padding: 24px 0 0;
+}
+.promo-card {
+  background: var(--bg-soft);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 22px 22px 20px;
+  display: flex;
+  flex-direction: column;
+  min-height: 128px;
+}
+.promo-card .tag {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  color: var(--purple-dark);
+  text-transform: uppercase;
+  margin: 0 0 8px;
+}
+.promo-card h3 { font-size: 16px; font-weight: 700; margin: 0 0 6px; line-height: 1.35; }
+.promo-card p { font-size: 12.5px; color: var(--text-mute); margin: 0; }
+.promo-card .more { font-size: 12.5px; font-weight: 700; color: var(--purple-dark); margin-top: 14px; display: inline-block; }
+.promo-card.accent { background: var(--purple-dark); border-color: var(--purple-dark); }
+.promo-card.accent .tag { color: rgba(255,255,255,0.75); }
+.promo-card.accent h3 { color: #fff; }
+.promo-card.accent p { color: rgba(255,255,255,0.85); }
+.promo-card.accent .more { color: #fff; }
+
+.icon-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 12px;
+}
+.icon-card {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 18px 10px 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 8px;
+  transition: border-color .15s ease, transform .15s ease;
+}
+.icon-card:hover { border-color: var(--purple); transform: translateY(-2px); }
+.icon-card .ic {
+  width: 40px; height: 40px; border-radius: 10px;
+  background: var(--purple-light); color: var(--purple-dark);
+  display: flex; align-items: center; justify-content: center;
+}
+.icon-card .ic svg { width: 21px; height: 21px; }
+.icon-card span { font-size: 12.5px; font-weight: 700; line-height: 1.3; color: var(--text-strong); }
+.icon-card .cat-count { font-size: 10.5px; font-weight: 600; color: var(--text-mute); }
+@media (max-width: 860px) {
+  .promo-row { grid-template-columns: 1fr; }
+  .icon-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+.section { padding: 40px 0 0; }
+.section-head { margin-bottom: 18px; }
+.section-head h2 { font-size: 19px; font-weight: 800; margin: 0; letter-spacing: -0.2px; color: var(--text-strong); }
