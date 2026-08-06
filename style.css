@@ -1299,3 +1299,46 @@ img { max-width: 100%; display: block; }
 .section { padding: 40px 0 0; }
 .section-head { margin-bottom: 18px; }
 .section-head h2 { font-size: 19px; font-weight: 800; margin: 0; letter-spacing: -0.2px; color: var(--text-strong); }
+
+/* Grainger-style category tiles (photo-led) */
+.grainger-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 16px;
+}
+.grainger-tile {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  overflow: hidden;
+  display: block;
+  transition: border-color .15s ease, transform .15s ease, box-shadow .15s ease;
+}
+.grainger-tile:hover {
+  border-color: var(--purple);
+  transform: translateY(-3px);
+  box-shadow: 0 10px 24px rgba(139,127,232,0.16);
+}
+.grainger-thumb {
+  height: 150px;
+  background-color: var(--purple-light);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  padding: 14px;
+  box-sizing: border-box;
+}
+.grainger-label {
+  font-size: 14.5px;
+  font-weight: 700;
+  color: var(--text-strong);
+  padding: 14px 14px 2px;
+}
+.grainger-count {
+  font-size: 12px;
+  color: var(--text-mute);
+  padding: 0 14px 14px;
+}
+@media (max-width: 860px) {
+  .grainger-grid { grid-template-columns: repeat(2, 1fr); }
+}
