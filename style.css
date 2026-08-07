@@ -1364,6 +1364,12 @@ img { max-width: 100%; display: block; }
 @media (max-width: 860px) {
   .grainger-grid { grid-template-columns: repeat(2, 1fr); }
 }
+.grainger-thumb-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--purple-dark);
+}
 
 /* RS-style horizontal category tiles: name left / representative image right (homepage) */
 .rs-tile-grid {
