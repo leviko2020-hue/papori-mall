@@ -1211,6 +1211,19 @@ img { max-width: 100%; display: block; }
   .category-grid-big .category-card .thumb { height: 200px; }
 }
 
+/* 계측기 카드 — 로고 월 이미지, 잘리지 않게 background-size(퍼센트)만 은은하게 확대/축소 */
+.meter-card-thumb {
+  background-size: 78% auto !important;
+  animation: meterCardBreathe 7s ease-in-out infinite alternate;
+}
+@keyframes meterCardBreathe {
+  0%   { background-size: 78% auto; }
+  100% { background-size: 88% auto; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .meter-card-thumb { animation: none; background-size: 82% auto !important; }
+}
+
 /* ===== Homepage new-product image slider ===== */
 .new-product-slider {
   margin: 40px 0 56px;
