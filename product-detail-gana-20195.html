@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<title>충전식 임팩렌치 마끼다 DTW300Z — PAPORI</title>
+<title>충전식 임팩렌치 마끼다 DTW300 — PAPORI</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="style.css">
 </head>
@@ -37,8 +37,8 @@
 
     <div class="detail-info">
       <div class="brand-line">마끼다</div>
-      <h1>충전식 임팩렌치 마끼다 DTW300Z</h1>
-      <div class="model">모델 DTW300Z</div>
+      <h1>충전식 임팩렌치 마끼다 DTW300</h1>
+      <div class="model">모델 DTW300</div>
 
       <div class="trust-badges">
         <span class="trust-badge">공기구</span>
@@ -46,13 +46,23 @@
       </div>
 
       <div class="price-box">
-        <div class="final-price" style="font-size:20px; color:var(--purple-dark);">가격문의</div>
-        <div class="ship-note">규격·수량에 따라 견적이 달라져 별도 가격을 표기하지 않습니다</div>
+        <div class="final-price">590,000원</div>
+      </div>
+
+      <div class="qty-row">
+        <span style="font-size:14px;">수량</span>
+        <div class="qty-selector">
+          <button type="button">-</button>
+          <input type="text" value="1">
+          <button type="button">+</button>
+        </div>
       </div>
 
       <div class="action-row">
-        <a href="quote-request.html" class="btn btn-primary btn-block">이 상품 견적요청 하기</a>
+        <button class="btn btn-outline btn-block">장바구니</button>
+        <button class="btn btn-primary btn-block">바로구매</button>
       </div>
+      <a href="quote-request.html" class="quick-quote">이 상품 견적서로 담기 →</a>
 
       <div class="trust-strip">
         <div class="item"><b>배송</b>주문 후 2~3일 이내 (배송비 별도)</div>
@@ -74,17 +84,18 @@
     <div class="detail-section">
       <h3>제품 소개</h3>
       <p>Makita DTW300은 회전수 3,200rpm, 충격수 4,000ipm, 최대토크 330Nm으로 DTW285보다 한 단계 높은 토크를 내는 18V 충전식 임팩렌치입니다. 고장력 볼트 체결이 잦은 배전공사 현장에 적합합니다.</p>
+      <p class="vendor-source-note">본 가격은 제조사(Makita, lkmakita.co.kr) 공식 자료를 기준으로 제공됩니다.</p>
     </div>
   </div>
   <div class="tab-panel" id="panel-spec" style="display:none;">
     <div class="detail-section">
       <h3>제원표</h3>
       <table class="spec-table">
-        <tr><th>품목명</th><td>충전식 임팩렌치 마끼다 DTW300Z</td></tr>
+        <tr><th>품목명</th><td>충전식 임팩렌치 마끼다 DTW300</td></tr>
         <tr><th>제조사</th><td>마끼다</td></tr>
-        <tr><th>모델번호</th><td>DTW300Z</td></tr>
+        <tr><th>모델번호</th><td>DTW300</td></tr>
         <tr><th>분류</th><td>공기구 &gt; 전동공구</td></tr>
-        <tr><th>전원</th><td>18V 리튬이온 배터리 (LXT)</td></tr>
+        <tr><th>전원</th><td>18V 리튬이온 배터리 5.0Ah ×2 (세트 구성)</td></tr>
         <tr><th>회전수 / 충격수</th><td>3,200rpm / 4,000ipm</td></tr>
         <tr><th>최대 토크</th><td>330Nm</td></tr>
       </table>
@@ -100,13 +111,13 @@
   <div class="related">
     <h2>이 분류의 다른 상품</h2>
     <div class="product-grid" style="padding-top:0;">
-      <a href="product-detail-gana-20186.html" class="product-card">
-        <div class="thumb" style="background-image:url('images/products/gana/gana-20186.jpg');"></div>
-        <div class="body"><div class="brand">전동공구</div><h4>충전식 임팩렌치 마끼다 DTW251</h4><div class="inquiry">견적문의</div></div>
+      <a href="product-detail-gana-20188.html" class="product-card">
+        <div class="thumb" style="background-image:url('images/products/gana/gana-20188.png');"></div>
+        <div class="body"><div class="brand">전동공구</div><h4>충전식 임팩렌치 디월트 DCF922P2</h4><div class="price">460,000<span class="unit">원</span></div></div>
       </a>
-      <a href="product-detail-gana-20194.html" class="product-card">
-        <div class="thumb" style="background-image:url('images/products/gana/gana-20194.png');"></div>
-        <div class="body"><div class="brand">전동공구</div><h4>충전식 임팩렌치 미끼다 DTW180</h4><div class="inquiry">견적문의</div></div>
+      <a href="product-detail-gana-20190.html" class="product-card">
+        <div class="thumb" style="background-image:url('images/products/gana/gana-20190.jpg');"></div>
+        <div class="body"><div class="brand">전동공구</div><h4>밀워키 임팩트렌치 II 1/2 인치 18V 5.0Ah</h4><div class="price">430,000<span class="unit">원</span></div></div>
       </a>
     </div>
   </div>
@@ -130,6 +141,17 @@
 <a href="quote-request.html" class="floating-quote">빠른 견적문의</a>
 
 <script>
+  document.querySelectorAll('.qty-selector button').forEach(btn => {
+    btn.onclick = () => {
+      const input = btn.parentElement.querySelector('input');
+      let val = parseInt(input.value) || 1;
+      val = btn.textContent === '+' ? val + 1 : Math.max(1, val - 1);
+      input.value = val;
+    };
+  });
+  document.querySelectorAll('.action-row .btn-outline').forEach(btn => {
+    btn.onclick = () => alert('장바구니에 담았습니다');
+  });
   document.querySelectorAll('.action-row .btn-primary').forEach(btn => {
     if (btn.tagName === 'BUTTON') btn.onclick = () => alert('결제 페이지로 연동될 예정입니다');
   });
