@@ -1739,3 +1739,85 @@ img { max-width: 100%; display: block; }
   .home-hero-corner { position: static; text-align: left; margin-top: 24px; }
   .home-card { flex-basis: 160px; }
 }
+
+/* ============================================================
+   계측기 category hero banner (메인계측기.png) — subtle animation
+   ============================================================ */
+.meter-hero {
+  position: relative;
+  overflow: hidden;
+  height: 320px;
+  margin-bottom: 4px;
+}
+.meter-hero-bg {
+  position: absolute;
+  inset: 0;
+  background-image: url('images/meter-hero.png');
+  background-size: cover;
+  background-position: center 30%;
+  animation: meterHeroZoom 22s ease-in-out infinite alternate;
+}
+@keyframes meterHeroZoom {
+  0%   { transform: scale(1.0); }
+  100% { transform: scale(1.06); }
+}
+.meter-hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(14,11,31,0.15) 0%, rgba(14,11,31,0.55) 70%, rgba(14,11,31,0.82) 100%);
+}
+.meter-hero-inner {
+  position: relative;
+  z-index: 2;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 0 0 26px;
+}
+.meter-hero-inner .eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  width: fit-content;
+  font-size: 12px;
+  font-weight: 700;
+  color: #C9BFFF;
+  background: rgba(139,127,232,0.2);
+  border: 1px solid rgba(139,127,232,0.5);
+  padding: 6px 14px;
+  border-radius: 999px;
+  margin-bottom: 14px;
+  opacity: 0;
+  animation: meterHeroFadeUp .7s ease .15s forwards;
+}
+.meter-hero-inner h1 {
+  font-size: 30px;
+  font-weight: 800;
+  color: #fff;
+  margin: 0 0 8px;
+  letter-spacing: -.4px;
+  opacity: 0;
+  animation: meterHeroFadeUp .7s ease .3s forwards;
+}
+.meter-hero-inner p {
+  font-size: 14.5px;
+  color: rgba(255,255,255,0.72);
+  margin: 0;
+  max-width: 560px;
+  opacity: 0;
+  animation: meterHeroFadeUp .7s ease .45s forwards;
+}
+@keyframes meterHeroFadeUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .meter-hero-bg { animation: none; }
+  .meter-hero-inner .eyebrow, .meter-hero-inner h1, .meter-hero-inner p { animation: none; opacity: 1; }
+}
+@media (max-width: 720px) {
+  .meter-hero { height: 260px; }
+  .meter-hero-inner h1 { font-size: 24px; }
+}
