@@ -1752,9 +1752,9 @@ img { max-width: 100%; display: block; }
 .meter-hero-bg {
   position: absolute;
   inset: 0;
-  background-image: url('images/meter-hero.png');
+  background-image: url('images/meter-hero-banner.png');
   background-size: cover;
-  background-position: center 30%;
+  background-position: center center;
   animation: meterHeroZoom 22s ease-in-out infinite alternate;
 }
 @keyframes meterHeroZoom {
