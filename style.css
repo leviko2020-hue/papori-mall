@@ -1769,6 +1769,7 @@ img { max-width: 100%; display: block; }
   background-size: cover;
   background-position: center center;
   animation: meterHeroZoom 22s ease-in-out infinite alternate;
+  filter: url('#illustrateFilter');
 }
 @keyframes meterHeroZoom {
   0%   { transform: scale(1.0); }
