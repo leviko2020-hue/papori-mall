@@ -214,9 +214,32 @@
     escapeHtml: escapeHtml
   };
 
+  // 헤더 "로그인" 링크를 실제 로그인 상태에 맞춰 갱신 (로그인 시 이메일 표시 + 로그아웃)
+  function initAuthState() {
+    var loginLink = document.querySelector('.header-actions a[href="login.html"]');
+    if (!loginLink) return;
+    import('./papori-firebase.js').then(function (mod) {
+      mod.paporiOnAuthChange(function (user) {
+        if (user) {
+          loginLink.textContent = (user.email || '내 계정') + ' · 로그아웃';
+          loginLink.href = '#';
+          loginLink.onclick = function (e) {
+            e.preventDefault();
+            mod.paporiLogout().then(function () { location.reload(); });
+          };
+        } else {
+          loginLink.textContent = '로그인';
+          loginLink.href = 'login.html';
+          loginLink.onclick = null;
+        }
+      });
+    }).catch(function () { /* firebase 로드 실패 시 기본 "로그인" 링크 그대로 둠 */ });
+  }
+
   document.addEventListener('DOMContentLoaded', function () {
     updateBadge();
     initProductActions();
     renderCartPage();
+    initAuthState();
   });
 })();
