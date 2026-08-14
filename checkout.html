@@ -19,7 +19,7 @@
     <div class="header-actions">
       <div class="search-box"><input type="text" placeholder="제품명, 모델명 검색"></div>
       <a href="login.html">로그인</a>
-      <a href="cart.html">장바구니</a>
+      <a href="cart.html" class="cart-link">장바구니<span class="cart-badge"></span></a>
       <a href="quote-request.html" class="btn btn-primary btn-sm">견적요청</a>
     </div>
   </div>
@@ -60,11 +60,15 @@
     </div>
 
     <aside class="quote-side">
+      <h3>주문 상품</h3>
+      <div id="co-items" style="display:flex; flex-direction:column; gap:10px; margin-bottom:16px;"></div>
+      <p id="co-empty-msg" style="display:none; color:var(--text-mute); font-size:13px;">장바구니가 비어있습니다. <a href="index.html">쇼핑 계속하기 →</a></p>
+
       <h3>결제 정보</h3>
       <div class="cart-summary" style="margin-left:0; width:auto; padding:0; background:none;">
-        <div class="row"><span>상품 합계</span><span>2,970,000원</span></div>
-        <div class="row"><span>배송비</span><span>25,000원</span></div>
-        <div class="row total"><span>결제 예정 금액</span><span>2,995,000원</span></div>
+        <div class="row"><span>상품 합계</span><span id="co-subtotal">0원</span></div>
+        <div class="row"><span>배송비</span><span id="co-shipping">25,000원</span></div>
+        <div class="row total"><span>결제 예정 금액</span><span id="co-grandtotal">0원</span></div>
       </div>
       <button type="button" class="btn btn-primary btn-block" id="pay-submit" style="margin-top:18px;">
         결제하기
@@ -96,8 +100,53 @@
 
 <script type="module">
   import { paporiSubmitOrder } from "./papori-firebase.js";
+  const SHIPPING_FEE = 25000;
   const msg = document.getElementById('pay-msg');
-  document.getElementById('pay-submit').addEventListener('click', async () => {
+  const itemsBox = document.getElementById('co-items');
+  const emptyMsg = document.getElementById('co-empty-msg');
+  const submitBtn = document.getElementById('pay-submit');
+  const esc = (s) => (window.PaporiCart ? window.PaporiCart.escapeHtml(s) : String(s));
+
+  function getCartItems() {
+    return window.PaporiCart ? window.PaporiCart.getCart() : [];
+  }
+
+  function renderOrderSummary() {
+    const items = getCartItems();
+    const subtotal = items.reduce((sum, i) => sum + i.price * (parseInt(i.qty, 10) || 1), 0);
+    const grand = items.length ? subtotal + SHIPPING_FEE : 0;
+
+    if (items.length === 0) {
+      itemsBox.innerHTML = '';
+      emptyMsg.style.display = 'block';
+      submitBtn.disabled = true;
+      submitBtn.style.opacity = '0.5';
+      submitBtn.style.cursor = 'not-allowed';
+    } else {
+      emptyMsg.style.display = 'none';
+      submitBtn.disabled = false;
+      submitBtn.style.opacity = '';
+      submitBtn.style.cursor = '';
+      itemsBox.innerHTML = items.map(i => `
+        <div style="display:flex; justify-content:space-between; font-size:13px; gap:8px;">
+          <span style="color:var(--text-mute);">${esc(i.name)} × ${parseInt(i.qty, 10) || 1}</span>
+          <span style="white-space:nowrap;">${(i.price * (parseInt(i.qty, 10) || 1)).toLocaleString()}원</span>
+        </div>
+      `).join('');
+    }
+
+    document.getElementById('co-subtotal').textContent = subtotal.toLocaleString() + '원';
+    document.getElementById('co-shipping').textContent = items.length ? SHIPPING_FEE.toLocaleString() + '원' : '-';
+    document.getElementById('co-grandtotal').textContent = grand.toLocaleString() + '원';
+  }
+  renderOrderSummary();
+
+  submitBtn.addEventListener('click', async () => {
+    const cartItems = getCartItems();
+    if (cartItems.length === 0) {
+      msg.textContent = '장바구니에 담긴 상품이 없습니다.';
+      return;
+    }
     const name = document.getElementById('co-name').value.trim();
     const contact = document.getElementById('co-contact').value.trim();
     const address = document.getElementById('co-address').value.trim();
@@ -107,19 +156,19 @@
     }
     const payMethod = document.querySelector('input[name=pay]:checked').value;
     const taxInvoice = document.getElementById('co-tax').checked;
-    // 데모 데이터: 실제로는 장바구니 데이터를 그대로 넘겨야 함
-    const items = [
-      { name: '하이크마이크로 B25 산업용 열화상카메라', price: 2480000, qty: 1 },
-      { name: '디지털 클램프미터 (교류/직류 전류측정기)', price: 245000, qty: 2 }
-    ];
+    const items = cartItems.map(i => ({ name: i.name, price: i.price, qty: parseInt(i.qty, 10) || 1 }));
+    const subtotal = items.reduce((sum, i) => sum + i.price * i.qty, 0);
+    const totalAmount = subtotal + SHIPPING_FEE;
     msg.textContent = '주문 처리 중...';
     try {
       await paporiSubmitOrder({
         items,
         customer: { name, contact, address, note: document.getElementById('co-note').value },
-        payMethod, taxInvoice, totalAmount: 2995000
+        payMethod, taxInvoice, totalAmount
       });
       msg.textContent = '주문이 접수되었습니다!';
+      if (window.PaporiCart) window.PaporiCart.clearCart();
+      renderOrderSummary();
       alert('주문이 접수되었습니다.\n(실제 PG 결제 연동 전이라 결제 자체는 진행되지 않고, 주문 정보만 저장됩니다.)');
     } catch (err) {
       msg.textContent = '오류: ' + (err.message || err);
@@ -127,6 +176,7 @@
   });
 </script>
 
+  <script src="cart.js"></script>
 </body>
 </html>
 

@@ -19,7 +19,7 @@
     <div class="header-actions">
       <div class="search-box"><input type="text" placeholder="제품명, 모델명 검색"></div>
       <a href="login.html">로그인</a>
-      <a href="cart.html">장바구니</a>
+      <a href="cart.html" class="cart-link">장바구니<span class="cart-badge"></span></a>
       <a href="quote-request.html" class="btn btn-primary btn-sm">견적요청</a>
     </div>
   </div>
@@ -29,45 +29,25 @@
   <h1 class="section-title" style="margin-top:32px;">장바구니</h1>
   <p class="section-sub">회원/비회원 모두 이용 가능 — 비회원은 결제 시 이름·연락처·배송지만 입력하면 바로 구매할 수 있습니다</p>
 
+  <p id="cart-empty-msg" style="display:none; color:var(--text-mute); padding:60px 0; text-align:center; font-size:15px;">
+    장바구니가 비어있습니다.<br><a href="index.html" class="btn btn-primary" style="margin-top:16px; display:inline-block;">쇼핑 계속하기</a>
+  </p>
+
   <table class="cart-table">
     <thead>
       <tr><th>상품</th><th>수량</th><th>가격</th><th>배송비</th><th></th></tr>
     </thead>
     <tbody>
-      <tr>
-        <td>
-          <div class="cart-item-name">
-            <div class="thumb-sm" style="background-image:url('https://images.unsplash.com/photo-1581092160562-40aa08e78837?q=80&w=200&auto=format&fit=crop');"></div>
-            <div>하이크마이크로 B25 산업용 열화상카메라</div>
-          </div>
-        </td>
-        <td>1</td>
-        <td>2,480,000원</td>
-        <td>별도</td>
-        <td><span class="remove-btn" style="color:#C0392B; cursor:pointer;">삭제</span></td>
-      </tr>
-      <tr>
-        <td>
-          <div class="cart-item-name">
-            <div class="thumb-sm" style="background-image:url('https://images.unsplash.com/photo-1581093588401-16b48c98e6a4?q=80&w=200&auto=format&fit=crop');"></div>
-            <div>디지털 클램프미터 (교류/직류 전류측정기)</div>
-          </div>
-        </td>
-        <td>2</td>
-        <td>490,000원</td>
-        <td>별도</td>
-        <td><span class="remove-btn" style="color:#C0392B; cursor:pointer;">삭제</span></td>
-      </tr>
     </tbody>
   </table>
 
   <div class="cart-summary">
-    <div class="row"><span>상품 합계</span><span>2,970,000원</span></div>
+    <div class="row"><span>상품 합계</span><span id="cart-subtotal">0원</span></div>
     <div class="row"><span>배송비</span><span>결제 시 계산</span></div>
-    <div class="row total"><span>합계</span><span>2,970,000원 + 배송비</span></div>
+    <div class="row total"><span>합계</span><span id="cart-grandtotal">0원 + 배송비</span></div>
   </div>
 
-  <div style="display:flex; justify-content:flex-end; gap:10px; margin: 24px 0 60px;">
+  <div id="cart-actions-row" style="display:flex; justify-content:flex-end; gap:10px; margin: 24px 0 60px;">
     <a href="quote-request.html" class="btn btn-outline">견적서로 전환</a>
     <a href="checkout.html" class="btn btn-primary">주문/결제하기</a>
   </div>
@@ -89,6 +69,7 @@
   </div>
 </footer>
 
+  <script src="cart.js"></script>
 </body>
 </html>
 
