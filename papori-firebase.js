@@ -7,12 +7,16 @@ import {
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 import {
   getFirestore, collection, addDoc, serverTimestamp, doc, setDoc,
-  getDocs, query, orderBy
+  getDoc, getDocs, query, orderBy
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
+
+// 관리자 화면(admin.html) 접근을 허용할 이메일 목록.
+// 실제 접근 제어는 Firestore 보안규칙에서 걸어야 하며, 이건 화면단 게이트일 뿐입니다.
+export const PAPORI_ADMIN_EMAILS = ["paporimomo@gmail.com"];
 
 // ---- 회원가입 ----
 // memberType: "personal" | "corp"
@@ -81,4 +85,38 @@ export async function paporiSubmitOrder({ items, customer, payMethod, taxInvoice
 export async function paporiGetOrders() {
   const snap = await getDocs(query(collection(db, "orders"), orderBy("createdAt", "desc")));
   return snap.docs.map(d => ({ id: d.id, ...d.data() }));
+}
+
+// ---- 상품 가격/재고 오버라이드 ----
+// 상품의 기본 가격/스펙은 각 product-detail-*.html에 그대로 있고, 관리자가 여기서
+// 가격을 바꾸거나 재고를 0으로 두면(품절) 해당 값이 기본값을 덮어씁니다.
+// productId는 product-detail-*.html 파일명에서 .html을 뺀 값 (예: "product-detail-m11w")
+export async function paporiGetProductOverrides() {
+  const snap = await getDocs(collection(db, "productOverrides"));
+  const map = {};
+  snap.forEach(d => { map[d.id] = d.data(); });
+  return map;
+}
+export async function paporiGetProductOverride(productId) {
+  const snap = await getDoc(doc(db, "productOverrides", productId));
+  return snap.exists() ? snap.data() : null;
+}
+// data: { price?: number, stock?: number }  — price/stock 중 넘긴 필드만 갱신(merge)
+export async function paporiSaveProductOverride(productId, data) {
+  await setDoc(doc(db, "productOverrides", productId), {
+    ...data,
+    updatedAt: serverTimestamp()
+  }, { merge: true });
+}
+
+// ---- 사이트 기본정보 설정 (상호/대표자/주소 등, 푸터에 실시간 반영) ----
+export async function paporiGetSiteConfig() {
+  const snap = await getDoc(doc(db, "siteConfig", "main"));
+  return snap.exists() ? snap.data() : null;
+}
+export async function paporiSaveSiteConfig(data) {
+  await setDoc(doc(db, "siteConfig", "main"), {
+    ...data,
+    updatedAt: serverTimestamp()
+  }, { merge: true });
 }

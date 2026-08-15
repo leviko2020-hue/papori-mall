@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
@@ -8,15 +8,25 @@
 </head>
 <body>
 
-<div class="admin-layout">
+<div id="admin-gate" style="max-width:360px; margin:80px auto; text-align:center;">
+  <h1 style="font-size:20px; margin-bottom:8px;">관리자 로그인</h1>
+  <p style="font-size:13px; color:var(--text-mute); margin-bottom:20px;">등록된 관리자 계정으로만 접근할 수 있습니다.</p>
+  <div class="form-group" style="text-align:left;"><label>이메일</label><input type="email" id="admin-email" placeholder="admin@example.com"></div>
+  <div class="form-group" style="text-align:left;"><label>비밀번호</label><input type="password" id="admin-password" placeholder="비밀번호"></div>
+  <button type="button" class="btn btn-primary btn-block" id="admin-login-btn">로그인</button>
+  <p id="admin-gate-msg" style="font-size:13px; color:var(--text-mute); margin-top:10px;"></p>
+  <a href="index.html" style="display:block; margin-top:16px; font-size:13px; color:var(--text-mute);">← 쇼핑몰로 돌아가기</a>
+</div>
+
+<div class="admin-layout" id="admin-layout" style="display:none;">
   <aside class="admin-sidebar">
     <div class="admin-logo">PAPORI 관리자</div>
     <a href="#" class="active" onclick="showPanel('orders')">주문 관리</a>
     <a href="#" onclick="showPanel('quotes')">견적문의 관리</a>
-    <a href="#" onclick="showPanel('products')">상품 관리</a>
-    <a href="#" onclick="showPanel('stock')">재고 관리</a>
+    <a href="#" onclick="showPanel('products')">상품 관리 (가격·재고)</a>
     <a href="#" onclick="showPanel('config')">사이트 기본정보 설정</a>
-    <a href="index.html" style="margin-top:20px; color:var(--text-mute);">← 쇼핑몰로 돌아가기</a>
+    <a href="#" id="admin-logout-link" style="margin-top:20px;">로그아웃</a>
+    <a href="index.html" style="color:var(--text-mute);">← 쇼핑몰로 돌아가기</a>
   </aside>
 
   <main class="admin-main">
@@ -40,59 +50,95 @@
     </div>
 
     <div id="panel-products" style="display:none;">
-      <h1>상품 관리</h1>
-      <p class="sub">카테고리별 상품 등록/수정</p>
-      <table class="admin-table">
-        <tr><th>카테고리</th><th>상품명</th><th>모델명</th><th>가격</th><th></th></tr>
-        <tr><td>열화상카메라</td><td>하이크마이크로 B25</td><td>HM-B25</td><td>2,480,000원</td><td><a href="#" class="btn btn-ghost btn-sm">수정</a></td></tr>
-        <tr><td>계측기</td><td>디지털 클램프미터</td><td>CM-330</td><td>245,000원</td><td><a href="#" class="btn btn-ghost btn-sm">수정</a></td></tr>
-        <tr><td>고압 활선작업 장구류</td><td>간접 활선작업용 절연조작봉</td><td>GI-08</td><td>견적문의</td><td><a href="#" class="btn btn-ghost btn-sm">수정</a></td></tr>
-      </table>
-      <button class="btn btn-primary btn-sm" style="margin-top:16px;">+ 상품 등록</button>
-    </div>
-
-    <div id="panel-stock" style="display:none;">
-      <h1>재고 관리</h1>
-      <p class="sub">가격 표기 상품(계측기·열화상카메라 등)의 재고 현황</p>
-      <table class="admin-table">
-        <tr><th>상품명</th><th>재고</th><th>상태</th></tr>
-        <tr><td>하이크마이크로 B25</td><td>4</td><td><span class="status-pill status-done">정상</span></td></tr>
-        <tr><td>하이크마이크로 Pocket2</td><td>1</td><td><span class="status-pill status-pending">부족</span></td></tr>
-        <tr><td>디지털 클램프미터</td><td>12</td><td><span class="status-pill status-done">정상</span></td></tr>
+      <h1>상품 관리 (가격 · 재고)</h1>
+      <p class="sub">고정가 상품의 판매가·재고를 수정합니다. 저장하면 해당 상품 페이지에 즉시 반영됩니다. 재고를 0으로 저장하면 "품절" 처리되어 장바구니 담기가 막힙니다.</p>
+      <div class="form-group" style="max-width:320px;"><input type="text" id="product-filter" placeholder="상품명으로 검색..."></div>
+      <div id="products-loading" style="font-size:13px; color:var(--text-mute);">불러오는 중...</div>
+      <table class="admin-table" id="products-table" style="display:none;">
+        <tr><th>상품명</th><th>기본가</th><th>판매가(오버라이드)</th><th>재고</th><th></th></tr>
+        <tbody id="products-tbody"></tbody>
       </table>
     </div>
 
     <div id="panel-config" style="display:none;">
       <h1>사이트 기본정보 설정</h1>
-      <p class="sub">여기서 값을 수정하면 푸터 등 사이트 전체에 자동 반영됩니다 (통신판매업신고번호 등)</p>
+      <p class="sub">여기서 값을 수정하고 저장하면 사이트 전체 푸터에 실시간으로 반영됩니다.</p>
       <div style="max-width:460px;">
-        <div class="form-group"><label>상호명</label><input type="text" value="SEGlobal"></div>
-        <div class="form-group"><label>사업자등록번호</label><input type="text" value="146-88-01550"></div>
-        <div class="form-group"><label>통신판매업신고번호</label><input type="text" value="제2206-대전대덕-0357호 (임시값 — 확인 후 교체)"></div>
-        <div class="form-group"><label>대표전화</label><input type="text" value="042-349-0703"></div>
-        <div class="form-group"><label>고객센터</label><input type="text" value="010-8699-8868"></div>
-        <button class="btn btn-primary" onclick="alert('데모 화면입니다. 실제 저장 시 사이트 전체 푸터에 즉시 반영됩니다.')">저장</button>
+        <div class="form-group"><label>상호</label><input type="text" id="cfg-business-name"></div>
+        <div class="form-group"><label>대표자</label><input type="text" id="cfg-ceo"></div>
+        <div class="form-group"><label>사업장 주소</label><input type="text" id="cfg-address"></div>
+        <div class="form-group"><label>대표전화</label><input type="text" id="cfg-phone"></div>
+        <div class="form-group"><label>고객센터</label><input type="text" id="cfg-cs-phone"></div>
+        <div class="form-group"><label>사업자등록번호</label><input type="text" id="cfg-biz-reg-no"></div>
+        <div class="form-group"><label>통신판매업신고번호</label><input type="text" id="cfg-mail-order-no"></div>
+        <button class="btn btn-primary" id="config-save-btn">저장</button>
+        <p id="config-msg" style="font-size:13px; color:var(--text-mute); margin-top:10px;"></p>
       </div>
     </div>
 
   </main>
 </div>
 
-<script>
-  function showPanel(name) {
-    ['orders','quotes','products','stock','config'].forEach(p => {
+<script src="products-data.js"></script>
+<script type="module">
+  import {
+    paporiLogin, paporiLogout, paporiOnAuthChange, PAPORI_ADMIN_EMAILS,
+    paporiGetOrders, paporiGetQuotes,
+    paporiGetProductOverrides, paporiSaveProductOverride,
+    paporiGetSiteConfig, paporiSaveSiteConfig
+  } from "./papori-firebase.js";
+
+  const gate = document.getElementById('admin-gate');
+  const layout = document.getElementById('admin-layout');
+  const gateMsg = document.getElementById('admin-gate-msg');
+
+  document.getElementById('admin-login-btn').addEventListener('click', async () => {
+    const email = document.getElementById('admin-email').value.trim();
+    const password = document.getElementById('admin-password').value;
+    if (!email || !password) { gateMsg.textContent = '이메일과 비밀번호를 입력해주세요.'; return; }
+    gateMsg.textContent = '로그인 중...';
+    try {
+      await paporiLogin({ email, password });
+      // onAuthChange가 이어서 접근 허용 여부를 판단합니다
+    } catch (err) {
+      gateMsg.textContent = '로그인 실패: ' + (err.message || err);
+    }
+  });
+
+  document.getElementById('admin-logout-link').addEventListener('click', (e) => {
+    e.preventDefault();
+    paporiLogout();
+  });
+
+  let bootstrapped = false;
+  paporiOnAuthChange((user) => {
+    const isAdmin = user && PAPORI_ADMIN_EMAILS.includes(user.email);
+    if (isAdmin) {
+      gate.style.display = 'none';
+      layout.style.display = 'grid';
+      if (!bootstrapped) { bootstrapped = true; loadOrders(); }
+    } else {
+      layout.style.display = 'none';
+      gate.style.display = 'block';
+      if (user) gateMsg.textContent = '이 계정(' + user.email + ')은 관리자로 등록되어 있지 않습니다.';
+    }
+  });
+
+  window.showPanel = function (name) {
+    ['orders', 'quotes', 'products', 'config'].forEach(p => {
       document.getElementById('panel-' + p).style.display = (p === name) ? 'block' : 'none';
     });
-    document.querySelectorAll('.admin-sidebar a').forEach(a => a.classList.remove('active'));
-    event.target.classList.add('active');
+    document.querySelectorAll('.admin-sidebar a[onclick]').forEach(a => a.classList.remove('active'));
+    event.currentTarget.classList.add('active');
     if (name === 'quotes') loadQuotes();
     if (name === 'orders') loadOrders();
-  }
+    if (name === 'products') loadProducts();
+    if (name === 'config') loadConfig();
+  };
 
   let quotesLoaded = false;
   async function loadQuotes() {
     if (quotesLoaded) return;
-    const { paporiGetQuotes } = await import('./papori-firebase.js');
     const loadingEl = document.getElementById('quotes-loading');
     const tableEl = document.getElementById('quotes-table');
     try {
@@ -127,7 +173,6 @@
   let ordersLoaded = false;
   async function loadOrders() {
     if (ordersLoaded) return;
-    const { paporiGetOrders } = await import('./papori-firebase.js');
     const loadingEl = document.getElementById('orders-loading');
     const tableEl = document.getElementById('orders-table');
     try {
@@ -159,12 +204,120 @@
     }
   }
 
-  // 첫 화면(주문 관리)이 기본으로 열려있으므로 바로 로딩
-  loadOrders();
+  let productsLoaded = false;
+  let allOverrides = {};
+  const fixedPriceProducts = (window.PAPORI_PRODUCTS || []).filter(p => p.price !== null);
+  document.querySelector('#panel-products .sub').textContent =
+    `고정가 상품(${fixedPriceProducts.length}개)의 판매가·재고를 수정합니다. 저장하면 해당 상품 페이지에 즉시 반영됩니다. 재고를 0으로 저장하면 "품절" 처리되어 장바구니 담기가 막힙니다.`;
+
+  function renderProductsTable(filterText) {
+    const tbody = document.getElementById('products-tbody');
+    const q = (filterText || '').trim().toLowerCase();
+    const rows = fixedPriceProducts.filter(p => !q || p.name.toLowerCase().includes(q));
+    tbody.innerHTML = rows.map(p => {
+      const ov = allOverrides[p.id] || {};
+      const curPrice = typeof ov.price === 'number' ? ov.price : p.price;
+      const curStock = typeof ov.stock === 'number' ? ov.stock : '';
+      return `
+        <tr data-id="${p.id}">
+          <td><a href="${p.url}" target="_blank">${p.name}</a></td>
+          <td>${p.price.toLocaleString()}원</td>
+          <td><input type="number" class="ov-price" value="${curPrice}" style="width:120px;"></td>
+          <td><input type="number" class="ov-stock" value="${curStock}" placeholder="미설정" style="width:80px;"></td>
+          <td><button type="button" class="btn btn-ghost btn-sm save-override">저장</button> <span class="save-msg" style="font-size:12px; color:var(--text-mute);"></span></td>
+        </tr>
+      `;
+    }).join('');
+
+    tbody.querySelectorAll('tr').forEach(tr => {
+      tr.querySelector('.save-override').onclick = async () => {
+        const id = tr.dataset.id;
+        const priceInput = tr.querySelector('.ov-price');
+        const stockInput = tr.querySelector('.ov-stock');
+        const msg = tr.querySelector('.save-msg');
+        const data = {};
+        if (priceInput.value !== '') data.price = parseInt(priceInput.value, 10);
+        if (stockInput.value !== '') data.stock = parseInt(stockInput.value, 10);
+        msg.textContent = '저장 중...';
+        try {
+          await paporiSaveProductOverride(id, data);
+          allOverrides[id] = { ...(allOverrides[id] || {}), ...data };
+          msg.textContent = '저장됨';
+          setTimeout(() => { msg.textContent = ''; }, 2000);
+        } catch (err) {
+          msg.textContent = '실패: ' + (err.message || err);
+        }
+      };
+    });
+  }
+
+  async function loadProducts() {
+    const loadingEl = document.getElementById('products-loading');
+    const tableEl = document.getElementById('products-table');
+    if (productsLoaded) return;
+    try {
+      allOverrides = await paporiGetProductOverrides();
+      productsLoaded = true;
+      loadingEl.style.display = 'none';
+      tableEl.style.display = 'table';
+      renderProductsTable('');
+      document.getElementById('product-filter').addEventListener('input', (e) => renderProductsTable(e.target.value));
+    } catch (err) {
+      loadingEl.textContent = '불러오기 실패: ' + (err.message || err);
+    }
+  }
+
+  let configLoaded = false;
+  async function loadConfig() {
+    if (configLoaded) return;
+    configLoaded = true;
+    const msg = document.getElementById('config-msg');
+    try {
+      const cfg = await paporiGetSiteConfig();
+      if (cfg) {
+        document.getElementById('cfg-business-name').value = cfg.businessName || '';
+        document.getElementById('cfg-ceo').value = cfg.ceo || '';
+        document.getElementById('cfg-address').value = cfg.address || '';
+        document.getElementById('cfg-phone').value = cfg.phone || '';
+        document.getElementById('cfg-cs-phone').value = cfg.csPhone || '';
+        document.getElementById('cfg-biz-reg-no').value = cfg.bizRegNo || '';
+        document.getElementById('cfg-mail-order-no').value = cfg.mailOrderNo || '';
+      } else {
+        // 아직 저장된 값이 없으면 현재 사이트에 표기된 기본값을 채워줌
+        document.getElementById('cfg-business-name').value = '에스이글로벌주식회사';
+        document.getElementById('cfg-ceo').value = '고대웅';
+        document.getElementById('cfg-address').value = '대전시 대덕구 대화로 106번길 66';
+        document.getElementById('cfg-phone').value = '042-349-0703';
+        document.getElementById('cfg-cs-phone').value = '010-8699-8868';
+        document.getElementById('cfg-biz-reg-no').value = '146-88-01550';
+        document.getElementById('cfg-mail-order-no').value = '제2206-대전대덕-0357호';
+      }
+    } catch (err) {
+      msg.textContent = '불러오기 실패: ' + (err.message || err);
+    }
+  }
+
+  document.getElementById('config-save-btn').addEventListener('click', async () => {
+    const msg = document.getElementById('config-msg');
+    const data = {
+      businessName: document.getElementById('cfg-business-name').value.trim(),
+      ceo: document.getElementById('cfg-ceo').value.trim(),
+      address: document.getElementById('cfg-address').value.trim(),
+      phone: document.getElementById('cfg-phone').value.trim(),
+      csPhone: document.getElementById('cfg-cs-phone').value.trim(),
+      bizRegNo: document.getElementById('cfg-biz-reg-no').value.trim(),
+      mailOrderNo: document.getElementById('cfg-mail-order-no').value.trim()
+    };
+    msg.textContent = '저장 중...';
+    try {
+      await paporiSaveSiteConfig(data);
+      msg.textContent = '저장되었습니다. 사이트 전체 푸터에 반영됩니다.';
+    } catch (err) {
+      msg.textContent = '실패: ' + (err.message || err);
+    }
+  });
 </script>
 
   <script src="cart.js"></script>
 </body>
 </html>
-
-

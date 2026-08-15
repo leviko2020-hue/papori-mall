@@ -1,6 +1,6 @@
 // PAPORI 전체 상품 목록 (자동 생성 — product-detail-*.html에서 추출)
 // 견적요청 페이지 자동완성 검색에 사용됩니다. 상품 페이지를 추가/수정한 뒤에는 이 파일도 재생성해야 합니다.
-const PAPORI_PRODUCTS = [
+var PAPORI_PRODUCTS = [
   { id: "product-detail-ai56", name: "HIKMICRO AI56 음향카메라 (초음파 부분방전 진단)", model: "64채널 MEMS 마이크", category: "열화상카메라 · HIKMICRO", price: 13950000, url: "product-detail-ai56.html" },
   { id: "product-detail-ai56l", name: "HIKMICRO AI56L 음향카메라 (다크비전)", model: "AI56 기반 다크비전(저조도) 모델", category: "열화상카메라 · HIKMICRO", price: null, url: "product-detail-ai56l.html" },
   { id: "product-detail-ai76", name: "HIKMICRO AI76 음향카메라 (초음파 부분방전 진단)", model: "136채널 마이크", category: "열화상카메라 · HIKMICRO", price: 21400000, url: "product-detail-ai76.html" },

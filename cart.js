@@ -117,20 +117,54 @@
     var product = readProductFromPage();
     if (!product) return;
 
-    document.querySelectorAll('.action-row .btn-outline').forEach(function (btn) {
-      if (btn.tagName !== 'BUTTON') return;
+    var outlineBtns = Array.prototype.filter.call(
+      document.querySelectorAll('.action-row .btn-outline'), function (b) { return b.tagName === 'BUTTON'; }
+    );
+    var primaryBtns = Array.prototype.filter.call(
+      document.querySelectorAll('.action-row .btn-primary'), function (b) { return b.tagName === 'BUTTON'; }
+    );
+
+    outlineBtns.forEach(function (btn) {
       btn.onclick = function () {
         addToCart(product, getQtyFromPage());
         showToast('장바구니에 담았습니다');
       };
     });
-    document.querySelectorAll('.action-row .btn-primary').forEach(function (btn) {
-      if (btn.tagName !== 'BUTTON') return;
+    primaryBtns.forEach(function (btn) {
       btn.onclick = function () {
         addToCart(product, getQtyFromPage());
         location.href = 'checkout.html';
       };
     });
+
+    // 관리자가 설정한 가격/재고 오버라이드 반영 (없으면 페이지에 있는 기본값 그대로 사용)
+    import('./papori-firebase.js').then(function (mod) {
+      return mod.paporiGetProductOverride(product.id);
+    }).then(function (override) {
+      if (!override) return;
+      var priceEl = document.querySelector('.price-box .final-price');
+
+      if (typeof override.price === 'number' && override.price > 0) {
+        product.price = override.price;
+        if (priceEl) priceEl.textContent = override.price.toLocaleString() + '원';
+      }
+      if (typeof override.stock === 'number' && override.stock <= 0) {
+        outlineBtns.concat(primaryBtns).forEach(function (btn) {
+          btn.disabled = true;
+          btn.textContent = '품절';
+          btn.style.opacity = '0.5';
+          btn.style.cursor = 'not-allowed';
+          btn.onclick = null;
+        });
+        if (priceEl) {
+          var soldOut = document.createElement('span');
+          soldOut.textContent = ' (품절)';
+          soldOut.style.color = '#C0392B';
+          soldOut.style.fontSize = '14px';
+          priceEl.appendChild(soldOut);
+        }
+      }
+    }).catch(function () { /* 오버라이드 조회 실패 시 페이지 기본값 그대로 사용 */ });
   }
 
   // cart.html: 실제 장바구니 내용을 테이블로 렌더링
@@ -236,10 +270,36 @@
     }).catch(function () { /* firebase 로드 실패 시 기본 "로그인" 링크 그대로 둠 */ });
   }
 
+  // 관리자 화면(admin.html)에서 저장한 사이트 기본정보로 푸터를 실시간 갱신
+  // (Firestore에 아직 아무 값도 저장 안 돼 있으면 페이지에 있는 기본값을 그대로 둠)
+  function applySiteConfig() {
+    var footerInfo = document.querySelector('.footer-info');
+    if (!footerInfo) return;
+    import('./papori-firebase.js').then(function (mod) {
+      return mod.paporiGetSiteConfig();
+    }).then(function (cfg) {
+      if (!cfg) return;
+      var divs = footerInfo.querySelectorAll('div');
+      if (divs[0] && cfg.businessName) {
+        divs[0].textContent = '상호 ' + cfg.businessName +
+          (cfg.ceo ? ' · 대표자 ' + cfg.ceo : '') +
+          (cfg.phone ? ' · 대표전화 ' + cfg.phone : '') +
+          (cfg.csPhone ? ' · 고객센터 ' + cfg.csPhone : '');
+      }
+      if (divs[1] && cfg.address) divs[1].textContent = '사업장 주소 ' + cfg.address;
+      if (divs[2] && (cfg.bizRegNo || cfg.mailOrderNo)) {
+        divs[2].textContent = (cfg.bizRegNo ? '사업자등록번호 ' + cfg.bizRegNo : '') +
+          (cfg.bizRegNo && cfg.mailOrderNo ? ' · ' : '') +
+          (cfg.mailOrderNo ? '통신판매업신고 ' + cfg.mailOrderNo : '');
+      }
+    }).catch(function () { /* 조회 실패 시 페이지 기본값 그대로 사용 */ });
+  }
+
   document.addEventListener('DOMContentLoaded', function () {
     updateBadge();
     initProductActions();
     renderCartPage();
     initAuthState();
+    applySiteConfig();
   });
 })();
