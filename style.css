@@ -1,7 +1,7 @@
 :root {
-  --purple: #8B7FE8;
-  --purple-dark: #6C5CE7;
-  --purple-light: #F0EEFB;
+  --purple: #7C5CFC;
+  --purple-dark: #5B2EE0;
+  --purple-light: #ECE4FF;
   --gray-light: #F0F0F0;
   --bg: #FFFFFF;
   --bg-soft: #FAFAFA;
@@ -18,7 +18,7 @@ body {
   margin: 0;
   font-family: "Pretendard", -apple-system, "Segoe UI", Roboto, "Malgun Gothic", sans-serif;
   color: var(--text);
-  background: linear-gradient(180deg, #FFFFFF 0%, #FCFBFF 25%, #F6F3FD 60%, #F1EDFC 100%);
+  background: linear-gradient(180deg, #FFFFFF 0%, #F5F1FF 25%, #E9DFFF 60%, #DDD0FF 100%);
   background-attachment: fixed;
   line-height: 1.6;
 }
@@ -1929,7 +1929,7 @@ img { max-width: 100%; display: block; }
   height: 100px;
   border-radius: 10px;
   flex-shrink: 0;
-  background-color: var(--purple-light);
+  background-color: #fff;
   overflow: hidden;
 }
 .theme-slider .slide {
@@ -1958,3 +1958,20 @@ img { max-width: 100%; display: block; }
   letter-spacing: -0.2px;
   color: var(--text-mute);
 }
+.theme-brands .brand-logo {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 24px;
+  padding: 3px 8px;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 5px;
+}
+.theme-brands .brand-logo img {
+  max-height: 16px;
+  max-width: 62px;
+  object-fit: contain;
+  display: block;
+}
+.theme-brands .brand-logo-dark { background: #1a1a1a; border-color: #1a1a1a; }
