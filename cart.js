@@ -82,13 +82,14 @@
     });
   }
 
-  // 상품 상세페이지 DOM에서 현재 상품 정보 읽기 (가격이 없는 "가격문의" 상품은 null 반환)
+  // 상품 상세페이지 DOM에서 현재 상품 정보 읽기.
+  // price는 "가격문의" 상품이면 null — 이 경우도 관리자가 오버라이드로 가격을 지정하면
+  // initProductActions()가 페이지를 실제 구매 가능한 형태로 보강합니다.
   function readProductFromPage() {
     var h1 = document.querySelector('.detail-info h1');
+    if (!h1) return null;
     var priceEl = document.querySelector('.price-box .final-price');
-    if (!h1 || !priceEl) return null;
-    var price = parsePrice(priceEl.textContent);
-    if (!price) return null;
+    var price = priceEl ? parsePrice(priceEl.textContent) : NaN;
     var imgEl = document.querySelector('.detail-gallery .main-img');
     var brandEl = document.querySelector('.brand-line');
     var image = '';
@@ -102,7 +103,7 @@
       id: id,
       name: h1.textContent.trim(),
       brand: brandEl ? brandEl.textContent.trim() : '',
-      price: price,
+      price: price || null,
       image: image,
       url: file
     };
@@ -110,6 +111,43 @@
   function getQtyFromPage() {
     var input = document.querySelector('.qty-selector input');
     return input ? (parseInt(input.value, 10) || 1) : 1;
+  }
+
+  function wireActionButtons(product, outlineBtns, primaryBtns) {
+    outlineBtns.forEach(function (btn) {
+      btn.onclick = function () {
+        addToCart(product, getQtyFromPage());
+        showToast('장바구니에 담았습니다');
+      };
+    });
+    primaryBtns.forEach(function (btn) {
+      btn.onclick = function () {
+        addToCart(product, getQtyFromPage());
+        location.href = 'checkout.html';
+      };
+    });
+  }
+
+  function injectQtySelector(beforeEl) {
+    if (document.querySelector('.qty-selector') || !beforeEl) return;
+    var qtyRow = document.createElement('div');
+    qtyRow.className = 'qty-row';
+    qtyRow.innerHTML =
+      '<span style="font-size:14px;">수량</span>' +
+      '<div class="qty-selector">' +
+        '<button type="button">-</button>' +
+        '<input type="text" value="1">' +
+        '<button type="button">+</button>' +
+      '</div>';
+    beforeEl.parentNode.insertBefore(qtyRow, beforeEl);
+    qtyRow.querySelectorAll('.qty-selector button').forEach(function (btn) {
+      btn.onclick = function () {
+        var input = btn.parentElement.querySelector('input');
+        var val = parseInt(input.value, 10) || 1;
+        val = btn.textContent === '+' ? val + 1 : Math.max(1, val - 1);
+        input.value = val;
+      };
+    });
   }
 
   // 상품 상세페이지: 장바구니/바로구매 버튼을 실제 동작에 연결
@@ -124,20 +162,11 @@
       document.querySelectorAll('.action-row .btn-primary'), function (b) { return b.tagName === 'BUTTON'; }
     );
 
-    outlineBtns.forEach(function (btn) {
-      btn.onclick = function () {
-        addToCart(product, getQtyFromPage());
-        showToast('장바구니에 담았습니다');
-      };
-    });
-    primaryBtns.forEach(function (btn) {
-      btn.onclick = function () {
-        addToCart(product, getQtyFromPage());
-        location.href = 'checkout.html';
-      };
-    });
+    // 이미 고정가로 담기/구매 버튼이 있는 페이지는 바로 연결
+    if (product.price) wireActionButtons(product, outlineBtns, primaryBtns);
 
-    // 관리자가 설정한 가격/재고 오버라이드 반영 (없으면 페이지에 있는 기본값 그대로 사용)
+    // 관리자가 설정한 가격/재고 오버라이드 반영. "가격문의" 상품이라도 관리자가
+    // 판매가를 지정하면 이 페이지를 실제 구매 가능한 형태로 보강합니다.
     import('./papori-firebase.js').then(function (mod) {
       return mod.paporiGetProductOverride(product.id);
     }).then(function (override) {
@@ -146,8 +175,27 @@
 
       if (typeof override.price === 'number' && override.price > 0) {
         product.price = override.price;
-        if (priceEl) priceEl.textContent = override.price.toLocaleString() + '원';
+        if (priceEl) {
+          priceEl.textContent = override.price.toLocaleString() + '원';
+          priceEl.style.color = '';
+        }
+        var shipNote = document.querySelector('.price-box .ship-note');
+        if (shipNote) shipNote.remove();
+
+        if (outlineBtns.length === 0 && primaryBtns.length === 0) {
+          var actionRow = document.querySelector('.action-row');
+          if (actionRow) {
+            actionRow.innerHTML =
+              '<button class="btn btn-outline btn-block">장바구니</button>' +
+              '<button class="btn btn-primary btn-block">바로구매</button>';
+            outlineBtns = Array.prototype.slice.call(actionRow.querySelectorAll('.btn-outline'));
+            primaryBtns = Array.prototype.slice.call(actionRow.querySelectorAll('.btn-primary'));
+            injectQtySelector(actionRow);
+          }
+        }
+        wireActionButtons(product, outlineBtns, primaryBtns);
       }
+
       if (typeof override.stock === 'number' && override.stock <= 0) {
         outlineBtns.concat(primaryBtns).forEach(function (btn) {
           btn.disabled = true;
@@ -295,11 +343,83 @@
     }).catch(function () { /* 조회 실패 시 페이지 기본값 그대로 사용 */ });
   }
 
+  // products-data.js가 아직 로드 안 된 페이지(대부분의 페이지)라면 동적으로 불러옴
+  function ensureProductsData(cb) {
+    if (window.PAPORI_PRODUCTS) { cb(); return; }
+    var s = document.createElement('script');
+    s.src = 'products-data.js';
+    s.onload = cb;
+    s.onerror = cb; // 실패해도 검색 결과 없음으로 처리하고 진행
+    document.head.appendChild(s);
+  }
+
+  // 헤더 검색창(제품명, 모델명 검색)을 실제 검색으로 연결 — 이전엔 아무 동작도 없었음
+  function initHeaderSearch() {
+    var box = document.querySelector('.search-box');
+    var input = box ? box.querySelector('input') : null;
+    if (!box || !input) return;
+    box.style.position = 'relative';
+
+    var list = document.createElement('div');
+    list.className = 'autocomplete-list';
+    box.appendChild(list);
+
+    function renderMatches(matches, query) {
+      if (matches.length === 0) {
+        list.innerHTML = '<div class="autocomplete-empty">"' + escapeHtml(query) + '" 검색 결과가 없습니다.</div>';
+        list.classList.add('show');
+        return;
+      }
+      list.innerHTML = matches.map(function (p) {
+        return '<div class="autocomplete-item">' +
+          '<div><div class="ac-name">' + escapeHtml(p.name) + '</div>' +
+          '<div class="ac-meta">' + escapeHtml(p.category || '') + (p.model ? ' · ' + escapeHtml(p.model) : '') + '</div></div>' +
+          '</div>';
+      }).join('');
+      list.classList.add('show');
+      Array.prototype.forEach.call(list.querySelectorAll('.autocomplete-item'), function (el, i) {
+        el.onclick = function () { location.href = matches[i].url; };
+      });
+    }
+
+    function search(query) {
+      query = (query || '').trim();
+      if (!query) { list.classList.remove('show'); return []; }
+      var q = query.toLowerCase();
+      var matches = (window.PAPORI_PRODUCTS || []).filter(function (p) {
+        return (p.name && p.name.toLowerCase().indexOf(q) !== -1) ||
+          (p.model && p.model.toLowerCase().indexOf(q) !== -1) ||
+          (p.category && p.category.toLowerCase().indexOf(q) !== -1);
+      }).slice(0, 8);
+      renderMatches(matches, query);
+      return matches;
+    }
+
+    input.addEventListener('input', function () {
+      ensureProductsData(function () { search(input.value); });
+    });
+    input.addEventListener('focus', function () {
+      if (input.value.trim()) ensureProductsData(function () { search(input.value); });
+    });
+    input.addEventListener('keydown', function (e) {
+      if (e.key !== 'Enter') return;
+      e.preventDefault();
+      ensureProductsData(function () {
+        var matches = search(input.value);
+        if (matches.length > 0) location.href = matches[0].url;
+      });
+    });
+    document.addEventListener('click', function (e) {
+      if (!box.contains(e.target)) list.classList.remove('show');
+    });
+  }
+
   document.addEventListener('DOMContentLoaded', function () {
     updateBadge();
     initProductActions();
     renderCartPage();
     initAuthState();
     applySiteConfig();
+    initHeaderSearch();
   });
 })();

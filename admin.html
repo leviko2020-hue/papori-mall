@@ -209,23 +209,23 @@
 
   let productsLoaded = false;
   let allOverrides = {};
-  const fixedPriceProducts = (window.PAPORI_PRODUCTS || []).filter(p => p.price !== null);
+  const allProducts = window.PAPORI_PRODUCTS || [];
   document.querySelector('#panel-products .sub').textContent =
-    `고정가 상품(${fixedPriceProducts.length}개)의 판매가·재고를 수정합니다. 저장하면 해당 상품 페이지에 즉시 반영됩니다. 재고를 0으로 저장하면 "품절" 처리되어 장바구니 담기가 막힙니다.`;
+    `전체 상품(${allProducts.length}개)의 판매가·재고를 수정합니다. 저장하면 해당 상품 페이지에 즉시 반영됩니다. "가격문의" 상품도 여기서 판매가를 지정하면 그 페이지가 실제 장바구니 담기가 가능한 상품으로 바뀝니다. 재고를 0으로 저장하면 "품절" 처리되어 담기가 막힙니다.`;
 
   function renderProductsTable(filterText) {
     const tbody = document.getElementById('products-tbody');
     const q = (filterText || '').trim().toLowerCase();
-    const rows = fixedPriceProducts.filter(p => !q || p.name.toLowerCase().includes(q));
+    const rows = allProducts.filter(p => !q || p.name.toLowerCase().includes(q));
     tbody.innerHTML = rows.map(p => {
       const ov = allOverrides[p.id] || {};
-      const curPrice = typeof ov.price === 'number' ? ov.price : p.price;
+      const curPrice = typeof ov.price === 'number' ? ov.price : (p.price != null ? p.price : '');
       const curStock = typeof ov.stock === 'number' ? ov.stock : '';
       return `
         <tr data-id="${p.id}">
           <td><a href="${p.url}" target="_blank">${p.name}</a></td>
-          <td>${p.price.toLocaleString()}원</td>
-          <td><input type="number" class="ov-price" value="${curPrice}" style="width:120px;"></td>
+          <td>${p.price != null ? p.price.toLocaleString() + '원' : '가격문의'}</td>
+          <td><input type="number" class="ov-price" value="${curPrice}" placeholder="가격 입력" style="width:120px;"></td>
           <td><input type="number" class="ov-stock" value="${curStock}" placeholder="미설정" style="width:80px;"></td>
           <td><button type="button" class="btn btn-ghost btn-sm save-override">저장</button> <span class="save-msg" style="font-size:12px; color:var(--text-mute);"></span></td>
         </tr>
