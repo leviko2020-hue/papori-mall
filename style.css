@@ -1923,6 +1923,24 @@ img { max-width: 100%; display: block; }
   flex-shrink: 0;
   background-color: var(--purple-light);
 }
+.theme-slider {
+  position: relative;
+  width: 128px;
+  height: 100px;
+  border-radius: 10px;
+  flex-shrink: 0;
+  background-color: var(--purple-light);
+  overflow: hidden;
+}
+.theme-slider .slide {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  transition: opacity .7s ease;
+}
+.theme-slider .slide.active { opacity: 1; }
 .theme-brands {
   display: flex;
   align-items: center;

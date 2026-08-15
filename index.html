@@ -53,40 +53,55 @@
   <div class="theme-grid">
     <a href="category-kepco-meter.html" class="theme-tile">
       <div class="theme-top">
-        <h3>정밀 계측기<br>전문</h3>
-        <div class="theme-photo" style="background-image:url('images/products/sunsco/sunsco-10.png');"></div>
+        <h3>계측기</h3>
+        <div class="theme-slider">
+          <div class="slide active" style="background-image:url('images/products/vendor/kyoritsu-KEW8035-main.jpg');"></div>
+          <div class="slide" style="background-image:url('images/products/gana/gana-20006.jpg');"></div>
+          <div class="slide" style="background-image:url('images/products/vendor/hioki-CM4373-50-main.jpg');"></div>
+          <div class="slide" style="background-image:url('images/products/vendor/hioki-PQ3100-main.jpg');"></div>
+          <div class="slide" style="background-image:url('images/products/vendor/hasegawa-HSN-6A1-main.jpg');"></div>
+          <div class="slide" style="background-image:url('images/products/vendor/hasegawa-HST-series-main.jpg');"></div>
+        </div>
       </div>
       <div class="theme-brands"><span>HIOKI</span><span>KYORITSU</span><span>HASEGAWA</span></div>
     </a>
 
     <a href="category-kepco-tool-safety.html" class="theme-tile">
       <div class="theme-top">
-        <h3>활선·절연<br>안전장비</h3>
-        <div class="theme-photo" style="background-image:url('images/products/sunsco/sunsco-116.png');"></div>
+        <h3>활선 작업공구<br>안전장구류</h3>
+        <div class="theme-slider">
+          <div class="slide active" style="background-image:url('images/products/gana/gana-20122.jpg');"></div>
+          <div class="slide" style="background-image:url('images/products/sunsco/sunsco-128.png');"></div>
+          <div class="slide" style="background-image:url('images/products/gana/gana-20094.jpg');"></div>
+          <div class="slide" style="background-image:url('images/products/vendor/yssafety-YS307-main.jpg');"></div>
+          <div class="slide" style="background-image:url('images/products/vendor/handmax-no208-glove.jpg');"></div>
+        </div>
       </div>
-      <div class="theme-brands"><span>CHANCE</span><span>YOTSUGI</span></div>
-    </a>
-
-    <a href="category-kepco-tool-indirect.html" class="theme-tile">
-      <div class="theme-top">
-        <h3>간접활선<br>작업공구</h3>
-        <div class="theme-photo" style="background-image:url('images/products/sunsco/sunsco-117.png');"></div>
-      </div>
-      <div class="theme-brands"><span>ToolsChamp</span><span>간접활선 기자재</span></div>
+      <div class="theme-brands"><span>YOTSUGI</span><span>유신기업사</span><span>HAND MAX</span></div>
     </a>
 
     <a href="category-kepco-tool-hydraulic.html" class="theme-tile">
       <div class="theme-top">
-        <h3>프리미엄<br>유압공구</h3>
-        <div class="theme-photo" style="background-image:url('images/products/sunsco/sunsco-170.png');"></div>
+        <h3>전동·유압<br>공구</h3>
+        <div class="theme-slider">
+          <div class="slide active" style="background-image:url('images/products/gana/gana-20188.png');"></div>
+          <div class="slide" style="background-image:url('images/products/vendor/klauke-ek425cl.jpg');"></div>
+          <div class="slide" style="background-image:url('images/products/vendor/klauke-ek12042cfm.jpg');"></div>
+          <div class="slide" style="background-image:url('images/products/sunsco/sunsco-73.png');"></div>
+        </div>
       </div>
-      <div class="theme-brands"><span>이즈미</span><span>Klauke</span></div>
+      <div class="theme-brands"><span>DEWALT</span><span>Klauke</span><span>이즈미</span></div>
     </a>
 
     <a href="category-thermal.html" class="theme-tile">
       <div class="theme-top">
         <h3>열화상·초음파<br>카메라</h3>
-        <div class="theme-photo" style="background-image:url('images/hikmicro-building.png');"></div>
+        <div class="theme-slider">
+          <div class="slide active" style="background-image:url('images/products/sp120h_main.jpg');"></div>
+          <div class="slide" style="background-image:url('images/products/m60_main_v2.jpg');"></div>
+          <div class="slide" style="background-image:url('images/products/pocket2_main.jpg');"></div>
+          <div class="slide" style="background-image:url('images/products/ai76_main.jpg');"></div>
+        </div>
       </div>
       <div class="theme-brands"><span>HIKMICRO</span></div>
     </a>
@@ -94,9 +109,13 @@
     <a href="category-kepco-repair-material.html" class="theme-tile">
       <div class="theme-top">
         <h3>한전 보수용<br>자재</h3>
-        <div class="theme-photo" style="background-image:url('images/products/sunsco/sunsco-101.png');"></div>
+        <div class="theme-slider">
+          <div class="slide active" style="background-image:url('images/products/chongwoo/vine-cap-standard.jpg');"></div>
+          <div class="slide" style="background-image:url('images/products/jeryong/jeryong-6.jpg');"></div>
+          <div class="slide" style="background-image:url('images/products/sunsco/sunsco-141.png');"></div>
+        </div>
       </div>
-      <div class="theme-brands"><span>청우테크</span><span>세원산업</span></div>
+      <div class="theme-brands"><span>청우테크</span><span>제룡산업</span><span>세원산업</span></div>
     </a>
   </div>
 
@@ -146,6 +165,19 @@
 </footer>
 
 <a href="quote-request.html" class="floating-quote">빠른 견적문의</a>
+
+<script>
+  document.querySelectorAll('.theme-slider').forEach(function (slider) {
+    var slides = slider.querySelectorAll('.slide');
+    if (slides.length <= 1) return;
+    var i = 0;
+    setInterval(function () {
+      slides[i].classList.remove('active');
+      i = (i + 1) % slides.length;
+      slides[i].classList.add('active');
+    }, 2400 + Math.random() * 1000);
+  });
+</script>
 
   <script src="cart.js"></script>
 </body>
