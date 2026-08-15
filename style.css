@@ -1853,3 +1853,89 @@ img { max-width: 100%; display: block; }
   .meter-hero { height: 260px; }
   .meter-hero-inner h1 { font-size: 24px; }
 }
+
+/* 홈페이지: 카테고리 탭 바 */
+.cat-nav-bar {
+  background: var(--bg-soft);
+  border-bottom: 1px solid var(--border);
+}
+.cat-nav-inner {
+  display: flex;
+  gap: 4px;
+  overflow-x: auto;
+  padding: 10px 0;
+}
+.cat-nav-inner a {
+  flex-shrink: 0;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--text);
+  white-space: nowrap;
+  transition: background .15s ease, color .15s ease;
+}
+.cat-nav-inner a:hover { background: var(--purple-light); color: var(--purple-dark); }
+
+/* 홈페이지: 테마별 카테고리 타일 (사진 + 하단 브랜드 배너) */
+.theme-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  max-width: 1180px;
+}
+@media (max-width: 900px) { .theme-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 600px) { .theme-grid { grid-template-columns: 1fr; } }
+
+.theme-tile {
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  overflow: hidden;
+  transition: box-shadow .2s ease, transform .2s ease;
+}
+.theme-tile:hover { box-shadow: 0 10px 28px rgba(108,92,231,0.14); transform: translateY(-2px); }
+
+.theme-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 22px 20px 18px;
+  min-height: 128px;
+}
+.theme-top h3 {
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--text-strong);
+  margin: 0;
+  letter-spacing: -0.3px;
+  line-height: 1.35;
+}
+.theme-photo {
+  width: 112px;
+  height: 90px;
+  background-size: cover;
+  background-position: center;
+  border-radius: 10px;
+  flex-shrink: 0;
+  background-color: var(--purple-light);
+}
+.theme-brands {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  padding: 12px 16px;
+  background: var(--bg-soft);
+  border-top: 1px solid var(--border);
+  flex-wrap: wrap;
+}
+.theme-brands span {
+  font-size: 12.5px;
+  font-weight: 800;
+  letter-spacing: -0.2px;
+  color: var(--text-mute);
+}
