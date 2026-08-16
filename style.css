@@ -746,15 +746,16 @@ img { max-width: 100%; display: block; }
 
 /* Footer */
 .site-footer {
-  background: var(--bg-soft);
+  background: #F0F0F0;
   border-top: 1px solid var(--border);
   margin-top: 40px;
-  padding: 36px 0 24px;
-  font-size: 13px;
-  color: var(--text-mute);
+  padding: 32px 0 20px;
+  font-size: 12px;
+  color: #999999;
 }
 .footer-links { display: flex; gap: 18px; margin-bottom: 14px; }
-.footer-links a:hover { color: var(--purple-dark); }
+.footer-links a { color: #888888; }
+.footer-links a:hover { color: #555555; }
 .footer-info div { margin-bottom: 4px; }
 .footer-mascot { width: 34px; opacity: 0.85; margin-bottom: 14px; }
 
@@ -1854,28 +1855,25 @@ img { max-width: 100%; display: block; }
   .meter-hero-inner h1 { font-size: 24px; }
 }
 
-/* 홈페이지: 카테고리 탭 바 */
+/* 사이트 전체: 상단 대분류 탭 바 (헤더 바로 아래, 한 줄) */
 .cat-nav-bar {
-  background: var(--bg-soft);
-  border-bottom: 1px solid var(--border);
+  background: var(--purple-dark);
 }
 .cat-nav-inner {
   display: flex;
-  gap: 4px;
+  gap: 0;
   overflow-x: auto;
-  padding: 10px 0;
 }
 .cat-nav-inner a {
   flex-shrink: 0;
-  padding: 8px 16px;
-  border-radius: 20px;
-  font-size: 13.5px;
-  font-weight: 600;
-  color: var(--text);
+  padding: 11px 22px;
+  font-size: 14px;
+  font-weight: 700;
+  color: rgba(255,255,255,0.92);
   white-space: nowrap;
   transition: background .15s ease, color .15s ease;
 }
-.cat-nav-inner a:hover { background: var(--purple-light); color: var(--purple-dark); }
+.cat-nav-inner a:hover { background: rgba(255,255,255,0.14); color: #fff; }
 
 /* 홈페이지: 테마별 카테고리 타일 (사진 + 하단 브랜드 배너) */
 .theme-grid {
