@@ -1940,6 +1940,13 @@ img { max-width: 100%; display: block; }
   transition: opacity .7s ease;
 }
 .theme-slider .slide.active { opacity: 1; }
+.grainger-slider {
+  width: auto;
+  height: 150px;
+  border-radius: 0;
+  background-color: #fff;
+}
+.grainger-slider .slide { background-size: contain; }
 .theme-brands {
   display: flex;
   align-items: center;
