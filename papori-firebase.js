@@ -3,11 +3,12 @@ import { firebaseConfig } from "./firebase-config.js";
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import {
   getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword,
-  onAuthStateChanged, signOut
+  onAuthStateChanged, signOut, sendPasswordResetEmail,
+  reauthenticateWithCredential, EmailAuthProvider, deleteUser
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 import {
   getFirestore, collection, addDoc, serverTimestamp, doc, setDoc,
-  getDoc, getDocs, query, orderBy
+  getDoc, getDocs, query, orderBy, deleteDoc
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const app = initializeApp(firebaseConfig);
@@ -40,6 +41,24 @@ export async function paporiLogin({ email, password }) {
 
 export function paporiLogout() {
   return signOut(auth);
+}
+
+// ---- 비밀번호 찾기(재설정 메일 발송) ----
+// Firebase가 해당 이메일로 재설정 링크를 직접 보내줍니다(자체 서버 불필요).
+export function paporiSendPasswordReset(email) {
+  return sendPasswordResetEmail(auth, email);
+}
+
+// ---- 회원 탈퇴 ----
+// 보안상 최근 로그인이 필요해, 탈퇴 직전 비밀번호를 다시 확인(재인증)한 뒤 계정을 완전히 삭제합니다.
+// 완전 삭제이므로 탈퇴 후 같은 이메일로 즉시 재가입할 수 있습니다.
+export async function paporiDeleteAccount(password) {
+  const user = auth.currentUser;
+  if (!user) throw new Error('로그인이 필요합니다.');
+  const cred = EmailAuthProvider.credential(user.email, password);
+  await reauthenticateWithCredential(user, cred);
+  await deleteDoc(doc(db, "members", user.uid)).catch(() => {}); // 회원정보 문서도 함께 삭제(실패해도 탈퇴는 진행)
+  await deleteUser(user);
 }
 
 export function paporiOnAuthChange(callback) {

@@ -303,16 +303,28 @@
     import('./papori-firebase.js').then(function (mod) {
       mod.paporiOnAuthChange(function (user) {
         if (user) {
-          loginLink.textContent = (user.email || '내 계정') + ' · 로그아웃';
-          loginLink.href = '#';
-          loginLink.onclick = function (e) {
+          var wrap = document.createElement('span');
+          wrap.id = 'papori-auth-state';
+          wrap.innerHTML =
+            '<a href="mypage.html">' + escapeHtml(user.email || '내 계정') + '</a> · ' +
+            '<a href="#" id="papori-logout-link">로그아웃</a>';
+          loginLink.replaceWith(wrap);
+          document.getElementById('papori-logout-link').onclick = function (e) {
             e.preventDefault();
             mod.paporiLogout().then(function () { location.reload(); });
           };
         } else {
-          loginLink.textContent = '로그인';
-          loginLink.href = 'login.html';
-          loginLink.onclick = null;
+          var existing = document.getElementById('papori-auth-state');
+          if (existing) {
+            var restored = document.createElement('a');
+            restored.href = 'login.html';
+            restored.textContent = '로그인';
+            existing.replaceWith(restored);
+          } else {
+            loginLink.textContent = '로그인';
+            loginLink.href = 'login.html';
+            loginLink.onclick = null;
+          }
         }
       });
     }).catch(function () { /* firebase 로드 실패 시 기본 "로그인" 링크 그대로 둠 */ });

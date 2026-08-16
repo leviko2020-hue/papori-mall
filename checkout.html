@@ -67,7 +67,7 @@
       <h3>결제 정보</h3>
       <div class="cart-summary" style="margin-left:0; width:auto; padding:0; background:none;">
         <div class="row"><span>상품 합계</span><span id="co-subtotal">0원</span></div>
-        <div class="row"><span>배송비</span><span id="co-shipping">25,000원</span></div>
+        <div class="row"><span>배송비</span><span id="co-shipping">5,000원</span></div>
         <div class="row total"><span>결제 예정 금액</span><span id="co-grandtotal">0원</span></div>
       </div>
       <label style="display:flex; align-items:flex-start; gap:8px; font-weight:400; font-size:13px; margin-top:16px; color:var(--text-mute);">
@@ -105,7 +105,8 @@
 
 <script type="module">
   import { paporiSubmitOrder } from "./papori-firebase.js";
-  const SHIPPING_FEE = 25000;
+  const SHIPPING_FEE = 5000;
+  const FREE_SHIPPING_THRESHOLD = 500000;
   const msg = document.getElementById('pay-msg');
   const itemsBox = document.getElementById('co-items');
   const emptyMsg = document.getElementById('co-empty-msg');
@@ -116,10 +117,15 @@
     return window.PaporiCart ? window.PaporiCart.getCart() : [];
   }
 
+  function shippingFeeFor(subtotal) {
+    return subtotal >= FREE_SHIPPING_THRESHOLD ? 0 : SHIPPING_FEE;
+  }
+
   function renderOrderSummary() {
     const items = getCartItems();
     const subtotal = items.reduce((sum, i) => sum + i.price * (parseInt(i.qty, 10) || 1), 0);
-    const grand = items.length ? subtotal + SHIPPING_FEE : 0;
+    const shipping = shippingFeeFor(subtotal);
+    const grand = items.length ? subtotal + shipping : 0;
 
     if (items.length === 0) {
       itemsBox.innerHTML = '';
@@ -141,7 +147,7 @@
     }
 
     document.getElementById('co-subtotal').textContent = subtotal.toLocaleString() + '원';
-    document.getElementById('co-shipping').textContent = items.length ? SHIPPING_FEE.toLocaleString() + '원' : '-';
+    document.getElementById('co-shipping').textContent = items.length ? (shipping === 0 ? '무료' : shipping.toLocaleString() + '원') : '-';
     document.getElementById('co-grandtotal').textContent = grand.toLocaleString() + '원';
   }
   renderOrderSummary();
@@ -167,7 +173,7 @@
     const taxInvoice = document.getElementById('co-tax').checked;
     const items = cartItems.map(i => ({ name: i.name, price: i.price, qty: parseInt(i.qty, 10) || 1 }));
     const subtotal = items.reduce((sum, i) => sum + i.price * i.qty, 0);
-    const totalAmount = subtotal + SHIPPING_FEE;
+    const totalAmount = subtotal + shippingFeeFor(subtotal);
     msg.textContent = '주문 처리 중...';
     try {
       await paporiSubmitOrder({

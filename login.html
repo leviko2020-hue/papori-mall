@@ -40,6 +40,9 @@
     </div>
     <button type="button" class="btn btn-primary btn-block" id="login-submit">로그인</button>
     <p id="login-msg" style="font-size:13px; color:var(--text-mute); margin-top:10px; text-align:center;"></p>
+    <div style="text-align:center; margin-top:8px;">
+      <a href="#" id="forgot-password-link" style="font-size:13px; color:var(--text-mute);">비밀번호를 잊으셨나요?</a>
+    </div>
   </form>
 
   <div class="auth-links">
@@ -66,7 +69,7 @@
 </footer>
 
 <script type="module">
-  import { paporiLogin } from "./papori-firebase.js";
+  import { paporiLogin, paporiSendPasswordReset } from "./papori-firebase.js";
   const msg = document.getElementById('login-msg');
   document.getElementById('login-submit').addEventListener('click', async () => {
     const email = document.getElementById('li-email').value.trim();
@@ -79,6 +82,19 @@
       setTimeout(() => location.href = 'index.html', 800);
     } catch (err) {
       msg.textContent = '로그인 실패: ' + (err.message || err);
+    }
+  });
+
+  document.getElementById('forgot-password-link').addEventListener('click', async (e) => {
+    e.preventDefault();
+    const email = document.getElementById('li-email').value.trim() || prompt('가입하신 이메일을 입력해주세요');
+    if (!email) return;
+    msg.textContent = '재설정 메일 발송 중...';
+    try {
+      await paporiSendPasswordReset(email);
+      msg.textContent = email + ' 주소로 비밀번호 재설정 메일을 보냈습니다. 메일함을 확인해주세요.';
+    } catch (err) {
+      msg.textContent = '메일 발송 실패: ' + (err.message || err);
     }
   });
 </script>

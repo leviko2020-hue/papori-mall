@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>마이페이지 — PAPORI</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container header-top">
+    <a href="index.html" class="logo">PAPOR<span>I</span></a>
+    <nav class="gnb">
+      <a href="category-thermal.html">열화상카메라</a>
+      <a href="category-kepco.html">한전 기자재/계측기</a>
+      <a href="customer-center.html">고객센터</a>
+    </nav>
+    <div class="header-actions">
+      <div class="search-box"><input type="text" placeholder="제품명, 모델명 검색"></div>
+      <a href="login.html">로그인</a>
+      <a href="cart.html" class="cart-link">장바구니<span class="cart-badge"></span></a>
+      <a href="quote-request.html" class="btn btn-primary btn-sm">견적요청</a>
+    </div>
+  </div>
+</header>
+
+<div class="auth-wrap">
+  <h1>마이페이지</h1>
+  <p class="sub" id="mp-email">로그인 확인 중...</p>
+
+  <div id="mp-body" style="display:none;">
+    <div class="form-group">
+      <label>비밀번호 재설정</label>
+      <button type="button" class="btn btn-outline btn-block" id="mp-reset-pw">비밀번호 재설정 메일 받기</button>
+    </div>
+
+    <div class="form-group" style="margin-top:28px; padding-top:20px; border-top:1px solid var(--border);">
+      <label style="color:#C0392B;">회원 탈퇴</label>
+      <p style="font-size:13px; color:var(--text-mute); margin:0 0 10px;">탈퇴 시 회원정보가 삭제되며, 이후 같은 이메일로 다시 가입하실 수 있습니다. 진행 확인을 위해 비밀번호를 다시 입력해주세요.</p>
+      <input type="password" id="mp-withdraw-pw" placeholder="현재 비밀번호">
+      <button type="button" class="btn btn-block" style="margin-top:10px; background:#C0392B; color:#fff;" id="mp-withdraw">회원 탈퇴</button>
+    </div>
+    <p id="mp-msg" style="font-size:13px; color:var(--text-mute); margin-top:10px; text-align:center;"></p>
+  </div>
+
+  <div class="auth-links">
+    <a href="index.html">← 쇼핑몰로 돌아가기</a>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-links">
+      <a href="terms.html">이용약관</a>
+      <a href="privacy-policy.html">개인정보처리방침</a>
+      <a href="return-policy.html">교환/반품 안내</a>
+      <a href="materials.html">제품 자료실</a>
+    </div>
+    <div class="footer-info">
+      <div>상호 에스이글로벌주식회사 · 대표자 고대웅 · 대표전화 042-349-0703 · 고객센터 010-8699-8868</div>
+      <div>사업장 주소 대전시 대덕구 대화로 106번길 66</div>
+      <div>사업자등록번호 146-88-01550 · 통신판매업신고 제2206-대전대덕-0357호</div>
+      <div>© PAPORI. All rights reserved.</div>
+    </div>
+  </div>
+</footer>
+
+<script type="module">
+  import { paporiOnAuthChange, paporiSendPasswordReset, paporiDeleteAccount, paporiLogout } from "./papori-firebase.js";
+
+  const emailEl = document.getElementById('mp-email');
+  const bodyEl = document.getElementById('mp-body');
+  const msg = document.getElementById('mp-msg');
+
+  paporiOnAuthChange((user) => {
+    if (!user) {
+      emailEl.textContent = '로그인이 필요합니다.';
+      bodyEl.style.display = 'none';
+      setTimeout(() => location.href = 'login.html', 1200);
+      return;
+    }
+    emailEl.textContent = user.email + ' 님으로 로그인되어 있습니다';
+    bodyEl.style.display = 'block';
+  });
+
+  document.getElementById('mp-reset-pw').addEventListener('click', async () => {
+    const { getAuth } = await import('https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js');
+    const user = getAuth().currentUser;
+    if (!user) return;
+    msg.textContent = '메일 발송 중...';
+    try {
+      await paporiSendPasswordReset(user.email);
+      msg.textContent = user.email + ' 주소로 비밀번호 재설정 메일을 보냈습니다.';
+    } catch (err) {
+      msg.textContent = '실패: ' + (err.message || err);
+    }
+  });
+
+  document.getElementById('mp-withdraw').addEventListener('click', async () => {
+    const pw = document.getElementById('mp-withdraw-pw').value;
+    if (!pw) { msg.textContent = '비밀번호를 입력해주세요.'; return; }
+    if (!confirm('정말 탈퇴하시겠습니까? 회원정보가 삭제됩니다.')) return;
+    msg.textContent = '처리 중...';
+    try {
+      await paporiDeleteAccount(pw);
+      alert('탈퇴가 완료되었습니다.');
+      location.href = 'index.html';
+    } catch (err) {
+      msg.textContent = '탈퇴 실패: ' + (err.message || err) + ' (비밀번호를 확인해주세요)';
+    }
+  });
+</script>
+
+  <script src="cart.js"></script>
+</body>
+</html>
