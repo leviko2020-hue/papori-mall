@@ -70,7 +70,11 @@
         <div class="row"><span>배송비</span><span id="co-shipping">25,000원</span></div>
         <div class="row total"><span>결제 예정 금액</span><span id="co-grandtotal">0원</span></div>
       </div>
-      <button type="button" class="btn btn-primary btn-block" id="pay-submit" style="margin-top:18px;">
+      <label style="display:flex; align-items:flex-start; gap:8px; font-weight:400; font-size:13px; margin-top:16px; color:var(--text-mute);">
+        <input type="checkbox" id="co-agree" style="width:auto; margin-top:2px;">
+        <span>[필수] <a href="terms.html" target="_blank">이용약관</a> 및 <a href="return-policy.html" target="_blank">교환/반품 안내</a>(검교정 씰 훼손·사용 흔적이 있는 경우 반품이 제한될 수 있음을 포함)를 확인했으며 동의합니다.</span>
+      </label>
+      <button type="button" class="btn btn-primary btn-block" id="pay-submit" style="margin-top:10px;">
         결제하기
       </button>
       <p id="pay-msg" style="font-size:13px; color:var(--text-mute); margin-top:10px; text-align:center;"></p>
@@ -153,6 +157,10 @@
     const address = document.getElementById('co-address').value.trim();
     if (!name || !contact || !address) {
       msg.textContent = '받는 분, 연락처, 배송지를 입력해주세요.';
+      return;
+    }
+    if (!document.getElementById('co-agree').checked) {
+      msg.textContent = '이용약관 및 교환/반품 안내 동의가 필요합니다.';
       return;
     }
     const payMethod = document.querySelector('input[name=pay]:checked').value;
