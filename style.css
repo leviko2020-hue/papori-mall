@@ -373,7 +373,7 @@ img { max-width: 100%; display: block; }
 /* Product detail */
 .detail-wrap {
   display: grid;
-  grid-template-columns: 480px 1fr;
+  grid-template-columns: 336px 1fr;
   gap: 48px;
   padding: 20px 0 48px;
 }
@@ -388,6 +388,16 @@ img { max-width: 100%; display: block; }
   border: 1px solid var(--border);
   box-sizing: border-box;
   padding: 20px;
+}
+.gallery-quick-bar {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+.gallery-quick-bar .btn {
+  flex: 1;
+  padding: 9px 0;
+  font-size: 13px;
 }
 .detail-gallery { position: relative; }
 .detail-gallery .main-img {
