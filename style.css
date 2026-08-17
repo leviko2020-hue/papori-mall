@@ -43,6 +43,7 @@ img { max-width: 100%; display: block; }
   z-index: 50;
 }
 .header-top {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -92,15 +93,19 @@ img { max-width: 100%; display: block; }
   display: flex;
   align-items: center;
   background: var(--gray-light);
-  border-radius: 20px;
-  padding: 8px 16px;
-  min-width: 220px;
+  border-radius: 30px;
+  padding: 12px 24px;
+  min-width: 330px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
 }
 .search-box input {
   border: none;
   background: transparent;
   outline: none;
-  font-size: 13px;
+  font-size: 19px;
   width: 100%;
   color: var(--text);
 }

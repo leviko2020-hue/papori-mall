@@ -505,7 +505,9 @@
     var box = document.querySelector('.search-box');
     var input = box ? box.querySelector('input') : null;
     if (!box || !input) return;
-    box.style.position = 'relative';
+    // 헤더 검색창은 CSS에서 이미 position:absolute(가운데 정렬)로 지정돼 있음 —
+    // static일 때만 relative로 보강해서 자동완성 드롭다운의 위치 기준을 만들어줌
+    if (getComputedStyle(box).position === 'static') box.style.position = 'relative';
 
     var list = document.createElement('div');
     list.className = 'autocomplete-list';
