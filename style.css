@@ -271,7 +271,7 @@ img { max-width: 100%; display: block; }
 }
 .product-card .thumb {
   position: relative;
-  height: 200px;
+  height: 320px;
   background: #fff;
   background-size: contain;
   background-repeat: no-repeat;
@@ -279,6 +279,29 @@ img { max-width: 100%; display: block; }
   padding: 12px;
   box-sizing: border-box;
 }
+.card-link { display: block; }
+.card-quick-actions {
+  display: flex;
+  gap: 6px;
+  padding: 8px;
+  background: var(--bg-soft);
+  border-bottom: 1px solid var(--border);
+}
+.cqa-btn {
+  flex: 1;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 7px 2px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: #fff;
+  color: var(--text);
+  cursor: pointer;
+  white-space: nowrap;
+}
+.cqa-btn.cqa-buy { background: var(--purple); color: #fff; border-color: var(--purple); }
+.cqa-btn.cqa-buy:hover { background: var(--purple-dark); }
+.cqa-btn.cqa-cart:hover, .cqa-btn.cqa-quote:hover { background: var(--purple-light); border-color: var(--purple); color: var(--purple-dark); }
 
 /* 활선용/간접활선용 install-method ribbon badge (product-card thumb + detail main-img) */
 .install-badge {
@@ -567,11 +590,11 @@ img { max-width: 100%; display: block; }
   background: var(--bg-soft);
   border-radius: 10px;
   padding: 14px;
-  font-size: 19px;
+  font-size: 12px;
   text-align: center;
   color: var(--text);
 }
-.trust-strip .item b { display:block; font-size: 21px; color: var(--text-strong); margin-bottom: 2px; }
+.trust-strip .item b { display:block; font-size: 13px; color: var(--text-strong); margin-bottom: 2px; }
 
 /* Tabs */
 .tabs {

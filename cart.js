@@ -280,6 +280,73 @@
     }).catch(function () { /* 오버라이드 조회 실패 시 페이지 기본값 그대로 사용 */ });
   }
 
+  // 상품 목록 카드(카테고리 목록, 관련상품 등 .product-card 전부): 카드 상단에
+  // 바로구매/장바구니/견적요청 3버튼을 추가. 가격이 있는 카드는 실제 구매로,
+  // 가격문의 카드는 3버튼 모두 견적요청 담기로 동작 (상세페이지와 동일한 규칙).
+  function initProductCardActions() {
+    var cards = Array.prototype.slice.call(document.querySelectorAll('a.product-card'));
+    cards.forEach(function (oldCard) {
+      var href = oldCard.getAttribute('href');
+      var thumbEl = oldCard.querySelector('.thumb');
+      var h4 = oldCard.querySelector('h4');
+      if (!href || !thumbEl || !h4) return;
+
+      var brandEl = oldCard.querySelector('.brand');
+      var priceEl = oldCard.querySelector('.price');
+      var image = '';
+      var m = /url\((['"]?)(.*?)\1\)/.exec(thumbEl.style.backgroundImage || '');
+      if (m) image = m[2];
+      var price = priceEl ? parsePrice(priceEl.textContent) : NaN;
+
+      var product = {
+        id: href.replace(/\.html$/, ''),
+        name: h4.textContent.trim(),
+        brand: brandEl ? brandEl.textContent.trim() : '',
+        model: '',
+        price: price || null,
+        image: image,
+        url: href
+      };
+
+      var wrapper = document.createElement('div');
+      wrapper.className = 'product-card';
+
+      var actionsBar = document.createElement('div');
+      actionsBar.className = 'card-quick-actions';
+      actionsBar.innerHTML =
+        '<button type="button" class="cqa-btn cqa-buy">바로구매</button>' +
+        '<button type="button" class="cqa-btn cqa-cart">장바구니</button>' +
+        '<button type="button" class="cqa-btn cqa-quote">견적요청</button>';
+
+      var innerLink = document.createElement('a');
+      innerLink.className = 'card-link';
+      innerLink.href = href;
+      while (oldCard.firstChild) innerLink.appendChild(oldCard.firstChild);
+
+      wrapper.appendChild(actionsBar);
+      wrapper.appendChild(innerLink);
+      oldCard.replaceWith(wrapper);
+
+      var buyBtn = actionsBar.querySelector('.cqa-buy');
+      var cartBtn = actionsBar.querySelector('.cqa-cart');
+      var quoteBtn = actionsBar.querySelector('.cqa-quote');
+
+      quoteBtn.onclick = function (e) {
+        e.preventDefault();
+        addToQuoteDraft(product, 1);
+        showToast('견적요청 목록에 담았습니다');
+        location.href = 'quote-request.html';
+      };
+      if (product.price) {
+        cartBtn.onclick = function (e) { e.preventDefault(); addToCart(product, 1); showToast('장바구니에 담았습니다'); };
+        buyBtn.onclick = function (e) { e.preventDefault(); addToCart(product, 1); location.href = 'checkout.html'; };
+      } else {
+        cartBtn.onclick = function (e) { e.preventDefault(); addToQuoteDraft(product, 1); showToast('견적요청 목록에 담았습니다'); };
+        buyBtn.onclick = function (e) { e.preventDefault(); addToQuoteDraft(product, 1); location.href = 'quote-request.html'; };
+      }
+    });
+  }
+
   // cart.html: 실제 장바구니 내용을 테이블로 렌더링
   function renderCartPage() {
     var table = document.querySelector('.cart-table');
@@ -497,6 +564,7 @@
   document.addEventListener('DOMContentLoaded', function () {
     updateBadge();
     initProductActions();
+    initProductCardActions();
     renderCartPage();
     initAuthState();
     applySiteConfig();
