@@ -38,6 +38,10 @@
   <div class="detail-wrap">
     <div class="detail-gallery">
       <div class="main-img" style="background-image:url('images/products/vendor/hioki-CM4373-50-main.jpg');"></div>
+      <div class="gallery-thumbs">
+        <div class="thumb-img active" style="background-image:url('images/products/vendor/hioki-CM4373-50-main.jpg');" onclick="swapGalleryImage(this)"></div>
+        <div class="thumb-img" style="background-image:url('images/products/vendor/hioki-CM4373-50-angle2.png');" onclick="swapGalleryImage(this)"></div>
+      </div>
     </div>
 
     <div class="detail-info">
@@ -91,15 +95,34 @@
 
     <div class="detail-section">
       <h3>제품 소개</h3>
-      <p>HIOKI CM4373-50은 φ55mm 대구경 조로 최대 2000A까지 측정 가능한 AC/DC 클램프미터입니다. AC/DC 자동 판별과 P2010 고전압 프로브 연동으로 태양광 설비 점검까지 대응합니다.</p>
-      <h3 style="margin-top:20px;">주요 특징</h3>
+      <p>HIOKI CM4373-50은 φ55mm 대구경 조(jaw)로 최대 2000A까지 측정할 수 있는 AC/DC 클램프미터입니다. 배전반, 수배전설비, 태양광 발전설비 등 현장 여건이 까다로운 곳에서도 안정적으로 쓸 수 있도록 조 강성과 방진방수 성능(보관 시 IP54)을 강화했으며, CAT IV 600V / CAT III 1000V의 높은 내전압 등급을 확보해 활선 작업 시 안전성을 높였습니다. AC/DC 전류·전압을 자동으로 판별해 별도 조작 없이 바로 측정을 시작할 수 있고, 별매 고전압 프로브 P2010을 연결하면 DC 2000V까지 측정 범위가 확장되어 태양광 패널·인버터 점검에도 활용할 수 있습니다.</p>
+
+      <img class="full-img" style="margin:18px auto;" src="images/products/vendor/hioki-CM4373-50-solar.png" alt="HIOKI CM4373-50 태양광 설비 점검 활용 예시">
+      <p style="text-align:center; font-size:13px; color:var(--text-mute); margin-top:-8px;">P2010 고전압 프로브 연동 시 태양광 패널·인버터 계통의 DC 고전압 점검에도 사용할 수 있습니다.</p>
+
+      <h3 style="margin-top:28px;">주요 특징</h3>
+      <div class="detail-gallery" style="display:block; margin-bottom:18px;">
+        <div class="img-stack" style="flex-direction:row; gap:18px;">
+          <div style="flex:1;">
+            <img class="full-img" style="width:100%; max-width:none; margin:0;" src="images/products/vendor/hioki-CM4373-50-autohold.jpg" alt="AUTO-HOLD 기능 예시">
+            <p style="text-align:center; font-size:13px; color:var(--text-mute); margin-top:8px;">AUTO-HOLD 기능 — 측정값이 안정되면 자동으로 화면에 고정되어, 좁은 배전반 안에서도 표시값을 눈으로 바로 확인할 수 있습니다.</p>
+          </div>
+          <div style="flex:1;">
+            <img class="full-img" style="width:100%; max-width:none; margin:0;" src="images/products/vendor/hioki-CM4373-50-inrush.jpg" alt="돌입전류 측정 예시">
+            <p style="text-align:center; font-size:13px; color:var(--text-mute); margin-top:8px;">전동기 기동 시 발생하는 돌입전류의 실효값(RMS)과 파형 최대값(Peak)을 동시에 표시해 설비 점검·보호협조 설계에 활용할 수 있습니다.</p>
+          </div>
+        </div>
+      </div>
       <ul class="vendor-feature-list">
-        <li>직류 600A/2000A, 교류 600A/2000A 참실효값 측정</li>
-        <li>AC/DC 자동 판별, P2010 사용 시 DC 2000V까지 측정</li>
-        <li>돌입전류 실효값·파형피크 동시 표시</li>
-        <li>무선 어댑터 Z3210 장착 시 GENNECT Cross 연동</li>
+        <li>직류 600A/2000A, 교류 600A/2000A 참실효값(True RMS) 측정</li>
+        <li>AC/DC 자동 판별 기능으로 별도 전환 조작 없이 즉시 측정</li>
+        <li>고전압 프로브 P2010 사용 시 DC 2000V까지 측정 — 태양광 설비 점검용</li>
+        <li>돌입전류 실효값·파형피크 동시 표시로 전동기 기동전류 분석 지원</li>
+        <li>AUTO-HOLD 기능 — 측정값 안정 시 자동 고정 표시</li>
+        <li>무선통신 어댑터 Z3210(별매) 장착 시 GENNECT Cross 앱으로 데이터 무선 전송, 엑셀 내보내기 및 고조파(1~30차) 분석 지원</li>
+        <li>CAT IV 600V / CAT III 1000V 내전압 등급, 보관 시 IP54 방진방수</li>
       </ul>
-      <p class="vendor-source-note">본 정보는 제조사(HIOKI) 공식 자료를 기준으로 제공됩니다.</p>
+      <p class="vendor-source-note">본 정보 및 이미지는 제조사(HIOKI) 공식 자료를 바탕으로 재구성하여 제공합니다.</p>
     </div>
   </div>
   <div class="tab-panel" id="panel-spec" style="display:none;">
@@ -139,6 +162,38 @@
   <div class="related">
     <h2>이 분류의 다른 상품</h2>
     <div class="product-grid" style="padding-top:0;">
+      <a href="product-detail-meter-dt4252.html" class="product-card">
+        <div class="thumb" style="background-image:url('images/products/vendor/hioki-DT4252-main.jpg');"></div>
+        <div class="body">
+          <div class="brand">HIOKI</div>
+          <h4>디지털 멀티미터 DT4252</h4>
+          <div class="price">156,200<span class="unit">원</span></div>
+        </div>
+      </a>
+      <a href="product-detail-meter-pd3129.html" class="product-card">
+        <div class="thumb" style="background-image:url('images/products/vendor/hioki-PD3129-main.jpg');"></div>
+        <div class="body">
+          <div class="brand">HIOKI</div>
+          <h4>검상기 PD3129</h4>
+          <div class="price">216,700<span class="unit">원</span></div>
+        </div>
+      </a>
+      <a href="product-detail-meter-fluke374fc.html" class="product-card">
+        <div class="thumb" style="background-image:url('images/products/vendor/fluke-374fc-main.jpg');"></div>
+        <div class="body">
+          <div class="brand">FLUKE</div>
+          <h4>AC/DC 클램프미터 FLUKE 374FC</h4>
+          <div class="price">511,500<span class="unit">원</span></div>
+        </div>
+      </a>
+      <a href="product-detail-meter-kew8035.html" class="product-card">
+        <div class="thumb" style="background-image:url('images/products/vendor/kyoritsu-KEW8035-main.jpg');"></div>
+        <div class="body">
+          <div class="brand">KYORITSU</div>
+          <h4>비접촉검상기 KEW 8035</h4>
+          <div class="price">234,300<span class="unit">원</span></div>
+        </div>
+      </a>
     </div>
   </div>
 </main>
@@ -184,6 +239,14 @@
     });
     document.querySelectorAll('.tabs .tab').forEach(t => t.classList.remove('active'));
     event.currentTarget.classList.add('active');
+  }
+  function swapGalleryImage(el) {
+    const gallery = el.closest('.detail-gallery');
+    if (!gallery) return;
+    const main = gallery.querySelector('.main-img');
+    if (main) main.style.backgroundImage = el.style.backgroundImage;
+    gallery.querySelectorAll('.thumb-img').forEach(t => t.classList.remove('active'));
+    el.classList.add('active');
   }
 </script>
 
