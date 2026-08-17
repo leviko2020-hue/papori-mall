@@ -37,6 +37,10 @@
   <div class="detail-wrap">
     <div class="detail-gallery">
       <div class="main-img" style="background-image:url('images/products/vendor/hioki-PQ3100-91-main.jpg');"></div>
+      <div class="gallery-thumbs">
+        <div class="thumb-img active" style="background-image:url('images/products/vendor/hioki-PQ3100-91-main.jpg');" onclick="swapGalleryImage(this)"></div>
+        <div class="thumb-img" style="background-image:url('images/products/vendor/hioki-PQ3100-91-detail1.png');" onclick="swapGalleryImage(this)"></div>
+      </div>
     </div>
 
     <div class="detail-info">
@@ -174,6 +178,15 @@
     document.querySelectorAll('.tabs .tab').forEach(t => t.classList.remove('active'));
     event.currentTarget.classList.add('active');
   }
+  function swapGalleryImage(el) {
+    const gallery = el.closest('.detail-gallery');
+    if (!gallery) return;
+    const main = gallery.querySelector('.main-img');
+    if (main) main.style.backgroundImage = el.style.backgroundImage;
+    gallery.querySelectorAll('.thumb-img').forEach(t => t.classList.remove('active'));
+    el.classList.add('active');
+  }
+
 </script>
 
   <script src="cart.js"></script>
