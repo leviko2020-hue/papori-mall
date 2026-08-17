@@ -6,6 +6,24 @@
 // - checkout.html: PaporiCart.getCart()를 통해 실제 장바구니 데이터 사용
 (function () {
   var CART_KEY = 'papori_cart';
+  var QUOTE_DRAFT_KEY = 'papori_quote_draft';
+
+  function getQuoteDraft() {
+    try {
+      var raw = JSON.parse(localStorage.getItem(QUOTE_DRAFT_KEY));
+      return Array.isArray(raw) ? raw : [];
+    } catch (e) { return []; }
+  }
+  function addToQuoteDraft(item, qty) {
+    qty = Math.max(1, parseInt(qty, 10) || 1);
+    var draft = getQuoteDraft();
+    var existing = null;
+    for (var i = 0; i < draft.length; i++) { if (draft[i].id === item.id) { existing = draft[i]; break; } }
+    if (existing) existing.qty = (parseInt(existing.qty, 10) || 0) + qty;
+    else draft.push({ id: item.id, name: item.name, model: item.model || '', qty: qty });
+    localStorage.setItem(QUOTE_DRAFT_KEY, JSON.stringify(draft));
+  }
+  function clearQuoteDraft() { localStorage.removeItem(QUOTE_DRAFT_KEY); }
 
   function getCart() {
     try {
@@ -92,6 +110,7 @@
     var price = priceEl ? parsePrice(priceEl.textContent) : NaN;
     var imgEl = document.querySelector('.detail-gallery .main-img');
     var brandEl = document.querySelector('.brand-line');
+    var modelEl = document.querySelector('.detail-info .model');
     var image = '';
     if (imgEl) {
       var m = /url\((['"]?)(.*?)\1\)/.exec(imgEl.style.backgroundImage || '');
@@ -103,6 +122,7 @@
       id: id,
       name: h1.textContent.trim(),
       brand: brandEl ? brandEl.textContent.trim() : '',
+      model: modelEl ? modelEl.textContent.trim() : '',
       price: price || null,
       image: image,
       url: file
@@ -124,6 +144,29 @@
       btn.onclick = function () {
         addToCart(product, getQtyFromPage());
         location.href = 'checkout.html';
+      };
+    });
+  }
+
+  // 가격문의(가격 미확정) 상품용: 장바구니/바로구매를 실제 결제 대신 견적요청 담기로 연결
+  function wireQuoteButtons(product, outlineBtns, primaryBtns, quickQuoteEls) {
+    outlineBtns.forEach(function (btn) {
+      btn.onclick = function () {
+        addToQuoteDraft(product, getQtyFromPage());
+        showToast('견적요청 목록에 담았습니다');
+      };
+    });
+    primaryBtns.forEach(function (btn) {
+      btn.onclick = function () {
+        addToQuoteDraft(product, getQtyFromPage());
+        location.href = 'quote-request.html';
+      };
+    });
+    (quickQuoteEls || []).forEach(function (el) {
+      el.onclick = function (e) {
+        e.preventDefault();
+        addToQuoteDraft(product, getQtyFromPage());
+        location.href = 'quote-request.html';
       };
     });
   }
@@ -150,11 +193,16 @@
     });
   }
 
-  // 상품 상세페이지: 장바구니/바로구매 버튼을 실제 동작에 연결
+  // 상품 상세페이지: 장바구니/바로구매/견적서담기 버튼을 실제 동작에 연결.
+  // 모든 상품 페이지에 3가지 액션을 보장합니다 — 가격이 있는 상품은 장바구니/바로구매가
+  // 실제 결제로 이어지고, 가격문의 상품은 장바구니/바로구매도 견적요청 담기로 동작합니다.
+  // 어느 쪽이든 "이 상품 견적서로 담기"는 항상 견적요청 목록에 담깁니다 — 고정가 상품도
+  // 견적요청에 함께 넣어 다른 상품과 한 번에 견적받아 일괄 구매할 수 있습니다.
   function initProductActions() {
     var product = readProductFromPage();
     if (!product) return;
 
+    var actionRow = document.querySelector('.action-row');
     var outlineBtns = Array.prototype.filter.call(
       document.querySelectorAll('.action-row .btn-outline'), function (b) { return b.tagName === 'BUTTON'; }
     );
@@ -162,8 +210,35 @@
       document.querySelectorAll('.action-row .btn-primary'), function (b) { return b.tagName === 'BUTTON'; }
     );
 
-    // 이미 고정가로 담기/구매 버튼이 있는 페이지는 바로 연결
-    if (product.price) wireActionButtons(product, outlineBtns, primaryBtns);
+    // 가격문의 페이지 등 장바구니/바로구매 버튼이 아직 없으면 표준 2버튼 레이아웃으로 보강
+    if (outlineBtns.length === 0 && primaryBtns.length === 0 && actionRow) {
+      actionRow.innerHTML =
+        '<button type="button" class="btn btn-outline btn-block">장바구니</button>' +
+        '<button type="button" class="btn btn-primary btn-block">바로구매</button>';
+      outlineBtns = Array.prototype.slice.call(actionRow.querySelectorAll('.btn-outline'));
+      primaryBtns = Array.prototype.slice.call(actionRow.querySelectorAll('.btn-primary'));
+      injectQtySelector(actionRow);
+    }
+
+    // "이 상품 견적서로 담기" 링크가 없으면 액션 로우 뒤에 추가
+    var quickQuoteEls = Array.prototype.slice.call(document.querySelectorAll('.quick-quote'));
+    if (quickQuoteEls.length === 0 && actionRow) {
+      var qq = document.createElement('a');
+      qq.href = 'quote-request.html';
+      qq.className = 'quick-quote';
+      qq.textContent = '이 상품 견적서로 담기 →';
+      actionRow.parentNode.insertBefore(qq, actionRow.nextSibling);
+      quickQuoteEls = [qq];
+    }
+
+    if (product.price) {
+      // 고정가 상품: 장바구니/바로구매는 실제 구매로, 견적서 담기는 별도로 견적요청에 반영
+      wireActionButtons(product, outlineBtns, primaryBtns);
+      wireQuoteButtons(product, [], [], quickQuoteEls);
+    } else {
+      // 가격문의 상품: 아직 가격이 없으므로 3개 버튼 모두 견적요청 담기로 동작
+      wireQuoteButtons(product, outlineBtns, primaryBtns, quickQuoteEls);
+    }
 
     // 관리자가 설정한 가격/재고 오버라이드 반영. "가격문의" 상품이라도 관리자가
     // 판매가를 지정하면 이 페이지를 실제 구매 가능한 형태로 보강합니다.
@@ -182,17 +257,7 @@
         var shipNote = document.querySelector('.price-box .ship-note');
         if (shipNote) shipNote.remove();
 
-        if (outlineBtns.length === 0 && primaryBtns.length === 0) {
-          var actionRow = document.querySelector('.action-row');
-          if (actionRow) {
-            actionRow.innerHTML =
-              '<button class="btn btn-outline btn-block">장바구니</button>' +
-              '<button class="btn btn-primary btn-block">바로구매</button>';
-            outlineBtns = Array.prototype.slice.call(actionRow.querySelectorAll('.btn-outline'));
-            primaryBtns = Array.prototype.slice.call(actionRow.querySelectorAll('.btn-primary'));
-            injectQtySelector(actionRow);
-          }
-        }
+        // 지금까지는 견적요청 담기로 연결돼 있었을 버튼들을 실제 구매로 재연결
         wireActionButtons(product, outlineBtns, primaryBtns);
       }
 
@@ -293,7 +358,10 @@
     clearCart: clearCart,
     cartCount: cartCount,
     parsePrice: parsePrice,
-    escapeHtml: escapeHtml
+    escapeHtml: escapeHtml,
+    getQuoteDraft: getQuoteDraft,
+    addToQuoteDraft: addToQuoteDraft,
+    clearQuoteDraft: clearQuoteDraft
   };
 
   // 헤더 "로그인" 링크를 실제 로그인 상태에 맞춰 갱신 (로그인 시 이메일 표시 + 로그아웃)

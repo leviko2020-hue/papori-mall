@@ -184,7 +184,7 @@
     });
   }
 
-  function addRow(product) {
+  function addRow(product, qty) {
     rowSeq++;
     quoteEmpty.style.display = 'none';
     const tr = document.createElement('tr');
@@ -192,7 +192,7 @@
     tr.innerHTML = `
       <td>${product.name}</td>
       <td>${product.model ? product.model : '<input type="text" placeholder="규격/모델 입력">'}</td>
-      <td><input type="number" value="1" min="1"></td>
+      <td><input type="number" value="${parseInt(qty, 10) || 1}" min="1"></td>
       <td><input type="text" placeholder="예: 납기 문의"></td>
       <td><span class="remove-btn">삭제</span></td>
     `;
@@ -203,6 +203,16 @@
     quoteBody.appendChild(tr);
     showToast('견적요청서에 상품이 담겼습니다');
   }
+
+  // 상품 상세페이지의 "장바구니/바로구매/이 상품 견적서로 담기"에서 넘어온 항목을 미리 채워넣음
+  // (고정가 상품도 이 경로로 들어올 수 있어, 가격문의 상품과 함께 한 번에 견적요청할 수 있습니다)
+  document.addEventListener('DOMContentLoaded', () => {
+    if (!window.PaporiCart) return;
+    const draft = window.PaporiCart.getQuoteDraft();
+    if (!draft || draft.length === 0) return;
+    draft.forEach(it => addRow({ name: it.name, model: it.model || '', category: '상세페이지에서 담음' }, it.qty));
+    window.PaporiCart.clearQuoteDraft();
+  });
 
   acInput.addEventListener('input', (e) => renderAutocomplete(e.target.value));
   acInput.addEventListener('focus', (e) => { if (e.target.value.trim()) renderAutocomplete(e.target.value); });
