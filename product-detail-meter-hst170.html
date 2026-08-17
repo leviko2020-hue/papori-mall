@@ -79,8 +79,12 @@
 
     <div class="detail-section">
       <h3>제품 소개</h3>
-      <p>HASEGAWA HST-170은 특고압 배전선로 점검용 신축식 검전기입니다. FRP 절연봉을 최대 3145mm까지 뽑아 늘려 원거리에서도 안전하게 검전할 수 있으며, 경량 설계로 조작성이 뛰어납니다.</p>
-      <h3 style="margin-top:20px;">주요 특징</h3>
+      <p>HASEGAWA HST-170은 특고압 배전선로 점검용 신축식 검전기입니다. FRP 절연봉을 최대 3145mm까지 뽑아 늘려 원거리에서도 안전하게 검전할 수 있으며, 경량 설계로 조작성이 뛰어납니다. 짧게 접은 상태(단축 시)에서는 휴대와 보관이 간편해 이동이 잦은 현장에 적합합니다.</p>
+
+      <img class="full-img" style="margin:18px auto;" src="images/products/vendor/hasegawa-HST-series-angle.jpg" alt="HST-170 검출부 각도 조절 기능">
+      <p style="text-align:center; font-size:13px; color:var(--text-mute); margin-top:-8px;">검출부(발광부) 각도를 조절할 수 있어, 봉을 길게 뻗은 상태에서도 발광 표시를 눈으로 편하게 확인할 수 있습니다.</p>
+
+      <h3 style="margin-top:28px;">주요 특징</h3>
       <ul class="vendor-feature-list">
         <li>신축식 절연봉, 최대 길이 약 3145mm</li>
         <li>AC 60kV~195.5kV 특고압 대응</li>
@@ -115,6 +119,22 @@
   <div class="related">
     <h2>이 분류의 다른 상품</h2>
     <div class="product-grid" style="padding-top:0;">
+      <a href="product-detail-meter-hst30w.html" class="product-card">
+        <div class="thumb" style="background-image:url('images/products/vendor/hasegawa-HST-30W-main.jpg');"></div>
+        <div class="body"><div class="brand">HASEGAWA</div><h4>고압~특고압 검전기 HST-30W</h4><div class="inquiry">견적문의</div></div>
+      </a>
+      <a href="product-detail-meter-hss25b1.html" class="product-card">
+        <div class="thumb" style="background-image:url('images/products/vendor/hasegawa-HSS-25B1-main.jpg');"></div>
+        <div class="body"><div class="brand">HASEGAWA</div><h4>고압 검전기 HSS-25B1</h4><div class="inquiry">견적문의</div></div>
+      </a>
+      <a href="product-detail-meter-hsn6a1.html" class="product-card">
+        <div class="thumb" style="background-image:url('images/products/vendor/hasegawa-HSN-6A1-main.jpg');"></div>
+        <div class="body"><div class="brand">HASEGAWA</div><h4>고압 검전기 HSN-6A1</h4><div class="inquiry">견적문의</div></div>
+      </a>
+      <a href="product-detail-sunsco-9003.html" class="product-card">
+        <div class="thumb" style="background-image:url('images/products/vendor/hasegawa-HTE-610W-main.jpg');"></div>
+        <div class="body"><div class="brand">HASEGAWA</div><h4>저압 검전기 HTE-610W</h4><div class="inquiry">견적문의</div></div>
+      </a>
     </div>
   </div>
 </main>
@@ -146,6 +166,14 @@
     });
     document.querySelectorAll('.tabs .tab').forEach(t => t.classList.remove('active'));
     event.currentTarget.classList.add('active');
+  }
+  function swapGalleryImage(el) {
+    const gallery = el.closest('.detail-gallery');
+    if (!gallery) return;
+    const main = gallery.querySelector('.main-img');
+    if (main) main.style.backgroundImage = el.style.backgroundImage;
+    gallery.querySelectorAll('.thumb-img').forEach(t => t.classList.remove('active'));
+    el.classList.add('active');
   }
 </script>
 

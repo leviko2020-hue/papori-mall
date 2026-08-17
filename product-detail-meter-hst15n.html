@@ -38,6 +38,10 @@
   <div class="detail-wrap">
     <div class="detail-gallery">
       <div class="main-img" style="background-image:url('images/products/vendor/hasegawa-HST-1.5N-main.jpg');"></div>
+      <div class="gallery-thumbs">
+        <div class="thumb-img active" style="background-image:url('images/products/vendor/hasegawa-HST-1.5N-main.jpg');" onclick="swapGalleryImage(this)"></div>
+        <div class="thumb-img" style="background-image:url('images/products/vendor/hasegawa-HST-1.5N-accessory.jpg');" onclick="swapGalleryImage(this)"></div>
+      </div>
     </div>
 
     <div class="detail-info">
@@ -79,7 +83,7 @@
 
     <div class="detail-section">
       <h3>제품 소개</h3>
-      <p>HASEGAWA HST-1.5N은 AC/DC 겸용으로 사용 가능한 고압 검전기입니다. FRP 절연봉을 적용해 견고하면서도 가볍고, 7m 접지선을 갖춰 다양한 현장에 대응합니다.</p>
+      <p>HASEGAWA HST-1.5N은 AC/DC 겸용으로 사용 가능한 고압 검전기입니다. FRP 절연봉을 적용해 견고하면서도 가볍고, 7m 접지선을 갖춰 다양한 현장에 대응합니다. 휴대용 케이스와 접지선이 기본 구성품으로 포함되어 있어 현장 도착 즉시 바로 사용할 수 있습니다.</p>
       <h3 style="margin-top:20px;">주요 특징</h3>
       <ul class="vendor-feature-list">
         <li>AC/DC 겸용 600V~7,000V 검전</li>
@@ -115,6 +119,22 @@
   <div class="related">
     <h2>이 분류의 다른 상품</h2>
     <div class="product-grid" style="padding-top:0;">
+      <a href="product-detail-meter-hss25b1.html" class="product-card">
+        <div class="thumb" style="background-image:url('images/products/vendor/hasegawa-HSS-25B1-main.jpg');"></div>
+        <div class="body"><div class="brand">HASEGAWA</div><h4>고압 검전기 HSS-25B1</h4><div class="inquiry">견적문의</div></div>
+      </a>
+      <a href="product-detail-meter-hsn6a1.html" class="product-card">
+        <div class="thumb" style="background-image:url('images/products/vendor/hasegawa-HSN-6A1-main.jpg');"></div>
+        <div class="body"><div class="brand">HASEGAWA</div><h4>고압 검전기 HSN-6A1</h4><div class="inquiry">견적문의</div></div>
+      </a>
+      <a href="product-detail-meter-hst170.html" class="product-card">
+        <div class="thumb" style="background-image:url('images/products/vendor/hasegawa-HST-series-main.jpg');"></div>
+        <div class="body"><div class="brand">HASEGAWA</div><h4>특고압 검전기 HST-170</h4><div class="inquiry">견적문의</div></div>
+      </a>
+      <a href="product-detail-sunsco-9003.html" class="product-card">
+        <div class="thumb" style="background-image:url('images/products/vendor/hasegawa-HTE-610W-main.jpg');"></div>
+        <div class="body"><div class="brand">HASEGAWA</div><h4>저압 검전기 HTE-610W</h4><div class="inquiry">견적문의</div></div>
+      </a>
     </div>
   </div>
 </main>
@@ -146,6 +166,14 @@
     });
     document.querySelectorAll('.tabs .tab').forEach(t => t.classList.remove('active'));
     event.currentTarget.classList.add('active');
+  }
+  function swapGalleryImage(el) {
+    const gallery = el.closest('.detail-gallery');
+    if (!gallery) return;
+    const main = gallery.querySelector('.main-img');
+    if (main) main.style.backgroundImage = el.style.backgroundImage;
+    gallery.querySelectorAll('.thumb-img').forEach(t => t.classList.remove('active'));
+    el.classList.add('active');
   }
 </script>
 
