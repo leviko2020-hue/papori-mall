@@ -38,6 +38,10 @@
   <div class="detail-wrap">
     <div class="detail-gallery">
       <div class="main-img" style="background-image:url('images/products/vendor/kyoritsu-KEW8035-main.jpg');"></div>
+      <div class="gallery-thumbs">
+        <div class="thumb-img active" style="background-image:url('images/products/vendor/kyoritsu-KEW8035-main.jpg');" onclick="swapGalleryImage(this)"></div>
+        <div class="thumb-img" style="background-image:url('images/products/vendor/kyoritsu-KEW8035-clips.png');" onclick="swapGalleryImage(this)"></div>
+      </div>
     </div>
 
     <div class="detail-info">
@@ -91,15 +95,21 @@
 
     <div class="detail-section">
       <h3>제품 소개</h3>
-      <p>KYORITSU KEW 8035는 프로브를 활선에 직접 접촉하지 않고도 검상(상회전 확인)이 가능한 비접촉식 검상기입니다. 절연 악어클립으로 케이블을 물리기만 하면 되어 신속하고 안전한 테스트가 가능합니다.</p>
-      <h3 style="margin-top:20px;">주요 특징</h3>
+      <p>KYORITSU KEW 8035는 세계 최초의 비접촉식 상회전 검상기로, 프로브를 활선에 직접 접촉하지 않고도 상회전(위상 순서) 확인이 가능합니다. 절연 악어클립으로 케이블을 물리기만 하면 되기 때문에 분전반을 완전히 해체하지 않고도 신속·안전하게 테스트할 수 있습니다.</p>
+
+      <img class="full-img" style="margin:18px auto;" src="images/products/vendor/kyoritsu-KEW8035-inuse.png" alt="KEW8035 분전반 현장 사용 예시">
+      <p style="text-align:center; font-size:13px; color:var(--text-mute); margin-top:-8px;">절연장갑을 착용한 채로 3상 케이블에 악어클립을 물리는 것만으로 활선 접촉 없이 상회전을 바로 확인할 수 있습니다.</p>
+
+      <h3 style="margin-top:28px;">주요 특징</h3>
       <ul class="vendor-feature-list">
         <li>절연 악어클립으로 케이블 외경 Ø2.4~30mm까지 비접촉 측정</li>
-        <li>회전식 LED(CW/CCW)와 버저로 상회전 방향 표시</li>
-        <li>배면 자석으로 금속 배전반에 부착 가능</li>
-        <li>IEC 61010-1 CAT IV 600V, CAT III 1000V 적합</li>
+        <li>회전식 LED(CW/CCW)와 논리적인 버저음으로 상회전 방향 표시</li>
+        <li>강한 햇빛 아래에서도 잘 보이는 초고휘도(Super Bright) LED 모드</li>
+        <li>구·신 상 표기 방식을 모두 지원해 배선 연결 오류 방지</li>
+        <li>배면 자석으로 금속 배전반에 거치 가능</li>
+        <li>측정범위 3상 70~1000V AC, IEC 61010-1 CAT IV 600V·CAT III 1000V 적합</li>
       </ul>
-      <p class="vendor-source-note">본 정보는 제조사(KYORITSU) 공식 자료를 기준으로 제공됩니다.</p>
+      <p class="vendor-source-note">본 정보 및 이미지는 제조사(KYORITSU) 공식 자료를 바탕으로 재구성하여 제공합니다.</p>
     </div>
   </div>
   <div class="tab-panel" id="panel-spec" style="display:none;">
@@ -131,6 +141,38 @@
   <div class="related">
     <h2>이 분류의 다른 상품</h2>
     <div class="product-grid" style="padding-top:0;">
+      <a href="product-detail-meter-pd3129.html" class="product-card">
+        <div class="thumb" style="background-image:url('images/products/vendor/hioki-PD3129-main.jpg');"></div>
+        <div class="body">
+          <div class="brand">HIOKI</div>
+          <h4>검상기 PD3129</h4>
+          <div class="price">216,700<span class="unit">원</span></div>
+        </div>
+      </a>
+      <a href="product-detail-meter-cm4373-50.html" class="product-card">
+        <div class="thumb" style="background-image:url('images/products/vendor/hioki-CM4373-50-main.jpg');"></div>
+        <div class="body">
+          <div class="brand">HIOKI</div>
+          <h4>AC/DC 클램프미터 CM4373-50</h4>
+          <div class="price">414,700<span class="unit">원</span></div>
+        </div>
+      </a>
+      <a href="product-detail-meter-dt4252.html" class="product-card">
+        <div class="thumb" style="background-image:url('images/products/vendor/hioki-DT4252-main.jpg');"></div>
+        <div class="body">
+          <div class="brand">HIOKI</div>
+          <h4>디지털 멀티미터 DT4252</h4>
+          <div class="price">156,200<span class="unit">원</span></div>
+        </div>
+      </a>
+      <a href="product-detail-meter-fluke374fc.html" class="product-card">
+        <div class="thumb" style="background-image:url('images/products/vendor/fluke-374fc-main.jpg');"></div>
+        <div class="body">
+          <div class="brand">FLUKE</div>
+          <h4>AC/DC 클램프미터 FLUKE 374FC</h4>
+          <div class="price">511,500<span class="unit">원</span></div>
+        </div>
+      </a>
     </div>
   </div>
 </main>
@@ -176,6 +218,14 @@
     });
     document.querySelectorAll('.tabs .tab').forEach(t => t.classList.remove('active'));
     event.currentTarget.classList.add('active');
+  }
+  function swapGalleryImage(el) {
+    const gallery = el.closest('.detail-gallery');
+    if (!gallery) return;
+    const main = gallery.querySelector('.main-img');
+    if (main) main.style.backgroundImage = el.style.backgroundImage;
+    gallery.querySelectorAll('.thumb-img').forEach(t => t.classList.remove('active'));
+    el.classList.add('active');
   }
 </script>
 

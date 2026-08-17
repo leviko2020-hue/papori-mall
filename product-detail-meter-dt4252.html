@@ -38,6 +38,10 @@
   <div class="detail-wrap">
     <div class="detail-gallery">
       <div class="main-img" style="background-image:url('images/products/vendor/hioki-DT4252-main.jpg');"></div>
+      <div class="gallery-thumbs">
+        <div class="thumb-img active" style="background-image:url('images/products/vendor/hioki-DT4252-main.jpg');" onclick="swapGalleryImage(this)"></div>
+        <div class="thumb-img" style="background-image:url('images/products/vendor/hioki-DT4252-front.png');" onclick="swapGalleryImage(this)"></div>
+      </div>
     </div>
 
     <div class="detail-info">
@@ -91,16 +95,21 @@
 
     <div class="detail-section">
       <h3>제품 소개</h3>
-      <p>HIOKI DT4252는 DT4250 시리즈의 표준형 모델로, 전압·전류·저항 등 다목적 측정에 사용하는 디지털 멀티미터입니다. 저역통과필터로 고조파 영향을 줄여 기본파만 정확히 측정할 수 있습니다.</p>
-      <h3 style="margin-top:20px;">주요 특징</h3>
+      <p>HIOKI DT4252는 총 9개 모델로 구성된 DT4200 시리즈 중 하나로, 전압·전류·저항 등 현장에서 자주 쓰는 측정 항목을 폭넓게 지원하는 표준형 디지털 멀티미터입니다. DC전압 ±0.3%의 기본 정확도와 40Hz~1kHz의 넓은 AC 대역폭을 확보해 일반 전기설비 점검부터 인버터가 포함된 회로 점검까지 대응합니다.</p>
+
+      <img class="full-img" style="margin:18px auto;" src="images/products/vendor/hioki-DT4252-filter.jpeg" alt="HIOKI DT4252 저역통과필터 ON/OFF 비교">
+      <p style="text-align:center; font-size:13px; color:var(--text-mute); margin-top:-8px;">저역통과필터를 켜면 고조파 성분이 제거되어 인버터 등에서 나오는 왜곡된 파형에서도 기본파 전압·주파수만 깨끗하게 읽을 수 있습니다.</p>
+
+      <h3 style="margin-top:28px;">주요 특징</h3>
       <ul class="vendor-feature-list">
         <li>DC 전압 기본 정확도 ±0.3%, AC 전압 대역 40Hz~1kHz</li>
-        <li>DC/AC 전류 6.000A/10.00A 직접 입력 측정</li>
+        <li>DC/AC 전류 6.000A/10.00A 직접 입력 측정 (별도 클램프 불필요)</li>
         <li>전압과 주파수를 동시에 볼 수 있는 듀얼 디스플레이</li>
-        <li>저역통과필터로 고조파 영향 제거(인버터 기본파 성분 측정), PC 계측 대응 USB 통신(옵션)</li>
-        <li>CAT IV 600V, CAT III 1000V</li>
+        <li>저역통과필터로 고조파 영향 제거 — 인버터 기본파 성분만 정확히 측정</li>
+        <li>PC 계측 대응 USB 통신 기능(DT4900-01 옵션)으로 실시간 그래프 기록 가능</li>
+        <li>CAT IV 600V, CAT III 1000V 내전압 등급</li>
       </ul>
-      <p class="vendor-source-note">본 정보는 제조사(HIOKI) 공식 자료를 기준으로 제공됩니다.</p>
+      <p class="vendor-source-note">본 정보 및 이미지는 제조사(HIOKI) 공식 자료를 바탕으로 재구성하여 제공합니다.</p>
     </div>
   </div>
   <div class="tab-panel" id="panel-spec" style="display:none;">
@@ -140,6 +149,38 @@
   <div class="related">
     <h2>이 분류의 다른 상품</h2>
     <div class="product-grid" style="padding-top:0;">
+      <a href="product-detail-meter-cm4373-50.html" class="product-card">
+        <div class="thumb" style="background-image:url('images/products/vendor/hioki-CM4373-50-main.jpg');"></div>
+        <div class="body">
+          <div class="brand">HIOKI</div>
+          <h4>AC/DC 클램프미터 CM4373-50</h4>
+          <div class="price">414,700<span class="unit">원</span></div>
+        </div>
+      </a>
+      <a href="product-detail-meter-pd3129.html" class="product-card">
+        <div class="thumb" style="background-image:url('images/products/vendor/hioki-PD3129-main.jpg');"></div>
+        <div class="body">
+          <div class="brand">HIOKI</div>
+          <h4>검상기 PD3129</h4>
+          <div class="price">216,700<span class="unit">원</span></div>
+        </div>
+      </a>
+      <a href="product-detail-meter-fluke374fc.html" class="product-card">
+        <div class="thumb" style="background-image:url('images/products/vendor/fluke-374fc-main.jpg');"></div>
+        <div class="body">
+          <div class="brand">FLUKE</div>
+          <h4>AC/DC 클램프미터 FLUKE 374FC</h4>
+          <div class="price">511,500<span class="unit">원</span></div>
+        </div>
+      </a>
+      <a href="product-detail-meter-kew8035.html" class="product-card">
+        <div class="thumb" style="background-image:url('images/products/vendor/kyoritsu-KEW8035-main.jpg');"></div>
+        <div class="body">
+          <div class="brand">KYORITSU</div>
+          <h4>비접촉검상기 KEW 8035</h4>
+          <div class="price">234,300<span class="unit">원</span></div>
+        </div>
+      </a>
     </div>
   </div>
 </main>
@@ -185,6 +226,14 @@
     });
     document.querySelectorAll('.tabs .tab').forEach(t => t.classList.remove('active'));
     event.currentTarget.classList.add('active');
+  }
+  function swapGalleryImage(el) {
+    const gallery = el.closest('.detail-gallery');
+    if (!gallery) return;
+    const main = gallery.querySelector('.main-img');
+    if (main) main.style.backgroundImage = el.style.backgroundImage;
+    gallery.querySelectorAll('.thumb-img').forEach(t => t.classList.remove('active'));
+    el.classList.add('active');
   }
 </script>
 
