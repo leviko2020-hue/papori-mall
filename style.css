@@ -475,18 +475,18 @@ img { max-width: 100%; display: block; }
   z-index: 5;
 }
 .detail-info .brand-line {
-  font-size: 13px;
+  font-size: 21px;
   color: var(--purple-dark);
   font-weight: 700;
   margin-bottom: 8px;
 }
 .detail-info h1 {
-  font-size: 24px;
+  font-size: 38px;
   color: var(--text-strong);
   margin: 0 0 10px;
 }
 .detail-info .model {
-  font-size: 13px;
+  font-size: 21px;
   color: var(--text-mute);
   margin-bottom: 18px;
 }
@@ -497,7 +497,7 @@ img { max-width: 100%; display: block; }
   flex-wrap: wrap;
 }
 .trust-badge {
-  font-size: 12px;
+  font-size: 19px;
   font-weight: 600;
   background: var(--purple-light);
   color: var(--purple-dark);
@@ -511,12 +511,12 @@ img { max-width: 100%; display: block; }
   margin-bottom: 18px;
 }
 .price-box .final-price {
-  font-size: 26px;
+  font-size: 42px;
   font-weight: 700;
   color: var(--text-strong);
 }
 .price-box .ship-note {
-  font-size: 13px;
+  font-size: 21px;
   color: var(--text-mute);
   margin-top: 6px;
 }
@@ -551,7 +551,7 @@ img { max-width: 100%; display: block; }
   display: block;
   text-align: center;
   margin-top: 10px;
-  font-size: 13px;
+  font-size: 21px;
   color: var(--purple-dark);
   font-weight: 600;
 }
@@ -567,11 +567,11 @@ img { max-width: 100%; display: block; }
   background: var(--bg-soft);
   border-radius: 10px;
   padding: 14px;
-  font-size: 12px;
+  font-size: 19px;
   text-align: center;
   color: var(--text);
 }
-.trust-strip .item b { display:block; font-size: 13px; color: var(--text-strong); margin-bottom: 2px; }
+.trust-strip .item b { display:block; font-size: 21px; color: var(--text-strong); margin-bottom: 2px; }
 
 /* Tabs */
 .tabs {
@@ -581,7 +581,7 @@ img { max-width: 100%; display: block; }
 }
 .tabs .tab {
   padding: 14px 28px;
-  font-size: 15px;
+  font-size: 24px;
   font-weight: 600;
   color: var(--text-mute);
   cursor: pointer;
@@ -596,7 +596,7 @@ img { max-width: 100%; display: block; }
 .spec-table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 14px;
+  font-size: 22px;
 }
 .spec-table th, .spec-table td {
   text-align: left;
@@ -604,14 +604,14 @@ img { max-width: 100%; display: block; }
   border-bottom: 1px solid var(--border);
 }
 .spec-table th {
-  width: 180px;
+  width: 220px;
   background: var(--bg-soft);
   color: var(--text-mute);
   font-weight: 500;
 }
 .detail-section { margin-bottom: 36px; }
-.detail-section h3 { font-size: 17px; color: var(--text-strong); margin: 0 0 10px; }
-.detail-section p { font-size: 14px; color: var(--text); }
+.detail-section h3 { font-size: 27px; color: var(--text-strong); margin: 0 0 10px; }
+.detail-section p { font-size: 22px; color: var(--text); }
 .detail-section img { border-radius: 12px; margin-top: 10px; }
 
 /* Sunsco KEPCO detail gallery */
@@ -652,7 +652,7 @@ img { max-width: 100%; display: block; }
 .vendor-feature-list li {
   position: relative;
   padding-left: 22px;
-  font-size: 14px;
+  font-size: 22px;
   color: var(--text);
   line-height: 1.55;
 }
@@ -720,7 +720,7 @@ img { max-width: 100%; display: block; }
 
 .vendor-source-note {
   margin-top: 14px;
-  font-size: 12px;
+  font-size: 19px;
   color: var(--text-mute);
 }
 .spec-stat-grid {
@@ -737,12 +737,12 @@ img { max-width: 100%; display: block; }
   text-align: center;
 }
 .spec-stat-tile .stat-label {
-  font-size: 12px;
+  font-size: 19px;
   color: var(--text-mute);
   margin-bottom: 6px;
 }
 .spec-stat-tile .stat-value {
-  font-size: 15px;
+  font-size: 24px;
   font-weight: 700;
   color: var(--purple-dark);
   line-height: 1.3;
