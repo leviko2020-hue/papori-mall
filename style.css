@@ -1788,7 +1788,7 @@ img { max-width: 100%; display: block; }
 .meter-hero {
   position: relative;
   overflow: hidden;
-  height: 320px;
+  height: 220px;
   margin-bottom: 4px;
 }
 .meter-hero-bg {
@@ -1861,7 +1861,7 @@ img { max-width: 100%; display: block; }
   .meter-hero-inner .eyebrow, .meter-hero-inner h1, .meter-hero-inner p { animation: none; opacity: 1; }
 }
 @media (max-width: 720px) {
-  .meter-hero { height: 260px; }
+  .meter-hero { height: 190px; }
   .meter-hero-inner h1 { font-size: 24px; }
 }
 
