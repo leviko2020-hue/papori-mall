@@ -276,7 +276,7 @@ img { max-width: 100%; display: block; }
 }
 .product-card .thumb {
   position: relative;
-  height: 300px;
+  height: 210px;
   background: #fff;
   background-size: contain;
   background-repeat: no-repeat;
