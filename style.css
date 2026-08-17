@@ -253,8 +253,8 @@ img { max-width: 100%; display: block; }
 /* Product grid */
 .product-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 22px;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
   padding: 32px 0 64px;
 }
 .product-card {
@@ -271,7 +271,7 @@ img { max-width: 100%; display: block; }
 }
 .product-card .thumb {
   position: relative;
-  height: 320px;
+  height: 300px;
   background: #fff;
   background-size: contain;
   background-repeat: no-repeat;
@@ -282,17 +282,17 @@ img { max-width: 100%; display: block; }
 .card-link { display: block; }
 .card-quick-actions {
   display: flex;
-  gap: 6px;
-  padding: 8px;
+  gap: 4px;
+  padding: 6px;
   background: var(--bg-soft);
   border-bottom: 1px solid var(--border);
 }
 .cqa-btn {
   flex: 1;
-  font-size: 11px;
+  font-size: 9.5px;
   font-weight: 700;
-  padding: 7px 2px;
-  border-radius: 6px;
+  padding: 6px 1px;
+  border-radius: 5px;
   border: 1px solid var(--border);
   background: #fff;
   color: var(--text);
