@@ -1969,6 +1969,49 @@ img { max-width: 100%; display: block; }
   transition: background .15s ease, color .15s ease;
 }
 .cat-nav-inner a:hover { background: rgba(255,255,255,0.14); color: #fff; }
+.cat-nav-inner-banner { justify-content: center; }
+.cat-nav-inner-banner a { font-size: 15px; letter-spacing: .2px; }
+
+/* 홈페이지: 테마 타일 아래 주요 브랜드 로고 스트립 */
+.brand-strip { max-width: 1180px; margin: 8px 0 28px; }
+.brand-strip-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: #6b7280;
+  margin: 0 0 10px;
+}
+.brand-strip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.brand-strip-item {
+  flex: 1 1 130px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 64px;
+  background: #fff;
+  border: 1px solid #E5E7EB;
+  border-radius: 10px;
+  transition: border-color .15s ease, box-shadow .15s ease, transform .15s ease;
+}
+.brand-strip-item:hover {
+  border-color: var(--purple);
+  box-shadow: 0 4px 14px rgba(124,58,237,0.14);
+  transform: translateY(-2px);
+}
+.brand-strip-item img {
+  max-width: 78%;
+  max-height: 34px;
+  object-fit: contain;
+}
+.brand-strip-item.brand-strip-text {
+  font-weight: 800;
+  font-size: 16px;
+  color: #1f2937;
+  letter-spacing: .2px;
+}
 
 /* 홈페이지: 테마별 카테고리 타일 (사진 + 하단 브랜드 배너) */
 .theme-grid {
