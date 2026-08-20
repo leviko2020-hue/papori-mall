@@ -1,8 +1,8 @@
 :root {
-  --purple: #7C3AED;
+  --purple: #9C90D9;
   --purple-dark: #5B21B6;
   --purple-light: #EDE7FB;
-  --magenta: #C026D3;
+  --magenta: #C8A7DB;
   --gray-light: #F0F0F0;
   --bg: #FFFFFF;
   --bg-soft: #FAFAFA;
@@ -124,8 +124,8 @@ img { max-width: 100%; display: block; }
   border: none;
   transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
 }
-.btn-primary { background: var(--purple); color: #fff; box-shadow: 0 4px 14px rgba(139,127,232,0.35); }
-.btn-primary:hover { background: var(--purple-dark); transform: translateY(-1px); box-shadow: 0 6px 18px rgba(139,127,232,0.45); }
+.btn-primary { background: var(--purple-dark); color: #fff; box-shadow: 0 4px 14px rgba(91,33,182,0.3); }
+.btn-primary:hover { background: #4A1B94; transform: translateY(-1px); box-shadow: 0 6px 18px rgba(91,33,182,0.4); }
 .btn-outline { background: #fff; border: 1px solid var(--purple); color: var(--purple-dark); }
 .btn-ghost { background: var(--gray-light); color: var(--text-strong); }
 .btn-block { width: 100%; text-align: center; }
@@ -312,8 +312,8 @@ img { max-width: 100%; display: block; }
   cursor: pointer;
   white-space: nowrap;
 }
-.cqa-btn.cqa-buy { background: var(--purple); color: #fff; border-color: var(--purple); }
-.cqa-btn.cqa-buy:hover { background: var(--purple-dark); }
+.cqa-btn.cqa-buy { background: var(--purple-dark); color: #fff; border-color: var(--purple-dark); }
+.cqa-btn.cqa-buy:hover { background: #4A1B94; }
 .cqa-btn.cqa-cart:hover, .cqa-btn.cqa-quote:hover { background: var(--purple-light); border-color: var(--purple); color: var(--purple-dark); }
 
 /* 활선용/간접활선용 install-method ribbon badge (product-card thumb + detail main-img) */
@@ -850,7 +850,7 @@ img { max-width: 100%; display: block; }
   position: fixed;
   right: 28px;
   bottom: 28px;
-  background: var(--purple);
+  background: var(--purple-dark);
   color: #fff;
   font-weight: 700;
   font-size: 14px;
@@ -859,7 +859,7 @@ img { max-width: 100%; display: block; }
   box-shadow: 0 6px 20px rgba(139,127,232,0.4);
   z-index: 60;
 }
-.floating-quote:hover { background: var(--purple-dark); }
+.floating-quote:hover { background: #4A1B94; }
 
 @media (max-width: 900px) {
   .product-grid { grid-template-columns: repeat(3, 1fr); }
