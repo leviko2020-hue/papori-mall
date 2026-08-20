@@ -1661,9 +1661,9 @@ img { max-width: 100%; display: block; }
   overflow: hidden;
   min-height: 420px;
   background:
-    radial-gradient(560px 380px at 14% 18%, rgba(139,127,232,0.35), transparent 60%),
-    radial-gradient(620px 420px at 88% 78%, rgba(108,92,231,0.30), transparent 55%),
-    linear-gradient(150deg, #0E0B1F 0%, #17123A 45%, #1E1750 100%);
+    radial-gradient(560px 380px at 14% 18%, rgba(167,139,250,0.45), transparent 60%),
+    radial-gradient(620px 420px at 88% 78%, rgba(139,92,246,0.40), transparent 55%),
+    linear-gradient(150deg, #2E1065 0%, #4C1D95 45%, #6D28D9 100%);
 }
 .home-hero::before {
   content: "";
@@ -2086,6 +2086,7 @@ img { max-width: 100%; display: block; }
   letter-spacing: .2px;
 }
 .brand-strip-item.brand-strip-yusin img { max-height: 46px; max-width: 88%; }
+.brand-strip-item.brand-strip-milwaukee { background: #E4002B; border-color: #E4002B; }
 
 /* 홈페이지: 테마별 카테고리 타일 (사진 + 하단 브랜드 배너) */
 .theme-grid {
