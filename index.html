@@ -24,19 +24,40 @@
   </div>
 </header>
 
-<nav class="cat-nav-bar">
-  <div class="container cat-nav-inner cat-nav-inner-banner">
-    <a href="quote-request.html">활선차·특장차량용 AI주변관제시스템</a>
-  </div>
-</nav>
-
 <section class="home-hero">
-  <div class="container">
-    <p class="lead">HIKMICRO 열화상카메라, 계측기, 활선장구, 배전공사 자재까지 — 제조사 정품 사진과 정확한 규격만 확인하고 견적받으세요.</p>
-    <div class="home-hero-actions">
-      <a href="category-kepco-repair-material.html" class="btn-hero-primary">한전 보수용 자재</a>
-      <a href="quote-request.html" class="btn-hero-outline">빠른 견적요청</a>
+  <div class="hero-slide active">
+    <div class="container">
+      <p class="lead">HIKMICRO 열화상카메라, 계측기, 활선장구, 배전공사 자재까지 — 제조사 정품 사진과 정확한 규격만 확인하고 견적받으세요.</p>
+      <div class="home-hero-actions">
+        <a href="category-kepco-repair-material.html" class="btn-hero-primary">한전 보수용 자재</a>
+        <a href="quote-request.html" class="btn-hero-outline">빠른 견적요청</a>
+      </div>
     </div>
+  </div>
+  <div class="hero-slide">
+    <div class="container">
+      <p class="home-hero-eyebrow"><span class="dot"></span>NEW BUSINESS</p>
+      <h2 class="hero-slide-title">활선차·특장차량용<br>AI주변관제시스템</h2>
+      <p class="lead">차량 주변 위험요소를 실시간으로 감지하는 AI 기반 관제 솔루션 — 도입 문의는 견적요청으로 남겨주세요.</p>
+      <div class="home-hero-actions">
+        <a href="quote-request.html" class="btn-hero-primary">도입 문의하기</a>
+      </div>
+    </div>
+  </div>
+  <div class="hero-slide hero-slide-photo" style="background-image:linear-gradient(120deg, rgba(14,11,31,0.9), rgba(30,23,80,0.55)), url('images/products/sp120h_main.jpg');">
+    <div class="container">
+      <p class="home-hero-eyebrow"><span class="dot"></span>HIKMICRO OFFICIAL PARTNER</p>
+      <h2 class="hero-slide-title">HIKMICRO 열화상카메라</h2>
+      <p class="lead">정품 인증 파트너사 PAPORI에서 HIKMICRO 전 라인업을 만나보세요.</p>
+      <div class="home-hero-actions">
+        <a href="category-thermal.html" class="btn-hero-primary">제품 보러가기</a>
+      </div>
+    </div>
+  </div>
+  <div class="hero-dots">
+    <button class="hero-dot active" type="button" aria-label="1번 배너"></button>
+    <button class="hero-dot" type="button" aria-label="2번 배너"></button>
+    <button class="hero-dot" type="button" aria-label="3번 배너"></button>
   </div>
 </section>
 
@@ -137,12 +158,13 @@
     <p class="brand-strip-title">주요 브랜드</p>
     <div class="brand-strip-row">
       <a href="category-thermal.html" class="brand-strip-item"><img src="images/brand-logos/hikmicro.svg" alt="HIKMICRO"></a>
+      <a href="category-kepco-tool-electric.html#mfr-dewalt" class="brand-strip-item brand-strip-dark"><img src="images/brand-logos/dewalt.png" alt="DEWALT"></a>
       <a href="category-kepco-tool-electric.html#mfr-milwaukee" class="brand-strip-item brand-strip-text">Milwaukee</a>
       <a href="category-kepco-tool-hydraulic.html#mfr-klauke" class="brand-strip-item"><img src="images/brand-logos/klauke.png" alt="Klauke"></a>
       <a href="category-kepco-meter.html#mfr-hioki" class="brand-strip-item"><img src="images/brand-logos/hioki.png" alt="HIOKI"></a>
-      <a href="category-kepco-meter.html#mfr-kyoritsu" class="brand-strip-item"><img src="images/brand-logos/kyoritsu.png" alt="KYORITSU"></a>
+      <a href="category-kepco-meter.html#mfr-kyoritsu" class="brand-strip-item brand-strip-dual"><img src="images/brand-logos/kyoritsu.png" alt="KYORITSU"><span>KYORITSU</span></a>
       <a href="category-kepco-meter.html#mfr-hasegawa" class="brand-strip-item"><img src="images/brand-logos/hasegawa.svg" alt="HASEGAWA"></a>
-      <a href="category-kepco-meter.html#mfr-yusin" class="brand-strip-item"><img src="images/brand-logos/yusin.gif" alt="유신기업사"></a>
+      <a href="category-kepco-meter.html#mfr-yusin" class="brand-strip-item brand-strip-yusin"><img src="images/brand-logos/yusin.gif" alt="유신기업사"></a>
     </div>
   </section>
 
@@ -226,6 +248,34 @@
       slides[i].classList.add('active');
     }, 2400 + Math.random() * 1000);
   });
+
+  (function () {
+    var hero = document.querySelector('.home-hero');
+    if (!hero) return;
+    var slides = hero.querySelectorAll('.hero-slide');
+    var dots = hero.querySelectorAll('.hero-dot');
+    if (slides.length <= 1) return;
+    var i = 0;
+    var timer;
+    function go(idx) {
+      slides[i].classList.remove('active');
+      dots[i] && dots[i].classList.remove('active');
+      i = idx % slides.length;
+      slides[i].classList.add('active');
+      dots[i] && dots[i].classList.add('active');
+    }
+    function start() {
+      timer = setInterval(function () { go(i + 1); }, 5000);
+    }
+    dots.forEach(function (dot, idx) {
+      dot.addEventListener('click', function () {
+        clearInterval(timer);
+        go(idx);
+        start();
+      });
+    });
+    start();
+  })();
 </script>
 
   <script src="cart.js"></script>
