@@ -1694,7 +1694,18 @@ img { max-width: 100%; display: block; }
   background-position: center;
 }
 .hero-slide.active { opacity: 1; visibility: visible; z-index: 3; }
-.hero-slide-photo { background-size: contain !important; background-position: right center !important; background-repeat: no-repeat; }
+.hero-slide-bg {
+  position: absolute;
+  inset: 0;
+  max-width: 1180px;
+  margin: 0 auto;
+  left: 0;
+  right: 0;
+  background-size: contain;
+  background-position: right center;
+  background-repeat: no-repeat;
+  pointer-events: none;
+}
 .hero-slide-title {
   font-size: 34px;
   font-weight: 800;
