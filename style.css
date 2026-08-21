@@ -1700,8 +1700,17 @@ img { max-width: 100%; display: block; }
   font-weight: 800;
   line-height: 1.32;
   color: #fff;
-  margin: 0 0 14px;
+  margin: 0 0 8px;
   letter-spacing: -.4px;
+  text-shadow: 0 2px 16px rgba(0,0,0,0.35);
+}
+.hero-slide-subtitle {
+  font-size: 20px;
+  font-weight: 700;
+  color: #E4DBFF;
+  margin: 0 0 26px;
+  letter-spacing: -.2px;
+  text-shadow: 0 2px 16px rgba(0,0,0,0.35);
 }
 .hero-slide-logo {
   display: inline-flex;
