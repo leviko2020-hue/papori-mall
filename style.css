@@ -414,6 +414,27 @@ img { max-width: 100%; display: block; }
 }
 .product-grid > .meter-mfr-heading:first-child { margin-top: 0; border-top: none; padding-top: 0; }
 
+/* 브랜드별 상품을 세로 나열 대신 옆으로(컬럼) 배치할 때 사용 */
+.brand-columns {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  padding-top: 20px;
+}
+.brand-column { display: flex; flex-direction: column; }
+.brand-column-heading {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--purple-dark);
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid var(--purple-light);
+  scroll-margin-top: 90px;
+}
+@media (max-width: 700px) {
+  .brand-columns { grid-template-columns: 1fr; }
+}
+
 .brand-navbar {
   display: flex;
   flex-wrap: wrap;
