@@ -1752,6 +1752,8 @@ img { max-width: 100%; display: block; }
   padding: 7px 14px;
   margin-bottom: 16px;
 }
+.hero-slide-logo-raised { margin-top: -22px; }
+.hero-slide-title-equal { font-size: 28px; }
 .hero-slide-logo img { height: 18px; display: block; }
 .hero-dots {
   position: absolute;
@@ -1971,6 +1973,7 @@ img { max-width: 100%; display: block; }
   .home-hero { min-height: 460px; }
   .hero-slide { padding: 60px 0 76px; }
   .hero-slide-title { font-size: 26px; }
+  .hero-slide-title-equal { font-size: 22px; }
 }
 
 /* ============================================================
@@ -2077,6 +2080,34 @@ img { max-width: 100%; display: block; }
 .cat-nav-inner a:hover { background: rgba(255,255,255,0.14); color: #fff; }
 .cat-nav-inner-banner { justify-content: center; }
 .cat-nav-inner-banner a { font-size: 15px; letter-spacing: .2px; }
+
+/* 서브페이지 상단 카테고리 네비게이션 (둥근 필 버튼) */
+.cat-nav-inner.cat-nav-pills {
+  gap: 10px;
+  padding: 12px 0;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.cat-nav-pills a {
+  flex-shrink: 0;
+  padding: 9px 20px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #fff;
+  background: rgba(255,255,255,0.16);
+  border: 1px solid rgba(255,255,255,0.4);
+  border-radius: 999px;
+  white-space: nowrap;
+  transition: background .15s ease, transform .15s ease;
+}
+.cat-nav-pills a:hover {
+  background: #fff;
+  color: var(--purple-dark);
+  transform: translateY(-1px);
+}
+@media (max-width: 700px) {
+  .cat-nav-inner.cat-nav-pills { justify-content: flex-start; overflow-x: auto; flex-wrap: nowrap; }
+}
 
 /* 홈페이지: 테마 타일 아래 주요 브랜드 로고 스트립 */
 .brand-strip { max-width: 1180px; margin: 8px 0 28px; }
