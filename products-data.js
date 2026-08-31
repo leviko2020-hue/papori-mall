@@ -465,7 +465,7 @@ var PAPORI_PRODUCTS = [
   { id: "product-detail-sunsco-9010", name: "지중기기 조작봉 YS311 | AC 20kV, 1.5m (유신기업사)", model: "활선/절연", category: "간접활선공구 · 활선/절연", price: 862000, url: "product-detail-sunsco-9010.html" },
   { id: "product-detail-sunsco-9011", name: "지중기기 조작봉 YS312 | AC 30kV, 2.2m (유신기업사)", model: "활선/절연", category: "간접활선공구 · 활선/절연", price: 862000, url: "product-detail-sunsco-9011.html" },
   { id: "product-detail-sunsco-9012", name: "절연 방호관(절연도체덮개) YSN205 | 23kV급, 단종 (유신기업사)", model: "한전 보수용 자재", category: "한전 보수용 자재 · 한전 보수용 자재", price: null, url: "product-detail-sunsco-9012.html" },
-  { id: "product-detail-sunsco-9013", name: "절연 방호관(절연도체덮개) YSN305 | 23kV (유신기업사)", model: "한전 보수용 자재", category: "한전 보수용 자재 · 한전 보수용 자재", price: null, url: "product-detail-sunsco-9013.html" },
+  { id: "product-detail-sunsco-9013", name: "절연 방호관(절연도체덮개) YSN305 | 23kV (유신기업사)", model: "한전 보수용 자재", category: "한전 보수용 자재 · 한전 보수용 자재", price: 24000, url: "product-detail-sunsco-9013.html" },
   { id: "product-detail-sunsco-91", name: "절연저항계 IR4051-10", model: "모델 IR4051-10", category: "계측기 · HIOKI", price: 242000, url: "product-detail-sunsco-91.html" },
   { id: "product-detail-sunsco-92", name: "디지털다기능계측기 CEM-2400 [절연, 접지측정외] (청파)", model: "모델 DT-2400", category: "계측기 · CEM", price: 1155000, url: "product-detail-sunsco-92.html" },
   { id: "product-detail-sunsco-93", name: "저압검전기 TK-5060 | 저압 전압 검전기", model: "모델 TK-5060", category: "계측기 · TK (태광전자정밀)", price: 22000, url: "product-detail-sunsco-93.html" },
