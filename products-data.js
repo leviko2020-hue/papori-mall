@@ -195,7 +195,7 @@ var PAPORI_PRODUCTS = [
   { id: "product-detail-gana-20202", name: "수동 볼트카타", model: "전설공구", category: "전설공구 · MCC", price: null, url: "product-detail-gana-20202.html" },
   { id: "product-detail-gana-20203", name: "활선용 장선기벨트", model: "전설공구", category: "전설공구 · 전설공구", price: null, url: "product-detail-gana-20203.html" },
   { id: "product-detail-gana-20204", name: "케이블 풀링 다이", model: "전설공구", category: "전설공구 · 국산", price: null, url: "product-detail-gana-20204.html" },
-  { id: "product-detail-gana-20205", name: "수동식 휴즈압착기 이즈미 EH-1", model: "모델 EH-1", category: "전설공구 · IZUMI", price: null, url: "product-detail-gana-20205.html" },
+  { id: "product-detail-gana-20205", name: "수동식 휴즈압착기 이즈미 EH-1", model: "모델 EH-1", category: "전설공구 · IZUMI", price: 130000, url: "product-detail-gana-20205.html" },
   { id: "product-detail-gana-20206", name: "절연로라", model: "전설공구", category: "전설공구 · 국산", price: null, url: "product-detail-gana-20206.html" },
   { id: "product-detail-gana-20207", name: "수동식 휴즈압착기 이즈미 EH-3N", model: "모델 EH-3N", category: "전설공구 · IZUMI", price: null, url: "product-detail-gana-20207.html" },
   { id: "product-detail-gana-20208", name: "수동식 휴즈압착기 이즈미 EH-2C", model: "모델 EH-2C", category: "전설공구 · IZUMI", price: null, url: "product-detail-gana-20208.html" },
