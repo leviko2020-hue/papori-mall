@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+Disallow: /admin.html
+Disallow: /login.html
+Disallow: /signup.html
+Disallow: /mypage.html
+Disallow: /checkout.html
+Disallow: /cart.html
+
+Sitemap: https://papori-mall.vercel.app/sitemap.xml
