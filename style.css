@@ -1480,6 +1480,72 @@ img { max-width: 100%; display: block; }
   .thermal-hero h1 { font-size: 22px; }
 }
 
+/* 브랜드 모아보기 페이지 히어로 (유신기업사 등) */
+.brand-hero {
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(560px 380px at 12% 15%, rgba(139,127,232,0.35), transparent 60%),
+    radial-gradient(620px 420px at 90% 80%, rgba(108,92,231,0.30), transparent 55%),
+    linear-gradient(150deg, #0E0B1F 0%, #17123A 45%, #1E1750 100%);
+  padding: 56px 0 40px;
+  margin-bottom: 8px;
+}
+.brand-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
+  background-size: 42px 42px;
+  mask-image: radial-gradient(ellipse 90% 70% at 50% 30%, #000 40%, transparent 90%);
+  pointer-events: none;
+}
+.brand-hero .container { position: relative; z-index: 2; }
+.brand-hero-logo {
+  display: inline-flex;
+  align-items: center;
+  background: #fff;
+  border-radius: 10px;
+  padding: 12px 22px;
+  margin-bottom: 22px;
+}
+.brand-hero-logo img { height: 30px; display: block; }
+.brand-hero h1 {
+  font-size: 30px;
+  font-weight: 800;
+  line-height: 1.35;
+  color: #fff;
+  margin: 0 0 12px;
+  letter-spacing: -.4px;
+}
+.brand-hero p.lead {
+  font-size: 15px;
+  color: rgba(255,255,255,0.68);
+  max-width: 580px;
+  margin: 0 0 26px;
+  line-height: 1.6;
+}
+.brand-hero-stats { display: flex; gap: 28px; flex-wrap: wrap; }
+.brand-hero-stat b {
+  display: block;
+  font-size: 24px;
+  font-weight: 800;
+  color: #fff;
+  font-variant-numeric: tabular-nums;
+}
+.brand-hero-stat span {
+  display: block;
+  font-size: 12.5px;
+  color: rgba(255,255,255,0.55);
+  margin-top: 2px;
+}
+@media (max-width: 768px) {
+  .brand-hero { padding: 40px 0 32px; }
+  .brand-hero h1 { font-size: 24px; }
+}
+
 /* Homepage hero — blurred photo background (main-page-bg.png) */
 .hero {
   position: relative;
