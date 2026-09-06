@@ -357,7 +357,7 @@ var PAPORI_PRODUCTS = [
   { id: "product-detail-sunsco-123", name: "건설안전화 4, 6인치", model: "안전장구", category: "안전장구 · 안전장구", price: null, url: "product-detail-sunsco-123.html" },
   { id: "product-detail-sunsco-124", name: "COS 조작봉 YSC-300-4 | 전기 작업용 절연 조작봉", model: "활선/절연", category: "간접활선공구 · 활선/절연", price: 220000, url: "product-detail-sunsco-124.html" },
   { id: "product-detail-sunsco-125", name: "전선커버 (국산, 미제)", model: "활선/절연", category: "간접활선공구 · 활선/절연", price: 143000, url: "product-detail-sunsco-125.html" },
-  { id: "product-detail-sunsco-126", name: "[2월 생산 예정] 체결형 케이블 바인더 (800EA, 180EA)", model: "한전 보수용 자재", category: "한전 보수용 자재 · 한전 보수용 자재", price: 124190, url: "product-detail-sunsco-126.html" },
+  { id: "product-detail-sunsco-126", name: "[2월 생산 예정] 체결형 케이블 바인더 (800EA, 180EA)", model: "한전 보수용 자재", category: "한전 보수용 자재 · 한전 보수용 자재", price: null, url: "product-detail-sunsco-126.html" },
   { id: "product-detail-sunsco-127", name: "다목적데드엔드커버", model: "활선/절연", category: "간접활선공구 · 활선/절연", price: 170500, url: "product-detail-sunsco-127.html" },
   { id: "product-detail-sunsco-128", name: "EVA 고압 절연블랭킷 (일제 절연시트)", model: "모델 EVA HIGH VOLTAGE INSULATING BLANKET", category: "간접활선공구 · YOTSUGI", price: null, url: "product-detail-sunsco-128.html" },
   { id: "product-detail-sunsco-129", name: "고무브랑켓트 (평형)", model: "활선/절연", category: "간접활선공구 · 활선/절연", price: 242000, url: "product-detail-sunsco-129.html" },
