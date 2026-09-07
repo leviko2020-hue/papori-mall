@@ -132,7 +132,6 @@ var PAPORI_PRODUCTS = [
   { id: "product-detail-gana-20124", name: "라쳇트전선커터", model: "활선 및 안전장구", category: "안전장구 · 유신기업사", price: null, url: "product-detail-gana-20124.html" },
   { id: "product-detail-gana-20125", name: "인성쇄클", model: "활선 및 안전장구", category: "안전장구 · 국산", price: null, url: "product-detail-gana-20125.html" },
   { id: "product-detail-gana-20126", name: "충전부 임시절연캡", model: "활선 및 안전장구", category: "안전장구 · 활선 및 안전장구", price: null, url: "product-detail-gana-20126.html" },
-  { id: "product-detail-gana-20127", name: "실리콘위험표지판", model: "활선 및 안전장구", category: "안전장구 · 활선 및 안전장구", price: null, url: "product-detail-gana-20127.html" },
   { id: "product-detail-gana-20128", name: "클램프핀 직구, 곡구", model: "활선 및 안전장구", category: "안전장구 · 국산", price: 18150, url: "product-detail-gana-20128.html" },
   { id: "product-detail-gana-20129", name: "버킷 거치용 절연고리", model: "활선 및 안전장구", category: "안전장구 · ToolsChamp", price: null, url: "product-detail-gana-20129.html" },
   { id: "product-detail-gana-20130", name: "스마트스틱 그립서포터 (보조손잡이)", model: "활선 및 안전장구", category: "안전장구 · ToolsChamp", price: null, url: "product-detail-gana-20130.html" },
