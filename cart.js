@@ -88,6 +88,15 @@
   }
   function clearCart() { saveCart([]); }
 
+  // href가 "product-detail.html?id=custom-xxxx" 형태(관리자가 등록한 신규 상품)면 그 id를,
+  // 아니면 보통의 "product-detail-xxx.html"에서 ".html"만 뗀 값을 돌려줍니다.
+  function idFromHref(href) {
+    if (!href) return '';
+    var qIdx = href.indexOf('?id=');
+    if (qIdx !== -1) return decodeURIComponent(href.slice(qIdx + 4).split('&')[0]);
+    return href.replace(/\.html$/, '');
+  }
+
   function parsePrice(text) {
     if (!text) return NaN;
     var digits = String(text).replace(/[^0-9]/g, '');
@@ -105,7 +114,7 @@
   // initProductActions()가 페이지를 실제 구매 가능한 형태로 보강합니다.
   function readProductFromPage() {
     var h1 = document.querySelector('.detail-info h1');
-    if (!h1) return null;
+    if (!h1 || !h1.textContent.trim()) return null;
     var priceEl = document.querySelector('.price-box .final-price');
     var price = priceEl ? parsePrice(priceEl.textContent) : NaN;
     var imgEl = document.querySelector('.detail-gallery .main-img');
@@ -116,8 +125,12 @@
       var m = /url\((['"]?)(.*?)\1\)/.exec(imgEl.style.backgroundImage || '');
       if (m) image = m[2];
     }
+    // 관리자가 등록한 신규 상품(product-detail.html?id=custom-xxxx)은 파일명이 전부
+    // "product-detail.html"로 같으므로, 있으면 쿼리스트링의 id를 우선 사용합니다.
+    var customId = new URLSearchParams(location.search).get('id');
     var file = location.pathname.split('/').pop() || '';
-    var id = file.replace(/\.html$/, '') || h1.textContent.trim();
+    var id = customId || file.replace(/\.html$/, '') || h1.textContent.trim();
+    var url = customId ? (file + '?id=' + encodeURIComponent(customId)) : file;
     return {
       id: id,
       name: h1.textContent.trim(),
@@ -125,7 +138,7 @@
       model: modelEl ? modelEl.textContent.trim() : '',
       price: price || null,
       image: image,
-      url: file
+      url: url
     };
   }
   function getQtyFromPage() {
@@ -240,13 +253,45 @@
       wireQuoteButtons(product, outlineBtns, primaryBtns, quickQuoteEls);
     }
 
-    // 관리자가 설정한 가격/재고 오버라이드 반영. "가격문의" 상품이라도 관리자가
-    // 판매가를 지정하면 이 페이지를 실제 구매 가능한 형태로 보강합니다.
+    // 관리자가 설정한 가격/재고/이름/이미지/설명/제원 오버라이드 반영. "가격문의" 상품이라도
+    // 관리자가 판매가를 지정하면 이 페이지를 실제 구매 가능한 형태로 보강합니다.
     import('./papori-firebase.js').then(function (mod) {
       return mod.paporiGetProductOverride(product.id);
     }).then(function (override) {
       if (!override) return;
       var priceEl = document.querySelector('.price-box .final-price');
+
+      if (override.hidden) {
+        var wrap = document.querySelector('.detail-wrap');
+        if (wrap) {
+          wrap.innerHTML = '<div style="padding:60px 20px; text-align:center; color:var(--text-mute);">' +
+            '<p style="font-size:16px; margin-bottom:8px;">이 상품은 더 이상 판매하지 않습니다.</p>' +
+            '<a href="index.html" class="btn btn-outline btn-sm">홈으로 돌아가기</a></div>';
+        }
+        return;
+      }
+
+      if (override.name) {
+        h1.textContent = override.name;
+        product.name = override.name;
+      }
+      if (override.image) {
+        var mainImg = document.querySelector('.detail-gallery .main-img');
+        if (mainImg) mainImg.style.backgroundImage = "url('" + override.image + "')";
+        product.image = override.image;
+      }
+      if (override.description) {
+        var descEl = document.querySelector('#panel-info .detail-section p');
+        if (descEl) descEl.textContent = override.description;
+      }
+      if (Array.isArray(override.specRows) && override.specRows.length) {
+        var specTable = document.querySelector('#panel-spec .spec-table');
+        if (specTable) {
+          specTable.innerHTML = override.specRows.map(function (r) {
+            return '<tr><th>' + escapeHtml(r.label || '') + '</th><td>' + escapeHtml(r.value || '') + '</td></tr>';
+          }).join('');
+        }
+      }
 
       if (typeof override.price === 'number' && override.price > 0) {
         product.price = override.price;
@@ -283,7 +328,8 @@
   // 상품 목록 카드(카테고리 목록, 관련상품 등 .product-card 전부): 카드 상단에
   // 바로구매/장바구니/견적요청 3버튼을 추가. 가격이 있는 카드는 실제 구매로,
   // 가격문의 카드는 3버튼 모두 견적요청 담기로 동작 (상세페이지와 동일한 규칙).
-  function initProductCardActions() {
+  function initProductCardActions(overridesMap) {
+    overridesMap = overridesMap || {};
     var cards = Array.prototype.slice.call(document.querySelectorAll('a.product-card'));
     cards.forEach(function (oldCard) {
       var href = oldCard.getAttribute('href');
@@ -291,15 +337,31 @@
       var h4 = oldCard.querySelector('h4');
       if (!href || !thumbEl || !h4) return;
 
+      var cardId = idFromHref(href);
+      var ov = overridesMap[cardId];
+      if (ov && ov.hidden) { oldCard.remove(); return; }
+      if (ov && ov.name) h4.textContent = ov.name;
+      if (ov && ov.image) thumbEl.style.backgroundImage = "url('" + ov.image + "')";
+
       var brandEl = oldCard.querySelector('.brand');
       var priceEl = oldCard.querySelector('.price');
+      var inquiryEl = oldCard.querySelector('.inquiry');
+      if (ov && typeof ov.price === 'number' && ov.price > 0) {
+        var priceText = ov.price.toLocaleString() + '원';
+        if (priceEl) {
+          priceEl.innerHTML = ov.price.toLocaleString() + '<span class="unit">원</span>';
+        } else if (inquiryEl) {
+          inquiryEl.outerHTML = '<div class="price">' + ov.price.toLocaleString() + '<span class="unit">원</span></div>';
+          priceEl = oldCard.querySelector('.price');
+        }
+      }
       var image = '';
       var m = /url\((['"]?)(.*?)\1\)/.exec(thumbEl.style.backgroundImage || '');
       if (m) image = m[2];
       var price = priceEl ? parsePrice(priceEl.textContent) : NaN;
 
       var product = {
-        id: href.replace(/\.html$/, ''),
+        id: cardId,
         name: h4.textContent.trim(),
         brand: brandEl ? brandEl.textContent.trim() : '',
         model: '',
@@ -345,6 +407,35 @@
         buyBtn.onclick = function (e) { e.preventDefault(); addToQuoteDraft(product, 1); location.href = 'quote-request.html'; };
       }
     });
+    document.dispatchEvent(new CustomEvent('papori:cards-updated'));
+  }
+
+  // 관리자가 등록한 신규 상품을, 이 페이지의 .product-grid[data-category]와 카테고리명이
+  // 같은 것만 골라 기존 카드와 동일한 마크업으로 만들어 목록 맨 뒤에 추가합니다.
+  // product-detail.html?id=custom-xxxx 로 연결되는 "가상의" 상세페이지를 씁니다.
+  function loadCustomProductsForCategory() {
+    var grid = document.querySelector('.product-grid[data-category]');
+    if (!grid) return Promise.resolve();
+    var category = grid.getAttribute('data-category');
+    return import('./papori-firebase.js').then(function (mod) {
+      return mod.paporiGetCustomProductsByCategory(category);
+    }).then(function (products) {
+      if (!products.length) return;
+      products.forEach(function (p) {
+        var href = 'product-detail.html?id=' + encodeURIComponent(p.id);
+        var img = (p.images && p.images[0] && p.images[0].url) || '';
+        var bodyHtml = '<div class="brand">' + escapeHtml(p.brand || '') + '</div>' +
+          '<h4>' + escapeHtml(p.name || '') + '</h4>' +
+          (typeof p.price === 'number' && p.price > 0
+            ? '<div class="price">' + p.price.toLocaleString() + '<span class="unit">원</span></div>'
+            : '<div class="inquiry">견적문의</div>');
+        var a = document.createElement('a');
+        a.href = href;
+        a.className = 'product-card';
+        a.innerHTML = '<div class="thumb" style="background-image:url(\'' + img + '\');"></div><div class="body">' + bodyHtml + '</div>';
+        grid.appendChild(a);
+      });
+    }).catch(function () { /* 신규 상품 조회 실패해도 기존 목록은 그대로 보여줌 */ });
   }
 
   // cart.html: 실제 장바구니 내용을 테이블로 렌더링
@@ -428,7 +519,10 @@
     escapeHtml: escapeHtml,
     getQuoteDraft: getQuoteDraft,
     addToQuoteDraft: addToQuoteDraft,
-    clearQuoteDraft: clearQuoteDraft
+    clearQuoteDraft: clearQuoteDraft,
+    // product-detail.html(신규 상품용 공용 템플릿)이 Firestore에서 상품정보를 받아와
+    // DOM(h1, 이미지 등)을 채운 "다음에" 이 함수를 호출하면 장바구니/구매 버튼이 연결됩니다.
+    reinitProductPage: initProductActions
   };
 
   // 헤더 "로그인" 링크를 실제 로그인 상태에 맞춰 갱신 (로그인 시 이메일 표시 + 로그아웃)
@@ -566,10 +660,23 @@
   document.addEventListener('DOMContentLoaded', function () {
     updateBadge();
     initProductActions();
-    initProductCardActions();
     renderCartPage();
     initAuthState();
     applySiteConfig();
     initHeaderSearch();
+
+    // 카테고리 카드: 기존 상품 오버라이드(가격/이름/이미지/숨김) 적용 → 액션버튼 부착,
+    // 이어서 관리자가 등록한 신규 상품을 이 카테고리 목록 뒤에 추가.
+    import('./papori-firebase.js').then(function (mod) {
+      return mod.paporiGetProductOverrides();
+    }).then(function (overridesMap) {
+      initProductCardActions(overridesMap || {});
+    }).catch(function () {
+      initProductCardActions({});
+    }).then(function () {
+      return loadCustomProductsForCategory();
+    }).then(function () {
+      initProductCardActions({});
+    });
   });
 })();

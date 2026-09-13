@@ -25,7 +25,7 @@
     <div class="admin-logo">PAPORI 관리자</div>
     <a href="#" class="active" onclick="showPanel('orders')">주문 관리</a>
     <a href="#" onclick="showPanel('quotes')">견적문의 관리</a>
-    <a href="#" onclick="showPanel('products')">상품 관리 (가격·재고)</a>
+    <a href="#" onclick="showPanel('products')">상품 관리</a>
     <a href="#" onclick="showPanel('config')">사이트 기본정보 설정</a>
     <a href="#" id="admin-logout-link" style="margin-top:20px;">로그아웃</a>
     <a href="index.html" style="color:var(--text-mute);">← 쇼핑몰로 돌아가기</a>
@@ -52,14 +52,42 @@
     </div>
 
     <div id="panel-products" style="display:none;">
-      <h1>상품 관리 (가격 · 재고)</h1>
-      <p class="sub">고정가 상품의 판매가·재고를 수정합니다. 저장하면 해당 상품 페이지에 즉시 반영됩니다. 재고를 0으로 저장하면 "품절" 처리되어 장바구니 담기가 막힙니다.</p>
-      <div class="form-group" style="max-width:320px;"><input type="text" id="product-filter" placeholder="상품명으로 검색..."></div>
-      <div id="products-loading" style="font-size:13px; color:var(--text-mute);">불러오는 중...</div>
-      <table class="admin-table" id="products-table" style="display:none;">
-        <tr><th>상품명</th><th>기본가</th><th>판매가(오버라이드)</th><th>재고</th><th></th></tr>
-        <tbody id="products-tbody"></tbody>
-      </table>
+      <h1>상품 관리</h1>
+      <div class="admin-subtabs" style="display:flex; gap:8px; margin-bottom:18px; border-bottom:1px solid var(--border); padding-bottom:0;">
+        <a href="#" class="admin-subtab active" onclick="showProductsSubtab('existing')" id="subtab-existing">기존 상품 수정</a>
+        <a href="#" class="admin-subtab" onclick="showProductsSubtab('new')" id="subtab-new">신규 상품 등록</a>
+        <a href="#" class="admin-subtab" onclick="showProductsSubtab('mine')" id="subtab-mine">등록한 신규 상품</a>
+      </div>
+
+      <div id="products-sub-existing">
+        <p class="sub">기존 상품의 이름·가격·이미지·설명·숨김 여부를 수정합니다. 저장하면 해당 상품 페이지와 목록에 즉시 반영됩니다.</p>
+        <div class="form-group" style="max-width:320px;"><input type="text" id="product-filter" placeholder="상품명으로 검색..."></div>
+        <div id="products-loading" style="font-size:13px; color:var(--text-mute);">불러오는 중...</div>
+        <table class="admin-table" id="products-table" style="display:none;">
+          <tr><th>상품명</th><th>기본가</th><th>현재 판매가</th><th>재고</th><th>상태</th><th></th></tr>
+          <tbody id="products-tbody"></tbody>
+        </table>
+      </div>
+
+      <div id="products-sub-new" style="display:none;">
+        <p class="sub">여기서 등록하면 선택한 카테고리 페이지 목록 맨 뒤에 바로 노출되고, 전용 상세페이지가 자동으로 만들어집니다. 코드 수정이나 배포 없이 즉시 반영됩니다.</p>
+        <div id="new-product-form"></div>
+      </div>
+
+      <div id="products-sub-mine" style="display:none;">
+        <p class="sub">지금까지 이 화면에서 직접 등록한 신규 상품 목록입니다.</p>
+        <div id="mine-loading" style="font-size:13px; color:var(--text-mute);">불러오는 중...</div>
+        <table class="admin-table" id="mine-table" style="display:none;">
+          <tr><th>상품명</th><th>카테고리</th><th>가격</th><th>상태</th><th></th></tr>
+          <tbody id="mine-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div id="product-edit-overlay" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.45); z-index:50; align-items:center; justify-content:center;">
+      <div style="background:#fff; border-radius:12px; max-width:560px; width:92%; max-height:88vh; overflow-y:auto; padding:28px;">
+        <div id="product-edit-form"></div>
+      </div>
     </div>
 
     <div id="panel-config" style="display:none;">
@@ -87,8 +115,13 @@
     paporiLogin, paporiLogout, paporiOnAuthChange, PAPORI_ADMIN_EMAILS,
     paporiGetOrders, paporiGetQuotes,
     paporiGetProductOverrides, paporiSaveProductOverride,
-    paporiGetSiteConfig, paporiSaveSiteConfig
+    paporiGetSiteConfig, paporiSaveSiteConfig,
+    paporiUploadProductImage,
+    paporiGetCustomProducts, paporiCreateCustomProduct, paporiSaveCustomProduct, paporiDeleteCustomProduct
   } from "./papori-firebase.js";
+
+  var PAPORI_CATEGORIES = ["계측기", "안전장구", "전동유압공구", "열화상초음파카메라", "한전 보수용 자재"];
+  function escapeAttr(s) { return String(s == null ? '' : s).replace(/"/g, '&quot;'); }
 
   const gate = document.getElementById('admin-gate');
   const layout = document.getElementById('admin-layout');
@@ -210,48 +243,266 @@
   let productsLoaded = false;
   let allOverrides = {};
   const allProducts = window.PAPORI_PRODUCTS || [];
-  document.querySelector('#panel-products .sub').textContent =
-    `전체 상품(${allProducts.length}개)의 판매가·재고를 수정합니다. 저장하면 해당 상품 페이지에 즉시 반영됩니다. "가격문의" 상품도 여기서 판매가를 지정하면 그 페이지가 실제 장바구니 담기가 가능한 상품으로 바뀝니다. 재고를 0으로 저장하면 "품절" 처리되어 담기가 막힙니다.`;
 
+  window.showProductsSubtab = function (name) {
+    ['existing', 'new', 'mine'].forEach(n => {
+      document.getElementById('products-sub-' + n).style.display = (n === name) ? 'block' : 'none';
+      document.getElementById('subtab-' + n).classList.toggle('active', n === name);
+    });
+    if (name === 'new' && !document.getElementById('new-product-form').dataset.built) renderNewProductForm();
+    if (name === 'mine') loadMineProducts();
+  };
+
+  // ---- 공용: 이미지 업로드 위젯 (여러 장, 업로드 즉시 Storage에 저장 후 썸네일 표시) ----
+  function buildImageUploader(containerId, productIdForUpload, initialImages) {
+    const wrap = document.getElementById(containerId);
+    let images = (initialImages || []).slice(); // [{url, path}]
+    wrap.innerHTML = `
+      <input type="file" accept="image/*" multiple class="img-file-input">
+      <div class="pf-thumbs"></div>
+      <p style="font-size:11px; color:var(--text-mute); margin-top:4px;">첫 번째 사진이 대표 이미지로 사용됩니다. 컴퓨터에서 직접 작업/보정한 이미지 파일을 그대로 올리시면 됩니다.</p>
+    `;
+    const thumbsEl = wrap.querySelector('.pf-thumbs');
+    function renderThumbs() {
+      thumbsEl.innerHTML = images.map((im, i) =>
+        `<div class="pf-thumb" style="background-image:url('${im.url}')" data-i="${i}"><span class="pf-thumb-x">×</span></div>`
+      ).join('');
+      thumbsEl.querySelectorAll('.pf-thumb-x').forEach(x => {
+        x.onclick = () => { images.splice(parseInt(x.parentElement.dataset.i, 10), 1); renderThumbs(); };
+      });
+    }
+    renderThumbs();
+    wrap.querySelector('.img-file-input').onchange = async (e) => {
+      const files = Array.from(e.target.files || []);
+      for (const file of files) {
+        try {
+          const result = await paporiUploadProductImage(productIdForUpload, file);
+          images.push(result);
+          renderThumbs();
+        } catch (err) {
+          alert('이미지 업로드 실패: ' + (err.message || err));
+        }
+      }
+      e.target.value = '';
+    };
+    return { getImages: () => images };
+  }
+
+  // ---- 공용: 제원표(스펙) 행 편집 위젯 ----
+  function buildSpecRowsEditor(containerId, initialRows) {
+    const wrap = document.getElementById(containerId);
+    let rows = (initialRows || []).map(r => ({ label: r.label || '', value: r.value || '' }));
+    function render() {
+      wrap.innerHTML = rows.map((r, i) => `
+        <div class="pf-spec-row" data-i="${i}">
+          <input type="text" class="spec-label" placeholder="항목 (예: 정격전압)" value="${escapeAttr(r.label)}">
+          <input type="text" class="spec-value" placeholder="값 (예: AC 220V)" value="${escapeAttr(r.value)}">
+          <button type="button" class="btn btn-ghost btn-sm spec-remove">삭제</button>
+        </div>
+      `).join('') + `<button type="button" class="btn btn-ghost btn-sm" id="${containerId}-add">+ 행 추가</button>`;
+      wrap.querySelectorAll('.pf-spec-row').forEach(rowEl => {
+        const i = parseInt(rowEl.dataset.i, 10);
+        rowEl.querySelector('.spec-label').oninput = (e) => { rows[i].label = e.target.value; };
+        rowEl.querySelector('.spec-value').oninput = (e) => { rows[i].value = e.target.value; };
+        rowEl.querySelector('.spec-remove').onclick = () => { rows.splice(i, 1); render(); };
+      });
+      document.getElementById(containerId + '-add').onclick = () => { rows.push({ label: '', value: '' }); render(); };
+    }
+    render();
+    return { getRows: () => rows.filter(r => r.label.trim() || r.value.trim()) };
+  }
+
+  // ---- 신규 상품 등록 폼 ----
+  function renderNewProductForm() {
+    const el = document.getElementById('new-product-form');
+    el.dataset.built = '1';
+    const draftId = 'draft-' + Date.now();
+    el.innerHTML = `
+      <div class="pf-row"><label>카테고리</label>
+        <select id="np-category">${PAPORI_CATEGORIES.map(c => `<option value="${c}">${c}</option>`).join('')}</select>
+      </div>
+      <div class="pf-row"><label>상품명 *</label><input type="text" id="np-name" placeholder="예: 절연 안전모 YSH-300"></div>
+      <div class="pf-row"><label>브랜드/제조사</label><input type="text" id="np-brand" placeholder="예: 유신기업사 (비워두면 표시 안 함)"></div>
+      <div class="pf-row"><label>모델명</label><input type="text" id="np-model" placeholder="예: YSH-300"></div>
+      <div class="pf-row"><label>가격 (원)</label><input type="number" id="np-price" placeholder="비워두면 '가격문의'로 표시됩니다"></div>
+      <div class="pf-row"><label>뱃지 (선택)</label><input type="text" id="np-badge" placeholder="예: 간접활선용 (비워두면 표시 안 함)"></div>
+      <div class="pf-row"><label>상품 이미지</label><div id="np-images"></div></div>
+      <div class="pf-row"><label>상세 설명</label><textarea id="np-description" placeholder="상세정보 탭에 들어갈 소개 문구"></textarea></div>
+      <div class="pf-row"><label>제원표</label><div id="np-specs"></div></div>
+      <button type="button" class="btn btn-primary" id="np-submit">등록하기</button>
+      <span id="np-msg" style="font-size:13px; color:var(--text-mute); margin-left:8px;"></span>
+    `;
+    const imgWidget = buildImageUploader('np-images', draftId, []);
+    const specWidget = buildSpecRowsEditor('np-specs', []);
+
+    document.getElementById('np-submit').onclick = async () => {
+      const name = document.getElementById('np-name').value.trim();
+      const msg = document.getElementById('np-msg');
+      if (!name) { msg.textContent = '상품명을 입력해주세요.'; msg.style.color = '#C0392B'; return; }
+      const priceRaw = document.getElementById('np-price').value;
+      const data = {
+        category: document.getElementById('np-category').value,
+        name,
+        brand: document.getElementById('np-brand').value.trim(),
+        model: document.getElementById('np-model').value.trim(),
+        price: priceRaw !== '' ? parseInt(priceRaw, 10) : null,
+        badge: document.getElementById('np-badge').value.trim(),
+        images: imgWidget.getImages(),
+        description: document.getElementById('np-description').value.trim(),
+        specRows: specWidget.getRows(),
+        hidden: false
+      };
+      msg.style.color = 'var(--text-mute)';
+      msg.textContent = '등록 중...';
+      try {
+        const id = await paporiCreateCustomProduct(data);
+        msg.style.color = 'var(--purple-dark)';
+        msg.innerHTML = '등록 완료! <a href="product-detail.html?id=' + encodeURIComponent(id) + '" target="_blank">상품 페이지 보기 →</a>';
+        // 다음 상품을 이어서 등록할 수 있도록 폼 초기화
+        document.getElementById('np-name').value = '';
+        document.getElementById('np-brand').value = '';
+        document.getElementById('np-model').value = '';
+        document.getElementById('np-price').value = '';
+        document.getElementById('np-badge').value = '';
+        document.getElementById('np-description').value = '';
+        el.dataset.built = '';
+        renderNewProductForm();
+      } catch (err) {
+        msg.style.color = '#C0392B';
+        msg.textContent = '등록 실패: ' + (err.message || err);
+      }
+    };
+  }
+
+  // ---- 등록한 신규 상품 목록 ----
+  let mineLoaded = false;
+  async function loadMineProducts() {
+    const loadingEl = document.getElementById('mine-loading');
+    const tableEl = document.getElementById('mine-table');
+    const tbody = document.getElementById('mine-tbody');
+    loadingEl.style.display = 'block';
+    tableEl.style.display = 'none';
+    try {
+      const items = await paporiGetCustomProducts();
+      loadingEl.style.display = 'none';
+      tableEl.style.display = 'table';
+      if (items.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; color:var(--text-mute);">아직 등록한 신규 상품이 없습니다.</td></tr>';
+        return;
+      }
+      tbody.innerHTML = items.map(p => `
+        <tr data-id="${p.id}">
+          <td><a href="product-detail.html?id=${encodeURIComponent(p.id)}" target="_blank">${p.name}</a></td>
+          <td>${p.category || '-'}</td>
+          <td>${typeof p.price === 'number' && p.price > 0 ? p.price.toLocaleString() + '원' : '가격문의'}</td>
+          <td>${p.hidden ? '<span class="status-pill status-wait">숨김</span>' : '<span class="status-pill status-done">노출중</span>'}</td>
+          <td>
+            <button type="button" class="btn btn-ghost btn-sm mine-toggle">${p.hidden ? '노출' : '숨김'}</button>
+            <button type="button" class="btn btn-ghost btn-sm mine-delete" style="color:#C0392B;">삭제</button>
+          </td>
+        </tr>
+      `).join('');
+      tbody.querySelectorAll('tr').forEach(tr => {
+        const id = tr.dataset.id;
+        const item = items.find(p => p.id === id);
+        tr.querySelector('.mine-toggle').onclick = async () => {
+          try { await paporiSaveCustomProduct(id, { hidden: !item.hidden }); loadMineProducts(); }
+          catch (err) { alert('실패: ' + (err.message || err)); }
+        };
+        tr.querySelector('.mine-delete').onclick = async () => {
+          if (!confirm(`"${item.name}" 상품을 완전히 삭제할까요? 되돌릴 수 없습니다.`)) return;
+          try { await paporiDeleteCustomProduct(id); loadMineProducts(); }
+          catch (err) { alert('실패: ' + (err.message || err)); }
+        };
+      });
+    } catch (err) {
+      loadingEl.textContent = '불러오기 실패: ' + (err.message || err);
+    }
+  }
+
+  // ---- 기존 상품 목록 + 수정 오버레이 ----
   function renderProductsTable(filterText) {
     const tbody = document.getElementById('products-tbody');
     const q = (filterText || '').trim().toLowerCase();
     const rows = allProducts.filter(p => !q || p.name.toLowerCase().includes(q));
     tbody.innerHTML = rows.map(p => {
       const ov = allOverrides[p.id] || {};
-      const curPrice = typeof ov.price === 'number' ? ov.price : (p.price != null ? p.price : '');
-      const curStock = typeof ov.stock === 'number' ? ov.stock : '';
+      const curPrice = typeof ov.price === 'number' ? ov.price : p.price;
+      const curStock = typeof ov.stock === 'number' ? ov.stock : null;
+      const statusText = ov.hidden ? '<span class="status-pill status-wait">숨김</span>' : (curStock === 0 ? '<span class="status-pill status-pending">품절</span>' : '<span class="status-pill status-done">노출중</span>');
       return `
         <tr data-id="${p.id}">
-          <td><a href="${p.url}" target="_blank">${p.name}</a></td>
+          <td><a href="${p.url}" target="_blank">${ov.name || p.name}</a></td>
           <td>${p.price != null ? p.price.toLocaleString() + '원' : '가격문의'}</td>
-          <td><input type="number" class="ov-price" value="${curPrice}" placeholder="가격 입력" style="width:120px;"></td>
-          <td><input type="number" class="ov-stock" value="${curStock}" placeholder="미설정" style="width:80px;"></td>
-          <td><button type="button" class="btn btn-ghost btn-sm save-override">저장</button> <span class="save-msg" style="font-size:12px; color:var(--text-mute);"></span></td>
+          <td>${typeof curPrice === 'number' ? curPrice.toLocaleString() + '원' : '가격문의'}</td>
+          <td>${curStock != null ? curStock : '-'}</td>
+          <td>${statusText}</td>
+          <td><button type="button" class="btn btn-ghost btn-sm edit-existing">수정</button></td>
         </tr>
       `;
     }).join('');
 
-    tbody.querySelectorAll('tr').forEach(tr => {
-      tr.querySelector('.save-override').onclick = async () => {
-        const id = tr.dataset.id;
-        const priceInput = tr.querySelector('.ov-price');
-        const stockInput = tr.querySelector('.ov-stock');
-        const msg = tr.querySelector('.save-msg');
-        const data = {};
-        if (priceInput.value !== '') data.price = parseInt(priceInput.value, 10);
-        if (stockInput.value !== '') data.stock = parseInt(stockInput.value, 10);
-        msg.textContent = '저장 중...';
-        try {
-          await paporiSaveProductOverride(id, data);
-          allOverrides[id] = { ...(allOverrides[id] || {}), ...data };
-          msg.textContent = '저장됨';
-          setTimeout(() => { msg.textContent = ''; }, 2000);
-        } catch (err) {
-          msg.textContent = '실패: ' + (err.message || err);
-        }
+    tbody.querySelectorAll('.edit-existing').forEach(btn => {
+      btn.onclick = () => {
+        const id = btn.closest('tr').dataset.id;
+        const p = allProducts.find(x => x.id === id);
+        openExistingProductEditor(p);
       };
     });
+  }
+
+  function openExistingProductEditor(p) {
+    const ov = allOverrides[p.id] || {};
+    const overlay = document.getElementById('product-edit-overlay');
+    const form = document.getElementById('product-edit-form');
+    form.innerHTML = `
+      <h2 style="font-size:17px; margin:0 0 16px;">상품 수정 — ${p.name}</h2>
+      <div class="pf-row"><label>상품명</label><input type="text" id="ep-name" value="${escapeAttr(ov.name || p.name)}"></div>
+      <div class="pf-row"><label>판매가 (원, 비워두면 원래대로/가격문의)</label><input type="number" id="ep-price" value="${typeof ov.price === 'number' ? ov.price : ''}"></div>
+      <div class="pf-row"><label>재고 (비워두면 재고관리 안 함, 0=품절)</label><input type="number" id="ep-stock" value="${typeof ov.stock === 'number' ? ov.stock : ''}"></div>
+      <div class="pf-row"><label>이미지 교체 (선택, 안 올리면 기존 이미지 유지)</label><div id="ep-images"></div></div>
+      <div class="pf-row"><label>상세 설명 (선택)</label><textarea id="ep-description">${ov.description || ''}</textarea></div>
+      <div class="pf-row"><label>제원표 (선택, 채우면 기존 제원표를 대체합니다)</label><div id="ep-specs"></div></div>
+      <div class="pf-row"><label><input type="checkbox" id="ep-hidden" ${ov.hidden ? 'checked' : ''} style="width:auto; margin-right:6px;">이 상품을 목록과 상세페이지에서 숨김(판매종료) 처리</label></div>
+      <div style="display:flex; gap:8px; margin-top:18px;">
+        <button type="button" class="btn btn-primary" id="ep-save">저장</button>
+        <button type="button" class="btn btn-outline" id="ep-cancel">취소</button>
+        <span id="ep-msg" style="font-size:13px; color:var(--text-mute); align-self:center;"></span>
+      </div>
+    `;
+    const imgWidget = buildImageUploader('ep-images', p.id, ov.image ? [{ url: ov.image, path: '' }] : []);
+    const specWidget = buildSpecRowsEditor('ep-specs', ov.specRows || []);
+
+    overlay.style.display = 'flex';
+    document.getElementById('ep-cancel').onclick = () => { overlay.style.display = 'none'; };
+    document.getElementById('ep-save').onclick = async () => {
+      const msg = document.getElementById('ep-msg');
+      const nameVal = document.getElementById('ep-name').value.trim();
+      const priceVal = document.getElementById('ep-price').value;
+      const stockVal = document.getElementById('ep-stock').value;
+      const images = imgWidget.getImages();
+      const data = {
+        hidden: document.getElementById('ep-hidden').checked
+      };
+      if (nameVal && nameVal !== p.name) data.name = nameVal;
+      if (priceVal !== '') data.price = parseInt(priceVal, 10);
+      if (stockVal !== '') data.stock = parseInt(stockVal, 10);
+      if (images.length) data.image = images[images.length - 1].url;
+      const descVal = document.getElementById('ep-description').value.trim();
+      if (descVal) data.description = descVal;
+      const specRows = specWidget.getRows();
+      if (specRows.length) data.specRows = specRows;
+
+      msg.textContent = '저장 중...';
+      try {
+        await paporiSaveProductOverride(p.id, data);
+        allOverrides[p.id] = { ...(allOverrides[p.id] || {}), ...data };
+        overlay.style.display = 'none';
+        renderProductsTable(document.getElementById('product-filter').value);
+      } catch (err) {
+        msg.textContent = '실패: ' + (err.message || err);
+      }
+    };
   }
 
   async function loadProducts() {

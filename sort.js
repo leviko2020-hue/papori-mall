@@ -8,6 +8,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
   var originalHTML = grid.innerHTML; // 브랜드 그룹 헤딩 포함 원래 순서 보관
 
+  // cart.js가 상품 오버라이드(가격/숨김 등)를 반영하거나 관리자가 등록한 신규 상품을
+  // 목록에 추가하면 "papori:cards-updated" 이벤트를 쏩니다 — 그 시점의 최신 DOM을
+  // "인기순" 기준으로 다시 저장해둬야, 나중에 인기순으로 돌아갔을 때 숨김 처리된 상품이
+  // 다시 나타나거나 신규 상품이 누락되지 않습니다.
+  document.addEventListener('papori:cards-updated', function () {
+    originalHTML = grid.innerHTML;
+  });
+
   function priceOf(card) {
     var priceEl = card.querySelector('.price');
     if (!priceEl) return Infinity; // 견적문의 등 가격 없는 상품은 항상 맨 뒤

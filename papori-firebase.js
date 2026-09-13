@@ -8,12 +8,16 @@ import {
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 import {
   getFirestore, collection, addDoc, serverTimestamp, doc, setDoc,
-  getDoc, getDocs, query, orderBy, deleteDoc
+  getDoc, getDocs, query, orderBy, where, deleteDoc
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import {
+  getStorage, ref as storageRef, uploadBytes, getDownloadURL, deleteObject
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
+const storage = getStorage(app);
 
 // 관리자 화면(admin.html) 접근을 허용할 이메일 목록.
 // 실제 접근 제어는 Firestore 보안규칙에서 걸어야 하며, 이건 화면단 게이트일 뿐입니다.
@@ -126,6 +130,51 @@ export async function paporiSaveProductOverride(productId, data) {
     ...data,
     updatedAt: serverTimestamp()
   }, { merge: true });
+}
+
+// ---- 상품 이미지 업로드 (Firebase Storage) ----
+// productId 폴더 아래에 원본 파일명(+타임스탬프)으로 저장하고, 공개 다운로드 URL을 돌려줍니다.
+export async function paporiUploadProductImage(productId, file) {
+  var safeName = Date.now() + '_' + file.name.replace(/[^a-zA-Z0-9._-]/g, '_');
+  var path = 'product-images/' + productId + '/' + safeName;
+  var ref = storageRef(storage, path);
+  await uploadBytes(ref, file);
+  var url = await getDownloadURL(ref);
+  return { url: url, path: path };
+}
+export async function paporiDeleteProductImage(path) {
+  try { await deleteObject(storageRef(storage, path)); } catch (e) { /* 이미 삭제된 경우 등은 무시 */ }
+}
+
+// ---- 신규 상품(관리자가 직접 등록한 상품) ----
+// customProducts/{id} 문서 하나가 상품 하나. id는 "custom-" 접두어 + 타임스탬프로 자동 생성됩니다.
+// 필드: name, model, category(카테고리 페이지 매칭용, 예: "한전 보수용 자재"), brand, badge,
+//       price(숫자 또는 null=가격문의), images: [{url, path}], description, specRows: [{label, value}], hidden(bool)
+export function paporiNewProductId() {
+  return 'custom-' + Date.now() + '-' + Math.random().toString(36).slice(2, 7);
+}
+export async function paporiGetCustomProducts() {
+  var snap = await getDocs(query(collection(db, "customProducts"), orderBy("createdAt", "desc")));
+  return snap.docs.map(function (d) { return Object.assign({ id: d.id }, d.data()); });
+}
+export async function paporiGetCustomProductsByCategory(category) {
+  var snap = await getDocs(query(collection(db, "customProducts"), where("category", "==", category)));
+  return snap.docs.map(function (d) { return Object.assign({ id: d.id }, d.data()); }).filter(function (p) { return !p.hidden; });
+}
+export async function paporiGetCustomProduct(id) {
+  var snap = await getDoc(doc(db, "customProducts", id));
+  return snap.exists() ? Object.assign({ id: id }, snap.data()) : null;
+}
+export async function paporiSaveCustomProduct(id, data) {
+  await setDoc(doc(db, "customProducts", id), Object.assign({}, data, { updatedAt: serverTimestamp() }), { merge: true });
+}
+export async function paporiCreateCustomProduct(data) {
+  var id = paporiNewProductId();
+  await setDoc(doc(db, "customProducts", id), Object.assign({}, data, { createdAt: serverTimestamp(), updatedAt: serverTimestamp() }));
+  return id;
+}
+export async function paporiDeleteCustomProduct(id) {
+  await deleteDoc(doc(db, "customProducts", id));
 }
 
 // ---- 사이트 기본정보 설정 (상호/대표자/주소 등, 푸터에 실시간 반영) ----

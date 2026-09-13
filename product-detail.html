@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<title>HIKMICRO M11W 산업용 열화상카메라 — PAPORI</title>
+<title>상품 — PAPORI</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="style.css">
 </head>
@@ -33,129 +33,70 @@
 </nav>
 
 <main class="container">
-  <div class="breadcrumb">
-    <a href="index.html">홈</a> &gt; <a href="category-thermal.html">열화상카메라</a> &gt; M11W
+  <div class="breadcrumb" id="pd-breadcrumb">
+    <a href="index.html">홈</a>
   </div>
 
-  <div class="detail-wrap">
-    <div class="detail-gallery">
-      <div class="main-img" style="background-image:url('https://hikkorea.co.kr/images/product_images/0101/100010_L.jpg');"></div>
-      <div class="gallery-thumbs">
-        <div class="thumb-img active" style="background-image:url('https://hikkorea.co.kr/images/product_images/0101/100010_L.jpg');" onclick="swapGalleryImage(this)"></div>
-        <div class="thumb-img" style="background-image:url('https://hikkorea.co.kr/images/product_images/0101/100010_A1.jpg');" onclick="swapGalleryImage(this)"></div>
-      </div>
-    </div>
+  <div id="pd-loading" style="padding:80px 0; text-align:center; color:var(--text-mute);">불러오는 중...</div>
+  <div id="pd-notfound" style="display:none; padding:80px 0; text-align:center; color:var(--text-mute);">
+    <p style="font-size:16px; margin-bottom:12px;">상품을 찾을 수 없습니다.</p>
+    <a href="index.html" class="btn btn-outline btn-sm">홈으로 돌아가기</a>
+  </div>
 
-    <div class="detail-info">
-      <div class="brand-line">HIKMICRO</div>
-      <h1>HIKMICRO M11W 산업용 열화상카메라</h1>
-      <div class="model">모델명 M11W · IR 192×144(27,648 화소) · 온도범위 -20℃~+550℃</div>
-
-      <div class="trust-badges">
-        <span class="trust-badge">KC 인증</span>
-        <span class="trust-badge">한전 협력사 공급 실적 다수</span>
-        <span class="trust-badge">정품 A/S 보증</span>
+  <div id="pd-content" style="display:none;">
+    <div class="detail-wrap">
+      <div class="detail-gallery">
+        <div class="main-img" id="pd-main-img"></div>
+        <div class="gallery-thumbs" id="pd-thumbs"></div>
       </div>
 
-      <div class="price-box">
-        <div class="final-price">1,400,000원</div>
-      </div>
+      <div class="detail-info">
+        <div class="brand-line" id="pd-brand"></div>
+        <h1 id="pd-name"></h1>
+        <div class="model" id="pd-model"></div>
 
-      <div class="qty-row">
-        <span style="font-size:14px;">수량</span>
-        <div class="qty-selector">
-          <button type="button">-</button>
-          <input type="text" value="1">
-          <button type="button">+</button>
+        <div class="trust-badges" id="pd-badges"></div>
+
+        <div class="price-box">
+          <div class="final-price" id="pd-price"></div>
+        </div>
+
+        <div class="action-row"></div>
+        <a href="quote-request.html" class="quick-quote">이 상품 견적서로 담기 →</a>
+
+        <div class="trust-strip">
+          <div class="item"><b>배송</b>주문 후 2~3일 이내 (배송비 별도)</div>
+          <div class="item"><b>교환/반품</b>수령일로부터 7일 이내 (<a href="return-policy.html">반품안내</a>)</div>
+          <div class="item"><b>A/S</b>정품 유통 · 판매자 협력 A/S</div>
+          <div class="item"><b>세금계산서</b>발행 가능 (기업/관공서)</div>
         </div>
       </div>
-
-      <div class="action-row">
-        <button class="btn btn-outline btn-block">장바구니</button>
-        <button class="btn btn-primary btn-block">바로구매</button>
-      </div>
-      <a href="quote-request.html" class="quick-quote">이 상품 견적서로 담기 →</a>
-      <a href="hikmicro-catalog.pdf" download class="quick-quote" style="display:block; margin-top:6px;">📄 종합카탈로그 PDF 다운로드 (PAPORI)→</a>
-
-      <div class="trust-strip">
-        <div class="item"><b>배송</b>주문 후 2~3일 이내 (배송비 별도)</div>
-        <div class="item"><b>교환/반품</b>수령일로부터 7일 이내 (<a href="return-policy.html">반품안내</a>)</div>
-        <div class="item"><b>A/S</b>제조사 정품 보증 1년</div>
-        <div class="item"><b>세금계산서</b>발행 가능 (기업/관공서)</div>
-      </div>
     </div>
-  </div>
 
-  <div class="tabs">
-    <div class="tab active" onclick="showTab('info')">상세정보</div>
-    <div class="tab" onclick="showTab('spec')">스펙(제원표)</div>
-    <div class="tab" onclick="showTab('review')">구매평</div>
-    <div class="tab" onclick="showTab('qna')">Q&amp;A</div>
-  </div>
+    <div class="tabs">
+      <div class="tab active" onclick="showTab('info')">상세정보</div>
+      <div class="tab" onclick="showTab('spec')">스펙(제원표)</div>
+      <div class="tab" onclick="showTab('review')">구매평</div>
+      <div class="tab" onclick="showTab('qna')">Q&amp;A</div>
+    </div>
 
     <div class="tab-panel" id="panel-info">
-    <div class="detail-section">
-      <h3>제품 소개</h3>
-      <p>HIKMICRO M11W는 산업 현장의 정밀 진단에 최적화된
-      산업용 열화상카메라입니다. 한전 협력사 현장에서 다수 공급된 실적을 바탕으로, 활선설비 이상 발열 진단부터
-      전기설비 정기점검까지 폭넓게 활용할 수 있습니다.</p>
-      <ul class="package-list">
-        <li>시야각 37.2° × 27.8°</li>
-        <li>이미지 프레임 25Hz</li>
-        <li>감도(NETD) ≤40mK</li>
-        <li>A/S 기간 3년</li>
-      </ul>
-    </div>
-    <div class="detail-section">
-      <h3>제품 사진</h3>
-      <div class="img-stack">
-        <div class="stack-img" style="background-image:url('https://hikkorea.co.kr/images/product_images/0101/100010_A6.jpg');"></div>
-        <div class="stack-img" style="background-image:url('https://hikkorea.co.kr/images/product_images/0101/100010_A7.jpg');"></div>
-        <div class="stack-img" style="background-image:url('https://hikkorea.co.kr/images/product_images/0101/100010_A8.jpg');"></div>
+      <div class="detail-section">
+        <h3>제품 소개</h3>
+        <p id="pd-description"></p>
       </div>
     </div>
-  </div>
-  <div class="tab-panel" id="panel-spec" style="display:none;"><div class="detail-section">
-      <h3>제원표</h3>
-      <table class="spec-table">
-        <tr><th>모델명</th><td>M11W</td></tr>
-        <tr><th>IR 해상도</th><td>192 × 144 (27,648 화소)</td></tr>
-        <tr><th>온도범위</th><td>-20℃ ~ +550℃</td></tr>
-        <tr><th>정확도</th><td>±2℃ 또는 ±2%</td></tr>
-        <tr><th>화면해상도</th><td>3,264 × 2,448 (8MP)</td></tr>
-        <tr><th>시야각</th><td>37.2° × 27.8°</td></tr>
-        <tr><th>프레임레이트</th><td>25Hz</td></tr>
-        <tr><th>감도(NETD)</th><td>≤40mK</td></tr>
-        <tr><th>A/S 기간</th><td>3년</td></tr>
-      </table>
+    <div class="tab-panel" id="panel-spec" style="display:none;">
+      <div class="detail-section">
+        <h3>제원표</h3>
+        <table class="spec-table" id="pd-spec-table"></table>
+      </div>
     </div>
-  </div>
-  <div class="tab-panel" id="panel-review" style="display:none;">
-    <p style="color:var(--text-mute); font-size:14px; padding:20px 0;">아직 등록된 구매평이 없습니다.</p>
-  </div>
-  <div class="tab-panel" id="panel-qna" style="display:none;">
-    <p style="color:var(--text-mute); font-size:14px; padding:20px 0;">아직 등록된 문의가 없습니다. 궁금하신 점은 견적요청 또는 고객센터로 문의해주세요.</p>
-  </div>
-
-  <div class="related">
-    <h2>이 카테고리의 다른 상품</h2>
-    <div class="product-grid" style="padding-top:0;">
-      <a href="product-detail-pocket2.html" class="product-card">
-        <div class="thumb" style="background-image:url('https://images.unsplash.com/photo-1581093458791-9d42e3c7e117?q=80&w=600&auto=format&fit=crop');"></div>
-        <div class="body">
-          <div class="brand">HIKMICRO</div>
-          <h4>POCKET2 직무고시 열화상카메라</h4>
-          <div class="price">770,000<span class="unit">원</span></div>
-        </div>
-      </a>
-      <a href="product-detail-m20.html" class="product-card">
-        <div class="thumb" style="background-image:url('https://hikkorea.co.kr/images/product_images/0101/100011_L.jpg');"></div>
-        <div class="body">
-          <div class="brand">HIKMICRO</div>
-          <h4>HIKMICRO M20</h4>
-          <div class="price">2,761,000<span class="unit">원</span></div>
-        </div>
-      </a>
+    <div class="tab-panel" id="panel-review" style="display:none;">
+      <p style="color:var(--text-mute); font-size:14px; padding:20px 0;">아직 등록된 구매평이 없습니다.</p>
+    </div>
+    <div class="tab-panel" id="panel-qna" style="display:none;">
+      <p style="color:var(--text-mute); font-size:14px; padding:20px 0;">아직 등록된 문의가 없습니다. 궁금하신 점은 견적요청 또는 고객센터로 문의해주세요.</p>
     </div>
   </div>
 </main>
@@ -180,53 +121,124 @@
 
 <a href="quote-request.html" class="floating-quote">빠른 견적문의</a>
 
-
-<div class="toast" id="toast"></div>
-<script>
-  const toast = document.getElementById('toast');
-  function showToast(msg) {
-    toast.textContent = msg;
-    toast.classList.add('show');
-    setTimeout(() => toast.classList.remove('show'), 1800);
-  }
-  document.querySelectorAll('.qty-selector button').forEach(btn => {
-    btn.onclick = () => {
-      const input = btn.parentElement.querySelector('input');
-      let val = parseInt(input.value) || 1;
-      val = btn.textContent === '+' ? val + 1 : Math.max(1, val - 1);
-      input.value = val;
-    };
-  });
-  document.querySelectorAll('.action-row .btn-outline').forEach(btn => {
-    btn.onclick = () => showToast('장바구니에 담았습니다');
-  });
-  document.querySelectorAll('.action-row .btn-primary').forEach(btn => {
-    btn.onclick = () => showToast('데모 화면입니다 — 3단계 결제 페이지로 연동될 예정입니다');
-  });
-</script>
-
 <script>
   function swapGalleryImage(el) {
-    const gallery = el.closest('.detail-gallery');
+    var gallery = el.closest('.detail-gallery');
     if (!gallery) return;
-    const main = gallery.querySelector('.main-img');
+    var main = gallery.querySelector('.main-img');
     if (main) main.style.backgroundImage = el.style.backgroundImage;
-    gallery.querySelectorAll('.thumb-img').forEach(t => t.classList.remove('active'));
+    gallery.querySelectorAll('.thumb-img').forEach(function (t) { t.classList.remove('active'); });
     el.classList.add('active');
   }
-</script>
-<script>
   function showTab(name) {
-    ['info','spec','review','qna'].forEach(t => {
-      const el = document.getElementById('panel-' + t);
+    ['info', 'spec', 'review', 'qna'].forEach(function (t) {
+      var el = document.getElementById('panel-' + t);
       if (el) el.style.display = (t === name) ? 'block' : 'none';
     });
-    document.querySelectorAll('.tabs .tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.tabs .tab').forEach(function (t) { t.classList.remove('active'); });
     event.currentTarget.classList.add('active');
   }
 </script>
+
+<script type="module">
+  // 관리자가 admin.html에서 등록한 "신규 상품"을 위한 공용 상세페이지 템플릿입니다.
+  // product-detail.html?id=custom-xxxx 형태의 주소로 접속하면, 아래에서 Firestore의
+  // customProducts/{id} 문서를 읽어와 이 페이지를 채웁니다.
+  import { paporiGetCustomProduct } from './papori-firebase.js';
+
+  function escapeHtml(s) {
+    return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+
+  var id = new URLSearchParams(location.search).get('id');
+  var loadingEl = document.getElementById('pd-loading');
+  var notfoundEl = document.getElementById('pd-notfound');
+  var contentEl = document.getElementById('pd-content');
+
+  function showNotFound() {
+    loadingEl.style.display = 'none';
+    notfoundEl.style.display = 'block';
+  }
+
+  if (!id) {
+    showNotFound();
+  } else {
+    paporiGetCustomProduct(id).then(function (p) {
+      if (!p || p.hidden) { showNotFound(); return; }
+
+      document.title = p.name + ' — PAPORI';
+      document.getElementById('pd-breadcrumb').innerHTML =
+        '<a href="index.html">홈</a> &gt; ' +
+        (p.category ? '<a href="' + categoryUrl(p.category) + '">' + escapeHtml(p.category) + '</a> &gt; ' : '') +
+        escapeHtml(p.name);
+
+      var images = (p.images || []).map(function (im) { return im.url; }).filter(Boolean);
+      var mainImg = document.getElementById('pd-main-img');
+      mainImg.style.backgroundImage = images[0] ? "url('" + images[0] + "')" : '';
+      var thumbsEl = document.getElementById('pd-thumbs');
+      if (images.length > 1) {
+        thumbsEl.innerHTML = images.map(function (url, i) {
+          return '<div class="thumb-img' + (i === 0 ? ' active' : '') + '" style="background-image:url(\'' + url + '\');" onclick="swapGalleryImage(this)"></div>';
+        }).join('');
+      }
+
+      document.getElementById('pd-brand').textContent = p.brand || '';
+      document.getElementById('pd-name').textContent = p.name || '';
+      document.getElementById('pd-model').textContent = p.model || '';
+      if (p.badge) {
+        document.getElementById('pd-badges').innerHTML = '<span class="trust-badge">' + escapeHtml(p.badge) + '</span>';
+      }
+
+      var priceEl = document.getElementById('pd-price');
+      if (typeof p.price === 'number' && p.price > 0) {
+        priceEl.textContent = p.price.toLocaleString() + '원';
+      } else {
+        priceEl.style.fontSize = '20px';
+        priceEl.style.color = 'var(--purple-dark)';
+        priceEl.textContent = '가격문의';
+        var shipNote = document.createElement('div');
+        shipNote.className = 'ship-note';
+        shipNote.textContent = '규격·수량에 따라 견적이 달라져 별도 가격을 표기하지 않습니다';
+        priceEl.parentNode.appendChild(shipNote);
+      }
+
+      document.getElementById('pd-description').textContent = p.description || '';
+
+      var specTable = document.getElementById('pd-spec-table');
+      var rows = Array.isArray(p.specRows) ? p.specRows.slice() : [];
+      if (p.model) rows.unshift({ label: '모델명', value: p.model });
+      specTable.innerHTML = rows.map(function (r) {
+        return '<tr><th>' + escapeHtml(r.label || '') + '</th><td>' + escapeHtml(r.value || '') + '</td></tr>';
+      }).join('') || '<tr><td colspan="2" style="color:var(--text-mute);">등록된 제원 정보가 없습니다.</td></tr>';
+
+      loadingEl.style.display = 'none';
+      contentEl.style.display = 'block';
+
+      // DOM을 다 채운 뒤 cart.js에 넘겨 장바구니/바로구매/견적 버튼을 연결합니다.
+      if (window.PaporiCart && window.PaporiCart.reinitProductPage) {
+        window.PaporiCart.reinitProductPage();
+      } else {
+        document.addEventListener('DOMContentLoaded', function () {
+          if (window.PaporiCart) window.PaporiCart.reinitProductPage();
+        });
+      }
+    }).catch(function () { showNotFound(); });
+  }
+
+  function categoryUrl(category) {
+    var map = {
+      '계측기': 'category-kepco-meter.html',
+      '안전장구': 'category-kepco-tool-safety.html',
+      '전동유압공구': 'category-kepco-tool-hydraulic.html',
+      '열화상초음파카메라': 'category-thermal.html',
+      '한전 보수용 자재': 'category-kepco-repair-material.html'
+    };
+    return map[category] || 'index.html';
+  }
+</script>
+
   <script src="cart.js"></script>
 </body>
 </html>
-
-

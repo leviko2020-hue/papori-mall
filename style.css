@@ -1106,6 +1106,19 @@ img { max-width: 100%; display: block; }
 .status-pending { background: #FFF3E0; color: #B8720A; }
 .status-done { background: var(--purple-light); color: var(--purple-dark); }
 .status-wait { background: var(--gray-light); color: var(--text-mute); }
+.admin-subtab { font-size: 13px; font-weight: 600; color: var(--text-mute); padding: 10px 4px; border-bottom: 2px solid transparent; }
+.admin-subtab.active { color: var(--purple-dark); border-bottom-color: var(--purple); }
+.pf-row { margin-bottom: 14px; }
+.pf-row label { display: block; font-size: 12px; font-weight: 600; color: var(--text-mute); margin-bottom: 5px; }
+.pf-row input[type="text"], .pf-row input[type="number"], .pf-row textarea, .pf-row select {
+  width: 100%; padding: 9px 10px; border: 1px solid var(--border); border-radius: 8px; font-size: 13px; font-family: inherit;
+}
+.pf-row textarea { resize: vertical; min-height: 70px; }
+.pf-spec-row { display: flex; gap: 8px; margin-bottom: 6px; }
+.pf-spec-row input { flex: 1; }
+.pf-thumbs { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+.pf-thumb { width: 64px; height: 64px; border-radius: 8px; background-size: cover; background-position: center; position: relative; border: 1px solid var(--border); }
+.pf-thumb .pf-thumb-x { position: absolute; top: -6px; right: -6px; width: 18px; height: 18px; border-radius: 50%; background: #C0392B; color: #fff; font-size: 11px; line-height: 18px; text-align: center; cursor: pointer; }
 
 /* Series landing cards (하이크마이크로 스타일) */
 .series-grid {

@@ -1,0 +1,22 @@
+rules_version = '2';
+
+// PAPORI 쇼핑몰 Firebase Storage 보안 규칙 (상품 이미지 업로드용)
+// 이 파일은 저장소 안에서 참고/버전관리용으로 보관하는 사본입니다.
+// 실제로 적용하려면 Firebase 콘솔 > papori-mall 프로젝트 > Storage > 규칙(Rules) 탭에
+// 이 내용을 그대로 붙여넣고 "게시(Publish)"를 눌러야 합니다.
+// (Storage는 무료 Spark 요금제에서는 사용할 수 없고, 종량제인 Blaze 요금제로 전환해야
+//  업로드가 동작합니다 — 소규모 상품 이미지 몇백 장 수준이면 실사용료는 거의 0원입니다.)
+service firebase.storage {
+  match /b/{bucket}/o {
+    match /product-images/{productId}/{fileName} {
+      allow read: if true;
+      allow write: if request.auth != null
+        && request.auth.token.email == 'paporimomo@gmail.com'
+        && request.resource.size < 15 * 1024 * 1024
+        && request.resource.contentType.matches('image/.*');
+    }
+    match /{allPaths=**} {
+      allow read, write: if false;
+    }
+  }
+}
