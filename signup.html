@@ -66,10 +66,17 @@
     <p id="signup-msg" style="font-size:13px; color:var(--text-mute); margin-top:10px; text-align:center;"></p>
   </form>
 
-  <div class="auth-links">
+  <div id="signup-success" style="display:none; text-align:center; padding:20px 0;">
+    <div style="font-size:44px; margin-bottom:12px;">🎉</div>
+    <h2 style="font-size:20px; margin:0 0 8px;" id="signup-success-title">회원가입을 환영합니다!</h2>
+    <p style="font-size:14px; color:var(--text-mute); margin:0 0 24px;">PAPORI 회원가입이 완료되었습니다. 지금 바로 쇼핑을 시작해보세요.</p>
+    <a href="index.html" class="btn btn-primary btn-block">쇼핑몰 홈으로 가기</a>
+  </div>
+
+  <div class="auth-links" id="signup-bottom-links">
     이미 계정이 있으신가요? <a href="login.html">로그인</a>
   </div>
-  <a href="quote-request.html" class="guest-order-link">회원가입 없이 비회원으로 견적요청 하기 →</a>
+  <a href="quote-request.html" class="guest-order-link" id="signup-guest-link">회원가입 없이 비회원으로 견적요청 하기 →</a>
 </div>
 
 <footer class="site-footer">
@@ -115,8 +122,12 @@
     msg.textContent = '가입 처리 중...';
     try {
       await paporiSignUp({ email, password, name, memberType: window.memberType, companyName });
-      msg.textContent = '가입이 완료되었습니다. 로그인 페이지로 이동합니다.';
-      setTimeout(() => location.href = 'login.html', 1200);
+      document.getElementById('signup-form').style.display = 'none';
+      document.getElementById('signup-bottom-links').style.display = 'none';
+      document.getElementById('signup-guest-link').style.display = 'none';
+      const titleEl = document.getElementById('signup-success-title');
+      if (titleEl && name) titleEl.textContent = name + '님, 회원가입을 환영합니다!';
+      document.getElementById('signup-success').style.display = 'block';
     } catch (err) {
       msg.textContent = '가입 실패: ' + (err.message || err);
     }
