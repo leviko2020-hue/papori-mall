@@ -536,6 +536,12 @@ img { max-width: 100%; display: block; }
   border: 1px solid var(--border);
   cursor: pointer;
 }
+/* 썸네일이 4장 이상일 때: 한 줄에 3칸씩, 넘치는 장은 아래 줄로 정렬 */
+.gallery-thumbs.thumbs-3col {
+  display: grid;
+  grid-template-columns: repeat(3, 90px);
+}
+.gallery-thumbs.thumbs-3col .thumb-img { flex: none; }
 .detail-section .full-img {
   width: 60%;
   max-width: 700px;
