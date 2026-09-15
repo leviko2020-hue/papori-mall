@@ -25,16 +25,37 @@ export const PAPORI_ADMIN_EMAILS = ["paporimomo@gmail.com"];
 
 // ---- 회원가입 ----
 // memberType: "personal" | "corp"
-export async function paporiSignUp({ email, password, name, memberType, companyName }) {
+export async function paporiSignUp({
+  email, password, name, memberType, companyName,
+  mobile, phone, fax,
+  zipcode, address, addressDetail,
+  shippingSame, shippingZipcode, shippingAddress, shippingAddressDetail
+}) {
   const cred = await createUserWithEmailAndPassword(auth, email, password);
   // 등급(grade) 필드는 지금은 전부 "일반"으로 고정, 나중에 등급별 혜택 붙일 때 이 필드만 바꾸면 됨
   await setDoc(doc(db, "members", cred.user.uid), {
     email, name, memberType, companyName: companyName || null,
+    position: null,
+    mobile: mobile || null, phone: phone || null, fax: fax || null,
+    zipcode: zipcode || null, address: address || null, addressDetail: addressDetail || null,
+    shippingSame: shippingSame !== false,
+    shippingZipcode: shippingSame === false ? (shippingZipcode || null) : null,
+    shippingAddress: shippingSame === false ? (shippingAddress || null) : null,
+    shippingAddressDetail: shippingSame === false ? (shippingAddressDetail || null) : null,
     grade: "일반",
     approved: true, // 승인 절차 없이 즉시 이용 가능
     createdAt: serverTimestamp()
   });
   return cred.user;
+}
+
+// ---- 회원정보 조회/수정 (마이페이지) ----
+export async function paporiGetMember(uid) {
+  const snap = await getDoc(doc(db, "members", uid));
+  return snap.exists() ? snap.data() : null;
+}
+export async function paporiUpdateMember(uid, data) {
+  await setDoc(doc(db, "members", uid), { ...data, updatedAt: serverTimestamp() }, { merge: true });
 }
 
 // ---- 로그인 ----

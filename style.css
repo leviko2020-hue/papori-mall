@@ -976,6 +976,45 @@ img { max-width: 100%; display: block; }
   text-decoration: underline;
 }
 
+/* 회원가입/마이페이지: 필드가 많은 폼(주소, 연락처 등) */
+.auth-wrap-wide { max-width: 520px; }
+.form-section-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text-strong);
+  margin: 28px 0 14px;
+  padding-top: 22px;
+  border-top: 1px solid var(--border);
+}
+.form-section-title:first-child { border-top: none; padding-top: 0; margin-top: 0; }
+.form-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0 14px; }
+@media (max-width: 560px) { .form-grid-2 { grid-template-columns: 1fr; } }
+.form-group label .req { color: #C0392B; margin-left: 2px; }
+.form-group label .opt { color: var(--text-mute); font-weight: 400; margin-left: 4px; }
+.addr-row { display: flex; gap: 8px; }
+.addr-row input { flex: 1; }
+.addr-row .btn-outline { flex-shrink: 0; padding: 0 16px; font-size: 13px; white-space: nowrap; }
+.checkbox-row {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 13px; color: var(--text-mute);
+  margin: -6px 0 16px;
+}
+.checkbox-row input[type="checkbox"] { width: auto; }
+.mypage-view-row {
+  display: flex; justify-content: space-between; align-items: baseline;
+  padding: 12px 0; border-bottom: 1px solid var(--border); font-size: 14px;
+}
+.mypage-view-row .k { color: var(--text-mute); font-size: 13px; }
+.mypage-view-row .v { color: var(--text-strong); font-weight: 500; text-align: right; }
+.withdraw-confirm {
+  display: none; margin-top: 12px; padding: 14px;
+  border: 1px solid #f0c6c6; background: #fdf4f4; border-radius: 8px; font-size: 13px; color: #8a2f2f;
+}
+.withdraw-confirm.show { display: block; }
+.withdraw-confirm .confirm-actions { display: flex; gap: 8px; margin-top: 12px; }
+.withdraw-confirm .confirm-actions button { flex: 1; padding: 9px; font-size: 13px; border-radius: 7px; border: 1px solid var(--border); background: #fff; cursor: pointer; }
+.withdraw-confirm .confirm-actions button.confirm-yes { background: #C0392B; border-color: #C0392B; color: #fff; font-weight: 600; }
+
 /* Cart page */
 .cart-table { width: 100%; border-collapse: collapse; margin: 24px 0; }
 .cart-table th {

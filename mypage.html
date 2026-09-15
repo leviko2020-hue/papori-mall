@@ -32,12 +32,89 @@
   </div>
 </nav>
 
-<div class="auth-wrap">
+<div class="auth-wrap auth-wrap-wide">
   <h1>마이페이지</h1>
   <p class="sub" id="mp-email">로그인 확인 중...</p>
 
   <div id="mp-body" style="display:none;">
-    <div class="form-group">
+    <form id="mp-form">
+      <div class="form-section-title">기본정보</div>
+      <div class="form-grid-2">
+        <div class="form-group">
+          <label>이름 / 담당자명<span class="req">*</span></label>
+          <input type="text" id="mp-name">
+        </div>
+        <div class="form-group">
+          <label>회사명<span class="opt">(선택)</span></label>
+          <input type="text" id="mp-company">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>직함<span class="opt">(선택)</span></label>
+        <input type="text" id="mp-position" placeholder="예: 과장, 대리">
+      </div>
+      <div class="form-group">
+        <label>이메일</label>
+        <input type="email" id="mp-email-view" disabled style="background:#f7f5fb; color:var(--text-mute);">
+      </div>
+
+      <div class="form-section-title">연락처</div>
+      <div class="form-grid-2">
+        <div class="form-group">
+          <label>휴대폰 번호<span class="req">*</span></label>
+          <input type="tel" id="mp-mobile" placeholder="010-0000-0000">
+        </div>
+        <div class="form-group">
+          <label>전화번호<span class="req">*</span></label>
+          <input type="tel" id="mp-phone" placeholder="042-000-0000">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>팩스<span class="opt">(선택)</span></label>
+        <input type="tel" id="mp-fax" placeholder="042-000-0000">
+      </div>
+
+      <div class="form-section-title">주소</div>
+      <div class="form-group">
+        <label>주소<span class="req">*</span></label>
+        <div class="addr-row">
+          <input type="text" id="mp-zipcode" placeholder="우편번호" readonly>
+          <button type="button" class="btn btn-outline" id="mp-addr-search">우편번호 검색</button>
+        </div>
+      </div>
+      <div class="form-group">
+        <input type="text" id="mp-address" placeholder="주소" readonly>
+      </div>
+      <div class="form-group">
+        <input type="text" id="mp-address-detail" placeholder="상세주소 입력">
+      </div>
+
+      <div class="form-section-title">배송지</div>
+      <label class="checkbox-row">
+        <input type="checkbox" id="mp-shipping-same">
+        위 주소와 동일하게 사용
+      </label>
+      <div id="mp-shipping-fields">
+        <div class="form-group">
+          <label>배송지 주소</label>
+          <div class="addr-row">
+            <input type="text" id="mp-shipping-zipcode" placeholder="우편번호" readonly>
+            <button type="button" class="btn btn-outline" id="mp-shipping-addr-search">우편번호 검색</button>
+          </div>
+        </div>
+        <div class="form-group">
+          <input type="text" id="mp-shipping-address" placeholder="주소" readonly>
+        </div>
+        <div class="form-group">
+          <input type="text" id="mp-shipping-address-detail" placeholder="상세주소 입력">
+        </div>
+      </div>
+
+      <button type="button" class="btn btn-primary btn-block" id="mp-save">정보 저장</button>
+      <p id="mp-save-msg" style="font-size:13px; color:var(--text-mute); margin-top:10px; text-align:center;"></p>
+    </form>
+
+    <div class="form-group" style="margin-top:28px; padding-top:20px; border-top:1px solid var(--border);">
       <label>비밀번호 재설정</label>
       <button type="button" class="btn btn-outline btn-block" id="mp-reset-pw">비밀번호 재설정 메일 받기</button>
     </div>
@@ -47,6 +124,13 @@
       <p style="font-size:13px; color:var(--text-mute); margin:0 0 10px;">탈퇴 시 회원정보가 삭제되며, 이후 같은 이메일로 다시 가입하실 수 있습니다. 진행 확인을 위해 비밀번호를 다시 입력해주세요.</p>
       <input type="password" id="mp-withdraw-pw" placeholder="현재 비밀번호">
       <button type="button" class="btn btn-block" style="margin-top:10px; background:#C0392B; color:#fff;" id="mp-withdraw">회원 탈퇴</button>
+      <div class="withdraw-confirm" id="mp-withdraw-confirm">
+        정말 탈퇴하시겠습니까? 회원정보가 삭제되며 되돌릴 수 없습니다.
+        <div class="confirm-actions">
+          <button type="button" id="mp-withdraw-cancel">취소</button>
+          <button type="button" class="confirm-yes" id="mp-withdraw-yes">예, 탈퇴합니다</button>
+        </div>
+      </div>
     </div>
     <p id="mp-msg" style="font-size:13px; color:var(--text-mute); margin-top:10px; text-align:center;"></p>
   </div>
@@ -74,52 +158,144 @@
   </div>
 </footer>
 
+<script>
+  const mpShipSame = document.getElementById('mp-shipping-same');
+  const mpShipFields = document.getElementById('mp-shipping-fields');
+  mpShipSame.onchange = () => { mpShipFields.style.display = mpShipSame.checked ? 'none' : 'block'; };
+
+  function openPostcode(zipEl, addrEl, detailEl) {
+    new daum.Postcode({
+      oncomplete: function (data) {
+        zipEl.value = data.zonecode;
+        addrEl.value = data.roadAddress || data.jibunAddress;
+        if (detailEl) detailEl.focus();
+      }
+    }).open();
+  }
+  document.getElementById('mp-addr-search').onclick = () => {
+    openPostcode(document.getElementById('mp-zipcode'), document.getElementById('mp-address'), document.getElementById('mp-address-detail'));
+  };
+  document.getElementById('mp-shipping-addr-search').onclick = () => {
+    openPostcode(document.getElementById('mp-shipping-zipcode'), document.getElementById('mp-shipping-address'), document.getElementById('mp-shipping-address-detail'));
+  };
+</script>
+
 <script type="module">
-  import { paporiOnAuthChange, paporiSendPasswordReset, paporiDeleteAccount, paporiLogout } from "./papori-firebase.js";
+  import { paporiOnAuthChange, paporiSendPasswordReset, paporiDeleteAccount, paporiGetMember, paporiUpdateMember } from "./papori-firebase.js";
 
   const emailEl = document.getElementById('mp-email');
   const bodyEl = document.getElementById('mp-body');
   const msg = document.getElementById('mp-msg');
+  const saveMsg = document.getElementById('mp-save-msg');
+  let currentUser = null;
 
-  paporiOnAuthChange((user) => {
+  paporiOnAuthChange(async (user) => {
     if (!user) {
       emailEl.textContent = '로그인이 필요합니다.';
       bodyEl.style.display = 'none';
       setTimeout(() => location.href = 'login.html', 1200);
       return;
     }
+    currentUser = user;
     emailEl.textContent = user.email + ' 님으로 로그인되어 있습니다';
     bodyEl.style.display = 'block';
+    document.getElementById('mp-email-view').value = user.email;
+
+    try {
+      const member = await paporiGetMember(user.uid);
+      if (member) {
+        document.getElementById('mp-name').value = member.name || '';
+        document.getElementById('mp-company').value = member.companyName || '';
+        document.getElementById('mp-position').value = member.position || '';
+        document.getElementById('mp-mobile').value = member.mobile || '';
+        document.getElementById('mp-phone').value = member.phone || '';
+        document.getElementById('mp-fax').value = member.fax || '';
+        document.getElementById('mp-zipcode').value = member.zipcode || '';
+        document.getElementById('mp-address').value = member.address || '';
+        document.getElementById('mp-address-detail').value = member.addressDetail || '';
+        const shippingSame = member.shippingSame !== false;
+        mpShipSame.checked = shippingSame;
+        mpShipFields.style.display = shippingSame ? 'none' : 'block';
+        document.getElementById('mp-shipping-zipcode').value = member.shippingZipcode || '';
+        document.getElementById('mp-shipping-address').value = member.shippingAddress || '';
+        document.getElementById('mp-shipping-address-detail').value = member.shippingAddressDetail || '';
+      }
+    } catch (err) {
+      saveMsg.textContent = '회원정보를 불러오지 못했습니다: ' + (err.message || err);
+    }
+  });
+
+  document.getElementById('mp-save').addEventListener('click', async () => {
+    if (!currentUser) return;
+    const name = document.getElementById('mp-name').value.trim();
+    const mobile = document.getElementById('mp-mobile').value.trim();
+    const phone = document.getElementById('mp-phone').value.trim();
+    const address = document.getElementById('mp-address').value.trim();
+    if (!name || !mobile || !phone || !address) {
+      saveMsg.textContent = '이름, 휴대폰, 전화번호, 주소는 필수 입력 항목입니다.';
+      return;
+    }
+    const shippingSame = mpShipSame.checked;
+    saveMsg.textContent = '저장 중...';
+    try {
+      await paporiUpdateMember(currentUser.uid, {
+        name,
+        companyName: document.getElementById('mp-company').value.trim() || null,
+        position: document.getElementById('mp-position').value.trim() || null,
+        mobile, phone,
+        fax: document.getElementById('mp-fax').value.trim() || null,
+        zipcode: document.getElementById('mp-zipcode').value.trim() || null,
+        address,
+        addressDetail: document.getElementById('mp-address-detail').value.trim() || null,
+        shippingSame,
+        shippingZipcode: shippingSame ? null : document.getElementById('mp-shipping-zipcode').value.trim() || null,
+        shippingAddress: shippingSame ? null : document.getElementById('mp-shipping-address').value.trim() || null,
+        shippingAddressDetail: shippingSame ? null : document.getElementById('mp-shipping-address-detail').value.trim() || null
+      });
+      saveMsg.textContent = '저장되었습니다.';
+    } catch (err) {
+      saveMsg.textContent = '저장 실패: ' + (err.message || err);
+    }
   });
 
   document.getElementById('mp-reset-pw').addEventListener('click', async () => {
-    const { getAuth } = await import('https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js');
-    const user = getAuth().currentUser;
-    if (!user) return;
+    if (!currentUser) return;
     msg.textContent = '메일 발송 중...';
     try {
-      await paporiSendPasswordReset(user.email);
-      msg.textContent = user.email + ' 주소로 비밀번호 재설정 메일을 보냈습니다.';
+      await paporiSendPasswordReset(currentUser.email);
+      msg.textContent = currentUser.email + ' 주소로 비밀번호 재설정 메일을 보냈습니다.';
     } catch (err) {
       msg.textContent = '실패: ' + (err.message || err);
     }
   });
 
-  document.getElementById('mp-withdraw').addEventListener('click', async () => {
+  // 회원탈퇴: 브라우저 환경에 따라 window.confirm()이 차단되거나
+  // 예상과 다르게 동작하는 경우가 있어, 페이지 안에 직접 확인 UI를 그려서 처리합니다.
+  const withdrawConfirm = document.getElementById('mp-withdraw-confirm');
+  document.getElementById('mp-withdraw').addEventListener('click', () => {
     const pw = document.getElementById('mp-withdraw-pw').value;
     if (!pw) { msg.textContent = '비밀번호를 입력해주세요.'; return; }
-    if (!confirm('정말 탈퇴하시겠습니까? 회원정보가 삭제됩니다.')) return;
+    msg.textContent = '';
+    withdrawConfirm.classList.add('show');
+  });
+  document.getElementById('mp-withdraw-cancel').addEventListener('click', () => {
+    withdrawConfirm.classList.remove('show');
+  });
+  document.getElementById('mp-withdraw-yes').addEventListener('click', async () => {
+    const pw = document.getElementById('mp-withdraw-pw').value;
+    withdrawConfirm.classList.remove('show');
     msg.textContent = '처리 중...';
     try {
       await paporiDeleteAccount(pw);
-      alert('탈퇴가 완료되었습니다.');
-      location.href = 'index.html';
+      msg.textContent = '탈퇴가 완료되었습니다. 메인페이지로 이동합니다.';
+      setTimeout(() => location.href = 'index.html', 1200);
     } catch (err) {
       msg.textContent = '탈퇴 실패: ' + (err.message || err) + ' (비밀번호를 확인해주세요)';
     }
   });
 </script>
 
+  <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
   <script src="cart.js"></script>
 </body>
 </html>

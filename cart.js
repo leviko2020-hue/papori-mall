@@ -542,6 +542,13 @@
             e.preventDefault();
             mod.paporiLogout().then(function () { location.reload(); });
           };
+          // 이메일 대신 회원가입 때 입력한 이름(닉네임)을 표시 (Firestore members 문서 조회)
+          mod.paporiGetMember(user.uid).then(function (member) {
+            if (member && member.name) {
+              var nameLink = document.querySelector('#papori-auth-state a[href="mypage.html"]');
+              if (nameLink) nameLink.textContent = member.name + '님';
+            }
+          }).catch(function () { /* 조회 실패 시 이메일 표시 그대로 둠 */ });
         } else {
           var existing = document.getElementById('papori-auth-state');
           if (existing) {

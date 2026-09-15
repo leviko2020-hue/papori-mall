@@ -32,7 +32,7 @@
   </div>
 </nav>
 
-<div class="auth-wrap">
+<div class="auth-wrap auth-wrap-wide">
   <h1>회원가입</h1>
   <p class="sub">회원가입 즉시 이용 가능합니다. 기업회원도 별도 승인 절차 없이 바로 이용하실 수 있어요.</p>
 
@@ -42,27 +42,79 @@
   </div>
 
   <form id="signup-form">
-    <div class="form-group">
-      <label>이름 / 담당자명</label>
-      <input type="text" id="su-name" placeholder="홍길동">
+    <div class="form-section-title">기본정보</div>
+    <div class="form-grid-2">
+      <div class="form-group">
+        <label>이름 / 담당자명<span class="req">*</span></label>
+        <input type="text" id="su-name" placeholder="홍길동">
+      </div>
+      <div class="form-group">
+        <label>회사명<span class="opt">(선택)</span></label>
+        <input type="text" id="su-company" placeholder="예: 한전 협력사명">
+      </div>
     </div>
-    <div class="form-group" id="corp-name-field" style="display:none;">
-      <label>회사명</label>
-      <input type="text" id="su-company" placeholder="예: 한전 협력사명">
-    </div>
     <div class="form-group">
-      <label>이메일</label>
+      <label>이메일<span class="req">*</span></label>
       <input type="email" id="su-email" placeholder="example@company.com">
     </div>
     <div class="form-group">
-      <label>휴대폰 번호</label>
-      <input type="tel" id="su-phone" placeholder="010-0000-0000">
-    </div>
-    <div class="form-group">
-      <label>비밀번호</label>
+      <label>비밀번호<span class="req">*</span></label>
       <input type="password" id="su-password" placeholder="8자 이상 입력">
     </div>
-    <button type="button" class="btn btn-primary btn-block" id="signup-submit">가입 완료 (승인 절차 없음)</button>
+
+    <div class="form-section-title">연락처</div>
+    <div class="form-grid-2">
+      <div class="form-group">
+        <label>휴대폰 번호<span class="req">*</span></label>
+        <input type="tel" id="su-mobile" placeholder="010-0000-0000">
+      </div>
+      <div class="form-group">
+        <label>전화번호<span class="req">*</span></label>
+        <input type="tel" id="su-phone" placeholder="042-000-0000">
+      </div>
+    </div>
+    <div class="form-group">
+      <label>팩스<span class="opt">(선택)</span></label>
+      <input type="tel" id="su-fax" placeholder="042-000-0000">
+    </div>
+
+    <div class="form-section-title">주소</div>
+    <div class="form-group">
+      <label>주소<span class="req">*</span></label>
+      <div class="addr-row">
+        <input type="text" id="su-zipcode" placeholder="우편번호" readonly>
+        <button type="button" class="btn btn-outline" id="su-addr-search">우편번호 검색</button>
+      </div>
+    </div>
+    <div class="form-group">
+      <input type="text" id="su-address" placeholder="주소" readonly>
+    </div>
+    <div class="form-group">
+      <input type="text" id="su-address-detail" placeholder="상세주소 입력">
+    </div>
+
+    <div class="form-section-title">배송지</div>
+    <label class="checkbox-row">
+      <input type="checkbox" id="su-shipping-same" checked>
+      위 주소와 동일하게 사용
+    </label>
+    <div id="su-shipping-fields" style="display:none;">
+      <div class="form-group">
+        <label>배송지 주소</label>
+        <div class="addr-row">
+          <input type="text" id="su-shipping-zipcode" placeholder="우편번호" readonly>
+          <button type="button" class="btn btn-outline" id="su-shipping-addr-search">우편번호 검색</button>
+        </div>
+      </div>
+      <div class="form-group">
+        <input type="text" id="su-shipping-address" placeholder="주소" readonly>
+      </div>
+      <div class="form-group">
+        <input type="text" id="su-shipping-address-detail" placeholder="상세주소 입력">
+      </div>
+    </div>
+
+    <button type="button" class="btn btn-primary btn-block" id="signup-submit">가입완료</button>
     <p id="signup-msg" style="font-size:13px; color:var(--text-mute); margin-top:10px; text-align:center;"></p>
   </form>
 
@@ -100,11 +152,32 @@
 <script>
   const btnP = document.getElementById('btn-personal');
   const btnC = document.getElementById('btn-corp');
-  const corpField = document.getElementById('corp-name-field');
   let memberType = 'personal';
   window.memberType = memberType;
-  btnP.onclick = () => { btnP.classList.add('active'); btnC.classList.remove('active'); corpField.style.display = 'none'; window.memberType = 'personal'; };
-  btnC.onclick = () => { btnC.classList.add('active'); btnP.classList.remove('active'); corpField.style.display = 'block'; window.memberType = 'corp'; };
+  btnP.onclick = () => { btnP.classList.add('active'); btnC.classList.remove('active'); window.memberType = 'personal'; };
+  btnC.onclick = () => { btnC.classList.add('active'); btnP.classList.remove('active'); window.memberType = 'corp'; };
+
+  // 배송지 "위 주소와 동일" 체크 해제 시에만 배송지 입력란 표시
+  const shipSame = document.getElementById('su-shipping-same');
+  const shipFields = document.getElementById('su-shipping-fields');
+  shipSame.onchange = () => { shipFields.style.display = shipSame.checked ? 'none' : 'block'; };
+
+  // 다음(카카오) 우편번호 서비스 — 무료 공개 API, 키 불필요
+  function openPostcode(zipEl, addrEl, detailEl) {
+    new daum.Postcode({
+      oncomplete: function (data) {
+        zipEl.value = data.zonecode;
+        addrEl.value = data.roadAddress || data.jibunAddress;
+        if (detailEl) detailEl.focus();
+      }
+    }).open();
+  }
+  document.getElementById('su-addr-search').onclick = () => {
+    openPostcode(document.getElementById('su-zipcode'), document.getElementById('su-address'), document.getElementById('su-address-detail'));
+  };
+  document.getElementById('su-shipping-addr-search').onclick = () => {
+    openPostcode(document.getElementById('su-shipping-zipcode'), document.getElementById('su-shipping-address'), document.getElementById('su-shipping-address-detail'));
+  };
 </script>
 
 <script type="module">
@@ -115,13 +188,33 @@
     const password = document.getElementById('su-password').value;
     const name = document.getElementById('su-name').value.trim();
     const companyName = document.getElementById('su-company').value.trim();
-    if (!email || !password || !name) {
-      msg.textContent = '이름, 이메일, 비밀번호를 입력해주세요.';
+    const mobile = document.getElementById('su-mobile').value.trim();
+    const phone = document.getElementById('su-phone').value.trim();
+    const fax = document.getElementById('su-fax').value.trim();
+    const zipcode = document.getElementById('su-zipcode').value.trim();
+    const address = document.getElementById('su-address').value.trim();
+    const addressDetail = document.getElementById('su-address-detail').value.trim();
+    const shippingSame = document.getElementById('su-shipping-same').checked;
+    const shippingZipcode = document.getElementById('su-shipping-zipcode').value.trim();
+    const shippingAddress = document.getElementById('su-shipping-address').value.trim();
+    const shippingAddressDetail = document.getElementById('su-shipping-address-detail').value.trim();
+
+    if (!name || !email || !password || !mobile || !phone || !address) {
+      msg.textContent = '이름, 이메일, 비밀번호, 휴대폰, 전화번호, 주소는 필수 입력 항목입니다.';
+      return;
+    }
+    if (!shippingSame && !shippingAddress) {
+      msg.textContent = '배송지 주소를 입력하거나, "위 주소와 동일하게 사용"을 체크해주세요.';
       return;
     }
     msg.textContent = '가입 처리 중...';
     try {
-      await paporiSignUp({ email, password, name, memberType: window.memberType, companyName });
+      await paporiSignUp({
+        email, password, name, memberType: window.memberType, companyName,
+        mobile, phone, fax,
+        zipcode, address, addressDetail,
+        shippingSame, shippingZipcode, shippingAddress, shippingAddressDetail
+      });
       document.getElementById('signup-form').style.display = 'none';
       document.getElementById('signup-bottom-links').style.display = 'none';
       document.getElementById('signup-guest-link').style.display = 'none';
@@ -134,6 +227,7 @@
   });
 </script>
 
+  <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
   <script src="cart.js"></script>
 </body>
 </html>
