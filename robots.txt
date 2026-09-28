@@ -7,4 +7,4 @@ Disallow: /mypage.html
 Disallow: /checkout.html
 Disallow: /cart.html
 
-Sitemap: https://papori-mall.vercel.app/sitemap.xml
+Sitemap: https://rokxa.com/sitemap.xml
