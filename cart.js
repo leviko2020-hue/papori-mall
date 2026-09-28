@@ -575,19 +575,19 @@
       return mod.paporiGetSiteConfig();
     }).then(function (cfg) {
       if (!cfg) return;
-      var divs = footerInfo.querySelectorAll('div');
-      if (divs[0] && cfg.businessName) {
-        divs[0].textContent = '상호 ' + cfg.businessName +
-          (cfg.ceo ? ' · 대표자 ' + cfg.ceo : '') +
-          (cfg.phone ? ' · 대표전화 ' + cfg.phone : '') +
-          (cfg.csPhone ? ' · 고객센터 ' + cfg.csPhone : '');
-      }
-      if (divs[1] && cfg.address) divs[1].textContent = '사업장 주소 ' + cfg.address;
-      if (divs[2] && (cfg.bizRegNo || cfg.mailOrderNo)) {
-        divs[2].textContent = (cfg.bizRegNo ? '사업자등록번호 ' + cfg.bizRegNo : '') +
-          (cfg.bizRegNo && cfg.mailOrderNo ? ' · ' : '') +
-          (cfg.mailOrderNo ? '통신판매업신고 ' + cfg.mailOrderNo : '');
-      }
+      var fieldMap = {
+        'footer-biz-name': cfg.businessName,
+        'footer-biz-phone': cfg.phone,
+        'footer-biz-ceo': cfg.ceo,
+        'footer-biz-csphone': cfg.csPhone,
+        'footer-biz-address': cfg.address,
+        'footer-biz-regno': cfg.bizRegNo,
+        'footer-biz-mailorder': cfg.mailOrderNo
+      };
+      Object.keys(fieldMap).forEach(function (id) {
+        var el = document.getElementById(id);
+        if (el && fieldMap[id]) el.textContent = fieldMap[id];
+      });
     }).catch(function () { /* 조회 실패 시 페이지 기본값 그대로 사용 */ });
   }
 
