@@ -55,6 +55,11 @@
         <div class="autocomplete-list" id="ac-list"></div>
       </div>
 
+      <div style="margin-top:20px;">
+        <button type="button" class="btn btn-ghost btn-sm" id="catalog-toggle-btn">전체 상품에서 골라 담기 ▾</button>
+      </div>
+      <div class="catalog-browser" id="catalog-browser" style="display:none;"></div>
+
       <table class="quote-table" id="quote-table">
         <thead>
           <tr><th style="width:38%;">상품명</th><th>규격/모델</th><th style="width:70px;">수량</th><th>비고</th><th></th></tr>
@@ -219,6 +224,53 @@
     if (!draft || draft.length === 0) return;
     draft.forEach(it => addRow({ name: it.name, model: it.model || '', category: '상세페이지에서 담음' }, it.qty));
     window.PaporiCart.clearQuoteDraft();
+  });
+
+  // 전체 상품을 대분류별로 묶어서 클릭만으로 견적요청서에 담을 수 있는 목록
+  const catalogBrowser = document.getElementById('catalog-browser');
+  const catalogToggleBtn = document.getElementById('catalog-toggle-btn');
+  let catalogBuilt = false;
+
+  function buildCatalogBrowser() {
+    if (catalogBuilt) return;
+    catalogBuilt = true;
+    const groups = {};
+    PAPORI_PRODUCTS.forEach(p => {
+      const parts = (p.category || '기타').split('·');
+      const main = parts[0].trim() || (parts[1] ? parts[1].trim() : '기타');
+      if (!groups[main]) groups[main] = [];
+      groups[main].push(p);
+    });
+    const order = Object.keys(groups).sort((a, b) => groups[b].length - groups[a].length);
+    catalogBrowser.innerHTML = order.map(cat => `
+      <details class="catalog-cat">
+        <summary>${esc(cat)} <span class="catalog-count">${groups[cat].length}개</span></summary>
+        ${groups[cat].map(p => `
+          <div class="catalog-item" data-id="${esc(p.id)}">
+            <div><div class="ci-name">${esc(p.name)}</div><div class="ci-meta">${esc(p.category)}${p.model ? ' · ' + esc(p.model) : ''}</div></div>
+            <span class="ci-add">+ 담기</span>
+          </div>
+        `).join('')}
+      </details>
+    `).join('');
+    catalogBrowser.querySelectorAll('.catalog-item').forEach(el => {
+      el.addEventListener('click', () => {
+        const product = PAPORI_PRODUCTS.find(p => p.id === el.dataset.id);
+        if (product) addRow(product);
+      });
+    });
+  }
+
+  catalogToggleBtn.addEventListener('click', () => {
+    const showing = catalogBrowser.style.display !== 'none';
+    if (showing) {
+      catalogBrowser.style.display = 'none';
+      catalogToggleBtn.textContent = '전체 상품에서 골라 담기 ▾';
+    } else {
+      buildCatalogBrowser();
+      catalogBrowser.style.display = 'block';
+      catalogToggleBtn.textContent = '전체 상품 목록 닫기 ▴';
+    }
   });
 
   acInput.addEventListener('input', (e) => renderAutocomplete(e.target.value));
