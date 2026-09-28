@@ -870,6 +870,12 @@ img { max-width: 100%; display: block; }
 .footer-links a { color: #888888; }
 .footer-links a:hover { color: #555555; }
 .footer-info div { margin-bottom: 4px; }
+.footer-biz-toggle { cursor: pointer; user-select: none; color: #999999; }
+.footer-biz-toggle:hover { color: #666666; }
+.footer-biz-arrow { display: inline-block; font-size: 10px; transition: transform 0.2s; }
+.footer-biz-details { display: none; margin-top: 4px; }
+.footer-info.open .footer-biz-details { display: block; }
+.footer-info.open .footer-biz-arrow { transform: rotate(180deg); }
 .footer-mascot { width: 34px; opacity: 0.85; margin-bottom: 14px; }
 
 /* Floating quote button */
